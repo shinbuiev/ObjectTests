@@ -8,9 +8,6 @@ import org.openqa.selenium.support.events.EventFiringWebDriver;
 
 import java.util.ArrayList;
 import java.util.List;
-//import selenium.EventFiringWebDriverWrapper;
-//import selenium.Utils;
-
 
 /**
  * Created by Sergiy.K on 17-Oct-16.
@@ -96,11 +93,6 @@ public class OrderPage extends BasePage {
         return TOTAL_PRICE.getText();
     }
 
-    public void waitPrice() {
-        clickOnPage();
-//        Utils.waitElement(DOMAIN_PRICE);
-    }
-
     public Product getActualProduct() {
         Product actualProduct = new Product(getProductName());
         actualProduct.setPlan(new Plan(getPlanName(), getCurrentURL()));
@@ -122,8 +114,6 @@ public class OrderPage extends BasePage {
             if (NAME_PLANS_OPTIONS_LIST.get(i).getText().equals(term)) {
                 NAME_PLANS_OPTIONS_LIST.get(i).click();
                 setOptionTerm(term);
-                // add price here for addons
-//                 actual.setPlanTerm(new Term(term));
             }
         }
     }
@@ -234,7 +224,6 @@ public class OrderPage extends BasePage {
     }
 
     public void inputDomainName(String domainName) {
-//        finalProduct.setProductDomain(new Domain(domainName));
         this.domainName = domainName;
         DOMAIN_SEARCH_FIELD.sendKeys(domainName);
     }
@@ -248,7 +237,6 @@ public class OrderPage extends BasePage {
     }
 
     public String getValidationErrorMessage() {
-//        Utils.waitElement(DOMAIN_NAME_VALIDATION_ERROR);
         return DOMAIN_NAME_VALIDATION_ERROR.getText();
     }
 

@@ -24,7 +24,7 @@ import java.util.concurrent.TimeUnit;
  */
 public class HostingBuyTest {
     public static EventFiringWebDriver driver;
-    @Mock
+
     private Product productBefore;
     private Product productAfter;
     private java.lang.String errors = "";
@@ -36,7 +36,8 @@ public class HostingBuyTest {
     @BeforeSuite
     public void initEnv() {
 
-        System.setProperty("webdriver.chrome.driver", "C:\\Automation\\chromedriver\\chromedriver.exe"); //Chrome driver
+//      System.setProperty("webdriver.chrome.driver", "C:\\Automation\\chromedriver\\chromedriver.exe"); //Chrome driver windows
+        System.setProperty("webdriver.chrome.driver", "/home/geser/IdeaProjects/chromedriver"); //Chrome driver linux
         java.lang.String userAgent = "Mozilla/5.0 (Windows NT 6.3; WOW64; Dreamscape/1.0;) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/49.0.2623.87 Safari/537.36";
         ChromeOptions co = new ChromeOptions();
         co.addArguments("--disable-extensions");
@@ -73,15 +74,14 @@ public class HostingBuyTest {
         orderPage.addAddon("Traffic Booster");
         orderPage.addAddon("Premium Email Protection");
         orderPage.addAddon("Secure Web Hosting");
-
         orderPage.pageDown();
         orderPage.clearDomainInputField();
         orderPage.inputDomainName("DomainForTesting.com");
         orderPage.clickContinueOrderButton();
         rememberProductBefore(orderPage);
-        orderPage.productToString(orderPage.getFinalProduct());
+//        orderPage.productToString(orderPage.getFinalProduct());
         shoppingCartPage.clickCart();
-        shoppingCartPage.productToString(shoppingCartPage.getProduct());
+//        shoppingCartPage.productToString(shoppingCartPage.getProduct());
         rememberProductAfter(shoppingCartPage);
         compareProductsShoppingCart();
         checkProductSpecification(shoppingCartPage);

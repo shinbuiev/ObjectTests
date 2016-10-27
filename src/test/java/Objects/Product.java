@@ -16,6 +16,7 @@ public class Product {
     private Price productPrice;
     private Addon addon;
     private Term term;
+    private Plan plan;
 
     private ArrayList<Plan> plans;
     private ArrayList<Term> terms;
@@ -63,7 +64,7 @@ public class Product {
         return addon;
     }
 
-    private Plan plan;
+
 
     public Plan getPlan() {
         return plan;
@@ -191,7 +192,7 @@ public class Product {
         }
         return error;
     }
-
+    // method check product specification
     public String isProduct(Product product) {
         String error = "";
         if (!this.getProductName().equals(product.getProductName())) {
