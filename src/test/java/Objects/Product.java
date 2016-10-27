@@ -13,8 +13,8 @@ public class Product {
     private String productName;
     private Price productPrice;
     public Addon addon;
-
     private Term term;
+
     private ArrayList<Plan> plans;
     private ArrayList<Term> terms;
     private ArrayList<Addon> addons;
@@ -118,18 +118,14 @@ public class Product {
     }
 
     public String getErrorOrderPage(Object o) {
-
         String error = "";
         Product product = (Product) o;
         if (!this.getProductName().equals(product.getProductName())) {
-            error = error + "Error1: Wrong product name:  " + this.getProductName() + " expected, but found: " + product.getProductName() + "\n";
-            LOGGER.error(error);
+            error = error + "Error1: Wrong product name: on Plan Page it was " + this.getProductName() + ", but on Order Page it's: " + product.getProductName() + "\n";
         }
         if (!this.getPlan().getPlanName().equals(product.getPlan().getPlanName())) {
-            error = error + "Error2: For " + this.getProductName() + " product, find plans: " + this.getPlan().getPlanName() + " and " + product.getPlan().getPlanName() + "\n";
-            LOGGER.error(error);
+            error = error + "Error2: For " + this.getProductName() + " product, Wrong Plan Name: on Plan Page it was " + this.getPlan().getPlanName() + " but in Order Page it's: " + product.getPlan().getPlanName() + "\n";
         }
-
         return error;
     }
 
@@ -137,73 +133,44 @@ public class Product {
         String error = "";
         Product product = (Product) o;
         if (!this.getProductName().equals(product.getProductName())) {
-            error = error + "Error3: Wrong product name:  " + this.getProductName() + " expected, but found: " + product.getProductName() + "\n";
-            LOGGER.error(error);
+            error = error + "Error3: Wrong product name: on Order Page it was " + this.getProductName() + ", but in Shopping Cart it's " + product.getProductName() + "\n";
         }
-
         if (!this.getPlan().getPlanName().equals(product.getPlan().getPlanName())) {
-            error = error + "Error4: For " + this.getProductName() + " product, find plans: " + this.getPlan().getPlanName() + " and " + product.getPlan().getPlanName() + "\n";
-            LOGGER.error(error);
+            error = error + "Error4: For " + this.getProductName() + " product, Wrong Plan Name on Order Page it was: " + this.getPlan().getPlanName() + ", but in Shopping Cart it's: " + product.getPlan().getPlanName() + "\n";
         }
         if (!this.getPlan().getTerm().equals(product.getPlan().getTerm())) {
-            error = error + "Error5: For " + this.getProductName() + " product, on order Page was selected term of plan: " + this.getPlan().getTerm() + " but found in shopping cart: "
+            error = error + "Error5: For " + this.getProductName() + " product, on Order Page was selected term of plan " + this.getPlan().getTerm() + ", but in Shopping Cart it's: "
                     + product.getPlan().getTerm() + "\n";
-            LOGGER.error(error);
         }
-        if (!this.getAddons().equals(product.getAddons())) {
-            error = error + "Error6: For " + this.getProductName() + " expect addons: " + this.getAddons() + "\n" + "but found: " + product.getAddons() + "\n";
-            LOGGER.error(error);
+        if (!(this.getAddons().size() == product.getAddons().size())) {
+            error = error + "Error6: For " + this.getProductName() + " wrong count of addons, expect addons: " + this.getAddons() + "\n" + "but found: " + product.getAddons() + "\n";
         }
-
-        return error;
-    }
-
-    public String isProductNormal(Product product) {
-
-        String error = "";
-        if (!this.getProductName().equals(product.getProductName())) {
-            error = error + "Error7: Wrong product name:  " + this.getProductName() + " expected, but found: " + product.getProductName() + "\n";
-            LOGGER.error(error);
+        for (int i = 0; i < this.getAddons().size(); i++) {
+            if (!this.getAddons().get(i).getAddonName().equals(product.getAddons().get(i).getAddonName()))
+                error = error + "Error7: For " + this.getProductName() + " product, Wrong Addon Name: on Order Page was selected addon " + this.getAddons().get(i).getAddonName() +
+                        ", but in shopping Cart it's " + product.getAddons().get(i).getAddonName() + "\n";
         }
-
-        if (!this.getPlans().contains(product.getPlan())) {
-            error = error + "Error8: For " + this.getProductName() + " product, expected plans: " + this.getPlans()
-                    + " but found " + product.getPlan().getPlanName() + "\n";
-            LOGGER.error(error);
-        }//this.getPlans()getTerms.contains(product.getPlan.getTerm)
-
-        for (int i = 0; i < this.getPlans().size(); i++) {
-            //из продукта взять все из него выбрать термсы и посмотреть есть ли такой же в текущего продукта
-            if (!this.getPlans().get(i).getTerms().contains(product.getPlan().getTerm())) {
-                error = error + "Error9: For " + this.getProductName() + " possible terms is: " + this.getPlans().get(i).getTerms() + " but find: " + product.getPlan().getTerm() + "\n";
-                LOGGER.error(error);
-            }
+        for (int i = 0; i < this.getAddons().size(); i++) {
+            if (!this.getAddons().get(i).getAddonTerm().equals(product.getAddons().get(i).getAddonTerm()))
+                error = error + "Error8: For " + this.getProductName() + " product, on Order Page was selected term " + this.getAddons().get(i).getAddonTerm() +
+                        ", but in Shopping Cart Term for addon " + this.getAddons().get(i).getAddonName() + " found term " + product.getAddons().get(i).getAddonTerm() + "\n";
         }
-
-        for (int j = 0; j < product.getAddons().size(); j++) {
-            if (!this.getAddons().contains(product.getAddons().get(j))) {
-                error = error + "Error10: For " + this.getProductName() + " possible addons is: " + this.getAddons() + "\n" + "but found: " + product.getAddons().get(j) + " addon\n";
-                LOGGER.error(error);
-            }
-        }
-
         return error;
     }
 
     public String isProduct(Product product) {
         String error = "";
         if (!this.getProductName().equals(product.getProductName())) {
-            error = error + "Error7: Wrong product name:  " + this.getProductName() + " expected, but found: " + product.getProductName() + "\n";
+            error = error + "Specification Error1: Wrong product name: on Order Page it was " + this.getProductName() + ", but in Shopping Cart it's: " + product.getProductName() + "\n";
         }
 
-            if (!this.getPlans().contains(product.getPlan())) {
-//            error = error + "test message for error 9 " + this.getPlans();
-                error = error + "Error9: Wrong plan name: " + this.getPlans() + " expected, but found: " + product.getPlan() + "\n";
-            }
+        if (!this.getPlans().contains(product.getPlan())) {
+            error = error + "Specification Error2: Wrong plan name: on Order Page it was " + this.getPlans() + ", but in Shopping Cart it's: " + product.getPlan() +" specific error" + "\n";
+        }
 
         for (int i = 0; i < product.getAddons().size(); i++) {
             if (!this.getAddons().contains(product.getAddons().get(i))) {
-                error = error + "Error10: Wrong addon name: " + this.getAddons() + " is expected, but found: " + product.getAddons().get(i) + "\n";
+                error = error + "Specification Error3: Wrong addon name: on Order Page it was " + this.getAddons() + ", but in Shopping Cart it's: " + product.getAddons().get(i) + "\n";
             }
         }
 

@@ -1,6 +1,5 @@
 package Tests;
 
-import Interfaces.ExpectedProducts.LinuxHosting;
 import Interfaces.ExpectedProducts.LinuxWebHosting;
 import Objects.Product;
 import Pages.BasePage;
@@ -13,6 +12,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.support.events.EventFiringWebDriver;
+import org.testng.Assert;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.Test;
@@ -53,20 +53,13 @@ public class HostingBuyTest {
         driver.manage().deleteAllCookies();
     }
 
-
-    public void linux() {
-        Product product = linuxWebHosting.getLinuxHosting();
-        System.out.println("Expected configuration for " + product.getProductName() + ":");
-        product.plansToString();
-    }
-
-    @Test
-    public void testLinuxExpectedInitialize() {
-        LinuxHosting linuxHosting = new LinuxHosting();
-        linuxHosting.getLinuxHosting().plansToString();
-
-
-    }
+//    @Test
+//    public void testLinuxExpectedInitialize() {
+//        LinuxHosting linuxHosting = new LinuxHosting();
+//        linuxHosting.getLinuxHosting().plansToString();
+//
+//
+//    }
 
     @Test
     public void testByEconomyLinuxHosting() {
@@ -75,73 +68,27 @@ public class HostingBuyTest {
         rememberProductBefore(planPage);
         rememberProductAfter(orderPage);
         compareProducts();
+
+        orderPage.selectOption("24");
         orderPage.addAddon("Traffic Booster");
         orderPage.addAddon("Premium Email Protection");
         orderPage.addAddon("Secure Web Hosting");
-        orderPage.selectOption("24");
+
         orderPage.pageDown();
         orderPage.clearDomainInputField();
         orderPage.inputDomainName("ksdhfsdkfhsdkfhksjf.com");
-        System.out.println("1_____________________________________________________________________________________________");
-        checkProductSpecification(orderPage);
-        rememberProductBefore(orderPage);
         orderPage.clickContinueOrderButton();
+        rememberProductBefore(orderPage);
         shoppingCartPage.clickCart();
-        System.out.println("2_____________________________________________________________________________________________");
+        rememberProductAfter(shoppingCartPage);
+        compareProductsShoppingCart();
         checkProductSpecification(shoppingCartPage);
-        rememberProductAfter(shoppingCartPage);
-        compareProductsShoppingCart();
-//        System.out.println("_____________________________________________________________________________________________");
-        shoppingCartPage.productToString(shoppingCartPage.getProduct());
+        isProductOk();
     }
 
-    @Test
-    public void testByPremiumLinuxHosting() {
-        gotoPage("https://www.crazydomains.com.au/web-hosting/");
-        planPage.clickBuyNowPremiumHosting();
-        rememberProductBefore(planPage);
-        rememberProductAfter(orderPage);
-        compareProducts();
-
-        orderPage.addAddon("Traffic Booster");
-        orderPage.addAddon("Premium Email Protection");
-        orderPage.addAddon("Secure Web Hosting");
-        orderPage.selectOption("24");
-        orderPage.pageDown();
-        orderPage.clearDomainInputField();
-        orderPage.inputDomainName("ksdhfsdkfhsdkfhksjf.com");
-        rememberProductBefore(orderPage);
-        orderPage.clickContinueOrderButton();
-        shoppingCartPage.clickCart();
-        rememberProductAfter(shoppingCartPage);
-        compareProductsShoppingCart();
-        shoppingCartPage.productToString(shoppingCartPage.getProduct());
+    public void isProductOk() {
+        Assert.assertTrue(errors.equals(""), "\n" + errors);
     }
-
-    @Test
-    public void testByUnlimitedLinuxHosting() {
-        gotoPage("https://www.crazydomains.com.au/web-hosting/");
-        planPage.clickBuyNowUnlimitedHosting();
-        rememberProductBefore(planPage);
-        rememberProductAfter(orderPage);
-        compareProducts();
-
-        orderPage.addAddon("Traffic Booster");
-        orderPage.addAddon("Premium Email Protection");
-        orderPage.addAddon("Secure Web Hosting");
-        orderPage.selectOption("24");
-        orderPage.pageDown();
-        orderPage.clearDomainInputField();
-        orderPage.inputDomainName("ksdhfsdkfhsdkfhksjf.com");
-        rememberProductBefore(orderPage);
-
-        orderPage.clickContinueOrderButton();
-        shoppingCartPage.clickCart();
-        rememberProductAfter(shoppingCartPage);
-        compareProductsShoppingCart();
-        shoppingCartPage.productToString(shoppingCartPage.getProduct());
-    }
-
 
     public void gotoPage(java.lang.String url) {
         if (!driver.getCurrentUrl().equals(url)) {
@@ -152,12 +99,19 @@ public class HostingBuyTest {
         shoppingCartPage = new ShoppingCartPage(driver);
     }
 
-    public void checkProductSpecification(BasePage page){
-        System.out.println(linuxWebHosting.getLinuxHosting().isProduct(page.getProduct()));
+    public void checkProductSpecification(BasePage page) {
+        if (!errors.equals("")) {
+            errors = errors + "\n";
+        }
+        errors = errors + linuxWebHosting.getLinuxHosting().isProduct(page.getProduct());
     }
 
     public void rememberProductBefore(BasePage page) {
         productBefore = page.getProduct();
+    }
+
+    public void rememberProductBefore(OrderPage page) {
+        productBefore = page.getFinalProduct();
     }
 
     public void rememberProductAfter(BasePage page) {
@@ -168,16 +122,14 @@ public class HostingBuyTest {
         if (!errors.equals("")) {
             errors = errors + "\n";
         }
-        errors = errors + " " + productBefore.getErrorOrderPage(productAfter);
-        System.out.println(errors);
+        errors = errors + productBefore.getErrorOrderPage(productAfter);
     }
 
     public void compareProductsShoppingCart() {
         if (!errors.equals("")) {
             errors = errors + "\n";
         }
-        errors = errors + " " + productBefore.getErrorShoppingCartPage(productAfter);
-        System.out.println(errors);
+        errors = errors + productBefore.getErrorShoppingCartPage(productAfter);
     }
 
     @AfterTest
@@ -185,5 +137,4 @@ public class HostingBuyTest {
         if (driver != null)
             driver.quit();
     }
-
 }

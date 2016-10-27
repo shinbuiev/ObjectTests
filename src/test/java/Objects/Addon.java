@@ -22,6 +22,12 @@ public class Addon {
         this.addonName = addonName;
     }
 
+    public Addon(String addonName, Term addonTerm, Price addonPrice) {
+        this.addonTerm = addonTerm;
+        this.addonName = addonName;
+        this.addonPrice = addonPrice;
+    }
+
     public String getAddonName() {
         return addonName;
     }
@@ -33,41 +39,25 @@ public class Addon {
     public void setAddonTerm(Term addonTerm) {
         this.addonTerm = addonTerm;
     }
-    //
-//    public void setAddonName(String addonName) {
-//        this.addonName = addonName;
-//    }
-//
-//    public String getAddonPrice() {
-//        return addonPrice;
-//    }
-//
-//    public void setAddonPrice(String addonPrice) {
-//        this.addonPrice = addonPrice;
-//    }
-//
-//    public String getAddonTerm() {
-//        return addonTerm;
-//    }
-//
-//    public void setAddonTerm(String addonTerm) {
-//        this.addonTerm = addonTerm;
-//    }
-
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
+//        if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
+        boolean result = false;
         Addon addon = (Addon) o;
-
-        if (!this.addonName.equals(addon.addonName)) return false;
-        else return true;
-//        if (!this.addonTerm.equals(addon.addonTerm)) return false;
-//        if (!this.addonPrice.equals(addonPrice)) return false;
-//        if (addonPrice != null ? !addonPrice.equals(addon.addonPrice) : addon.addonPrice != null) return false;
-//        return addonTerm != null ? addonTerm.equals(addon.addonTerm) : addon.addonTerm == null;
+        if (this.addonName.equals(addon.addonName)) return true;
+        if ((this.addonTerm != null) && (addon.addonTerm == null)) return false;
+        if ((this.addonTerm != null) && (addon.addonTerm != null)) {
+            if (this.addonTerm.equals(addon.addonTerm)) return true;
+        } else return false;
+        if ((this.addonPrice != null) & (addon.addonPrice == null)) return false;
+        if ((this.addonPrice != null) & (addon.addonPrice != null)) {
+            if ((this.addonPrice.equals(addon.addonPrice == null))) return true;
+        } else return false;
+        if ((this.addonTerm != null) && (addon.addonTerm == null)) return false;
+        else return false;
     }
 
     @Override
@@ -81,13 +71,15 @@ public class Addon {
     @Override
     public String toString() {
         if (addonPrice != null) {
-            return addonName + addonPrice;
+            return "Addon: " + addonName + " price: " + addonPrice;
+            //+ " TERM is disable for now???";
         }
         if (addonPrice != null && addonTerm != null) {
-            return addonName +" " +  addonPrice + " " + addonTerm;
+            return "Addon: " + addonName + " price: " + addonPrice + " term: " + addonTerm;
         }
         if (addonTerm != null)
-            return addonName + " for " + addonTerm;
+            return "Addon: " + addonName + " term: " + addonTerm;
+//                    + " PRICE is disable for now???";
         else return addonName;
 
     }

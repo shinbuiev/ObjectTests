@@ -71,6 +71,7 @@ public class OrderPage extends BasePage {
     private int addonCount;
     protected EventFiringWebDriver driver;
     private Product actual;
+    private Product finalProduct;
 
     public OrderPage(EventFiringWebDriver driver) {
         super(driver);
@@ -110,7 +111,6 @@ public class OrderPage extends BasePage {
         }
         for (int i = 0; i < addons.size(); i++) {
             System.out.println(addons.get(i));
-
         }
         return actualProduct;
     }
@@ -120,8 +120,9 @@ public class OrderPage extends BasePage {
         for (int i = 0; i < getOptionCount(); i++) {
             if (NAME_PLANS_OPTIONS_LIST.get(i).getText().equals(term)) {
                 NAME_PLANS_OPTIONS_LIST.get(i).click();
-                setOptionTerm(term);// add price here for addons
-//                actual.setPlanTerm(new Term(term));
+                setOptionTerm(term);
+                // add price here for addons
+//                 actual.setPlanTerm(new Term(term));
             }
         }
     }
@@ -170,13 +171,13 @@ public class OrderPage extends BasePage {
         for (int i = 0; i < getAddonCount(); i++) {
             if (addonName.equals(NAME_ADDONS_LIST.get(i).getText())) {
                 NAME_ADDONS_LIST.get(i).click();
-                addons.add(new Addon(addonName));
+                addons.add(new Addon(addonName, new Term(getOptionTerm())));
             }
         }
     }
 
     public void productToString(Product actual) {
-        System.out.println("Product: " + actual.getProductName() + ", selected plan:  " + actual.getPlan() + " for  " + actual.getPlan().getTerm() + " month");
+        System.out.println("Actual product in Order Page: " + actual.getProductName() + ", selected plan:  " + actual.getPlan() + " for  " + actual.getPlan().getTerm() + " month");
         System.out.println("Selected addons: " + actual.getAddons());
         System.out.println("Total price is: " + actual.getProductPrice().getPrice());
     }
@@ -267,10 +268,15 @@ public class OrderPage extends BasePage {
     }
 
     public void clickContinueOrderButton() {
-
-//        Utils.waitElement(CONTINUE_ORDER_BUTTON);
-
+        finalProduct = new Product(getProductName());
+        finalProduct.setPlan(new Plan(getPlanName(), new Term(getOptionTerm())));
+        finalProduct.setProductPrice(new Price(getTotalPrice()));
+        finalProduct.setAddons(addons);
         CONTINUE_ORDER_BUTTON.click();
+    }
+
+    public Product getFinalProduct() {
+        return finalProduct;
     }
 
     public String getProductName() {

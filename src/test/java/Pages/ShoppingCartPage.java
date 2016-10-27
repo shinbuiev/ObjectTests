@@ -61,6 +61,7 @@ public class ShoppingCartPage extends BasePage {
         }
     }
 
+
     public int getProductCount() {
         return driver.findElements(PRODUCT_LIST).size();
     }
@@ -74,7 +75,6 @@ public class ShoppingCartPage extends BasePage {
         actual = new Product(getProductName());
         actual.setProductPrice(new Price(getPrice()));
         actual.setPlan(new Plan(getProductPlan(),new Term(productTerm.getText())));
-//        actual.setPlanTerm(new Term(productTerm.getText()));
         ArrayList<Addon> addons = new ArrayList<Addon>();
         addons.add(new Addon(firstAddonName.getText(), new Term(firstAddonTerm.getText())));
         addons.add(new Addon(secondAddonName.getText(), new Term(secondAddonTerm.getText())));
@@ -95,7 +95,7 @@ public class ShoppingCartPage extends BasePage {
     }
 
     public void productToString(Product actual) {
-        System.out.println("When trying buy product: " + actual.getProductName() + ", selected plan:  " + actual.getPlan() + " for  " + actual.getPlan().getTerm() + " ");
+        System.out.println("Actual product in Shopping Cart: " + actual.getProductName() + ", selected plan:  " + actual.getPlan() + " for  " + actual.getPlan().getTerm() + " ");
         System.out.println("Selected addons: " + actual.getAddons());
         System.out.println("Total price is: " + actual.getProductPrice().getPrice());
     }
