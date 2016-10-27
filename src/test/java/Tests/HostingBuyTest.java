@@ -76,10 +76,12 @@ public class HostingBuyTest {
 
         orderPage.pageDown();
         orderPage.clearDomainInputField();
-        orderPage.inputDomainName("ksdhfsdkfhsdkfhksjf.com");
+        orderPage.inputDomainName("DomainForTesting.com");
         orderPage.clickContinueOrderButton();
         rememberProductBefore(orderPage);
+        orderPage.productToString(orderPage.getFinalProduct());
         shoppingCartPage.clickCart();
+        shoppingCartPage.productToString(shoppingCartPage.getProduct());
         rememberProductAfter(shoppingCartPage);
         compareProductsShoppingCart();
         checkProductSpecification(shoppingCartPage);

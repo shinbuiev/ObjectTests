@@ -22,6 +22,9 @@ public class ShoppingCartPage extends BasePage {
     @FindBy(xpath = "//*[@id=\"shopping_cart_table\"]/div[1]/div[2]/div[1]/div[2]/div[1]/div/div[1]/div[1]/a")
     private WebElement productTerm;
 
+    @FindBy(xpath = "//*[@class='item-name']/div[@class='item-desc']/div")
+    private WebElement productDomain;
+
 
     @FindBy(xpath = "//*[@id=\"shopping_cart_table\"]/div[1]/div[2]/div[2]/div[1]/span")
     private WebElement firstAddonName;
@@ -73,6 +76,7 @@ public class ShoppingCartPage extends BasePage {
     public void clickCart() {
         driver.findElement(cartClick).click();
         actual = new Product(getProductName());
+        actual.setProductDomain(new Domain(getProductDomain()));
         actual.setProductPrice(new Price(getPrice()));
         actual.setPlan(new Plan(getProductPlan(),new Term(productTerm.getText())));
         ArrayList<Addon> addons = new ArrayList<Addon>();
@@ -86,6 +90,10 @@ public class ShoppingCartPage extends BasePage {
         return driver.findElement(firstElement).getText().split(" - ")[0];
     }
 
+    public String getProductDomain(){
+        return productDomain.getText();
+    }
+
     public String getProductPlan() {
         return driver.findElement(firstElement).getText().split(" - ")[1];// last 7 symbols
     }
@@ -95,7 +103,7 @@ public class ShoppingCartPage extends BasePage {
     }
 
     public void productToString(Product actual) {
-        System.out.println("Actual product in Shopping Cart: " + actual.getProductName() + ", selected plan:  " + actual.getPlan() + " for  " + actual.getPlan().getTerm() + " ");
+        System.out.println("Actual product in Shopping Cart: " + actual.getProductName() + " Domain name: " + actual.getProductDomain() + ", selected plan:  " + actual.getPlan() + " for  " + actual.getPlan().getTerm() + " ");
         System.out.println("Selected addons: " + actual.getAddons());
         System.out.println("Total price is: " + actual.getProductPrice().getPrice());
     }

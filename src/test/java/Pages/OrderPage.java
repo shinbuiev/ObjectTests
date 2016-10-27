@@ -63,6 +63,7 @@ public class OrderPage extends BasePage {
     private String optionPrice;
     private int optionCount;
 
+    private String domainName;
     //for addons
     private ArrayList<Addon> addons = new ArrayList<Addon>();
     private boolean addonStatus;
@@ -177,7 +178,7 @@ public class OrderPage extends BasePage {
     }
 
     public void productToString(Product actual) {
-        System.out.println("Actual product in Order Page: " + actual.getProductName() + ", selected plan:  " + actual.getPlan() + " for  " + actual.getPlan().getTerm() + " month");
+        System.out.println("Actual product in Order Page: " + actual.getProductName() + " Domain name: " + actual.getProductDomain() + ", selected plan:  " + actual.getPlan() + " for  " + actual.getPlan().getTerm() + " month");
         System.out.println("Selected addons: " + actual.getAddons());
         System.out.println("Total price is: " + actual.getProductPrice().getPrice());
     }
@@ -233,7 +234,8 @@ public class OrderPage extends BasePage {
     }
 
     public void inputDomainName(String domainName) {
-//        Utils.waitElement(DOMAIN_SEARCH_FIELD);
+//        finalProduct.setProductDomain(new Domain(domainName));
+        this.domainName = domainName;
         DOMAIN_SEARCH_FIELD.sendKeys(domainName);
     }
 
@@ -269,6 +271,7 @@ public class OrderPage extends BasePage {
 
     public void clickContinueOrderButton() {
         finalProduct = new Product(getProductName());
+        finalProduct.setProductDomain(new Domain(domainName));
         finalProduct.setPlan(new Plan(getPlanName(), new Term(getOptionTerm())));
         finalProduct.setProductPrice(new Price(getTotalPrice()));
         finalProduct.setAddons(addons);
