@@ -3,10 +3,9 @@ package Tests;
 import Interfaces.ExpectedProducts.LinuxWebHosting;
 import Objects.Product;
 import Pages.BasePage;
-import Pages.OrderPage;
-import Pages.PlanPage;
+import Pages.HostingOrderPage;
+import Pages.HostingPlanPage;
 import Pages.ShoppingCartPage;
-import org.mockito.Mock;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
@@ -28,16 +27,16 @@ public class HostingBuyTest {
     private Product productBefore;
     private Product productAfter;
     private java.lang.String errors = "";
-    PlanPage planPage;
-    OrderPage orderPage;
+    HostingPlanPage hostingPlanPage;
+    HostingOrderPage orderPage;
     ShoppingCartPage shoppingCartPage;
     private LinuxWebHosting linuxWebHosting = new LinuxWebHosting();
 
     @BeforeSuite
     public void initEnv() {
 
-//      System.setProperty("webdriver.chrome.driver", "C:\\Automation\\chromedriver\\chromedriver.exe"); //Chrome driver windows
-        System.setProperty("webdriver.chrome.driver", "/home/geser/IdeaProjects/chromedriver"); //Chrome driver linux
+      System.setProperty("webdriver.chrome.driver", "C:\\Automation\\chromedriver\\chromedriver.exe"); //Chrome driver windows
+//        System.setProperty("webdriver.chrome.driver", "/home/geser/IdeaProjects/chromedriver"); //Chrome driver linux
         java.lang.String userAgent = "Mozilla/5.0 (Windows NT 6.3; WOW64; Dreamscape/1.0;) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/49.0.2623.87 Safari/537.36";
         ChromeOptions co = new ChromeOptions();
         co.addArguments("--disable-extensions");
@@ -65,8 +64,8 @@ public class HostingBuyTest {
     @Test
     public void testByEconomyLinuxHosting() {
         gotoPage("https://www.crazydomains.com.au/web-hosting/");
-        planPage.clickBuyNowEconomyHosting();
-        rememberProductBefore(planPage);
+        hostingPlanPage.clickBuyNowEconomyHosting();
+        rememberProductBefore(hostingPlanPage);
         rememberProductAfter(orderPage);
         compareProducts();
 
@@ -79,9 +78,9 @@ public class HostingBuyTest {
         orderPage.inputDomainName("DomainForTesting.com");
         orderPage.clickContinueOrderButton();
         rememberProductBefore(orderPage);
-//        orderPage.productToString(orderPage.getFinalProduct());
+        orderPage.productToString(orderPage.getFinalProduct());
         shoppingCartPage.clickCart();
-//        shoppingCartPage.productToString(shoppingCartPage.getProduct());
+        shoppingCartPage.productToString(shoppingCartPage.getProduct());
         rememberProductAfter(shoppingCartPage);
         compareProductsShoppingCart();
         checkProductSpecification(shoppingCartPage);
@@ -96,8 +95,8 @@ public class HostingBuyTest {
         if (!driver.getCurrentUrl().equals(url)) {
             driver.get(url);
         }
-        planPage = new PlanPage(driver);
-        orderPage = new OrderPage(driver);
+        hostingPlanPage = new HostingPlanPage(driver);
+        orderPage = new HostingOrderPage(driver);
         shoppingCartPage = new ShoppingCartPage(driver);
     }
 
@@ -105,14 +104,14 @@ public class HostingBuyTest {
         if (!errors.equals("")) {
             errors = errors + "\n";
         }
-        errors = errors + linuxWebHosting.getLinuxHosting().isProduct(page.getProduct());
+        errors = errors + linuxWebHosting.isProduct(page.getProduct());
     }
 
     public void rememberProductBefore(BasePage page) {
         productBefore = page.getProduct();
     }
 
-    public void rememberProductBefore(OrderPage page) {
+    public void rememberProductBefore(HostingOrderPage page) {
         productBefore = page.getFinalProduct();
     }
 

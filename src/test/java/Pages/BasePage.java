@@ -1,7 +1,6 @@
 package Pages;
 
 import Objects.Product;
-import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -11,13 +10,12 @@ import org.openqa.selenium.support.events.EventFiringWebDriver;
 /**
  * Created by Sergiy.K on 21-Oct-16.
  */
-public class BasePage {
+public abstract class BasePage {
 
     @FindBy(xpath = "/html/body")
     private WebElement CLICK;
 
     protected EventFiringWebDriver driver;
-    Product product;
 
     public BasePage(EventFiringWebDriver driver) {
         this.driver = driver;
@@ -32,10 +30,7 @@ public class BasePage {
         CLICK.sendKeys(Keys.PAGE_DOWN);
     }
 
-
-    public Product getProduct() {
-        return product;
-    }
+    public abstract Product getProduct();
 
     public String getCurrentUrl() {
         return driver.getCurrentUrl();

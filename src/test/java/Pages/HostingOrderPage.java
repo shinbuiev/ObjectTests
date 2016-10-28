@@ -3,7 +3,6 @@ package Pages;
 import Objects.*;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.events.EventFiringWebDriver;
 
 import java.util.ArrayList;
@@ -12,7 +11,7 @@ import java.util.List;
 /**
  * Created by Sergiy.K on 17-Oct-16.
  */
-public class OrderPage extends BasePage {
+public class HostingOrderPage extends BasePage {
 
     @FindBy(xpath = "//*[@class='bold item-name']")
     private List<WebElement> NAME_ADDONS_LIST;
@@ -68,19 +67,19 @@ public class OrderPage extends BasePage {
     private String addonPrice;
     private int addonCount;
     protected EventFiringWebDriver driver;
-    private Product actual;
-    private Product finalProduct;
+    private WebHostingProduct actual;
+    private WebHostingProduct finalProduct;
 
-    public OrderPage(EventFiringWebDriver driver) {
+    public HostingOrderPage(EventFiringWebDriver driver) {
         super(driver);
         this.driver = driver;
     }
 
-    public Product getProduct() {
-        actual = new Product(getProductName());
-        actual.setPlan(new Plan(getPlanName(), new Term(getOptionTerm())));
+    public WebHostingProduct getProduct() {
+        actual = new WebHostingProduct(getProductName());
+        actual.setProductPlan(new Plan(getPlanName(), new Term(getOptionTerm())));
         actual.setProductPrice(new Price(getTotalPrice()));
-        actual.setAddons(addons);
+        actual.setProductAddons(addons);
         return actual;
     }
 
@@ -93,9 +92,9 @@ public class OrderPage extends BasePage {
         return TOTAL_PRICE.getText();
     }
 
-    public Product getActualProduct() {
-        Product actualProduct = new Product(getProductName());
-        actualProduct.setPlan(new Plan(getPlanName(), getCurrentURL()));
+    public WebHostingProduct getActualProduct() {
+        WebHostingProduct actualWebHostingProduct = new WebHostingProduct(getProductName());
+        actualWebHostingProduct.setProductPlan(new Plan(getPlanName(), getCurrentURL()));
         ArrayList<Addon> addons = new ArrayList<Addon>();
         for (int i = 0; i < getAddonCount(); i++) {
             addons.add(new Addon(NAME_ADDONS_LIST.get(i).getText()));
@@ -105,7 +104,7 @@ public class OrderPage extends BasePage {
         for (int i = 0; i < addons.size(); i++) {
             System.out.println(addons.get(i));
         }
-        return actualProduct;
+        return actualWebHostingProduct;
     }
 
     //for options
@@ -167,9 +166,10 @@ public class OrderPage extends BasePage {
         }
     }
 
-    public void productToString(Product actual) {
-        System.out.println("Actual product in Order Page: " + actual.getProductName() + " Domain name: " + actual.getProductDomain() + ", selected plan:  " + actual.getPlan() + " for  " + actual.getPlan().getTerm() + " month");
-        System.out.println("Selected addons: " + actual.getAddons());
+    public void productToString(WebHostingProduct actual) {
+        System.out.println("Actual webHostingProduct in Order Page: " + actual.getProductName() + " Domain name: " + actual.getProductDomain() +
+                ", selected plan:  " + actual.getProductPlan() + " for  " + actual.getProductPlan().getTerm() + " month");
+        System.out.println("Selected addons: " + actual.getProductAddons());
         System.out.println("Total price is: " + actual.getProductPrice().getPrice());
     }
 
@@ -240,33 +240,20 @@ public class OrderPage extends BasePage {
         return DOMAIN_NAME_VALIDATION_ERROR.getText();
     }
 
-    public void clickOnPage() {
-//        Utils.waitElement(CLICK);
-        CLICK.click();
-    }
-
-//    public void waitDomainAvailableTickStatus() {
-//        Utils.waitElement(DOMAIN_AVAILABLE_TICK);
-//    }
-//
-//    public void waitPage() {
-//        Utils.waitElement(CLICK);
-//    }
-
     public boolean getDomainAvailableTickStatus() {
         return DOMAIN_AVAILABLE_TICK.isEnabled();
     }
 
     public void clickContinueOrderButton() {
-        finalProduct = new Product(getProductName());
+        finalProduct = new WebHostingProduct(getProductName());
         finalProduct.setProductDomain(new Domain(domainName));
-        finalProduct.setPlan(new Plan(getPlanName(), new Term(getOptionTerm())));
+        finalProduct.setProductPlan(new Plan(getPlanName(), new Term(getOptionTerm())));
         finalProduct.setProductPrice(new Price(getTotalPrice()));
-        finalProduct.setAddons(addons);
+        finalProduct.setProductAddons(addons);
         CONTINUE_ORDER_BUTTON.click();
     }
 
-    public Product getFinalProduct() {
+    public WebHostingProduct getFinalProduct() {
         return finalProduct;
     }
 

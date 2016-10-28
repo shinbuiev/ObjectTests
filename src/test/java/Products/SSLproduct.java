@@ -6,7 +6,7 @@ import Objects.*;
  * Created by geser on 27.10.16.
  */
 public class SSLproduct
-//        extends Product
+//        extends WebHostingProduct
 {
 
     private String productName;
@@ -97,7 +97,7 @@ public class SSLproduct
 
     // method check product specification
 
-//    public String isProduct(Product product) {
+//    public String isProduct(WebHostingProduct product) {
 //        return super.isProduct(product);
 //    }
 }

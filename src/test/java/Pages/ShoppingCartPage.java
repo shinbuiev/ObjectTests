@@ -43,7 +43,7 @@ public class ShoppingCartPage extends BasePage {
     @FindBy(xpath = "//*[@id=\"shopping_cart_table\"]/div[1]/div[2]/div[4]/div[2]/div/div/div[1]/div[1]/a/span")
     private WebElement thirdAddonTerm;
 
-    private Product actual;
+    private WebHostingProduct actual;
     protected EventFiringWebDriver driver;
 
     public ShoppingCartPage(EventFiringWebDriver driver) {
@@ -75,22 +75,23 @@ public class ShoppingCartPage extends BasePage {
 
     public void clickCart() {
         driver.findElement(cartClick).click();
-        actual = new Product(getProductName());
+        actual = new WebHostingProduct(getProductName());
         actual.setProductDomain(new Domain(getProductDomain()));
         actual.setProductPrice(new Price(getPrice()));
-        actual.setPlan(new Plan(getProductPlan(),new Term(productTerm.getText())));
+        actual.setProductTerm(new Term(productTerm.getText()));
+        actual.setProductPlan(new Plan(getProductPlan(), new Term(productTerm.getText())));
         ArrayList<Addon> addons = new ArrayList<Addon>();
         addons.add(new Addon(firstAddonName.getText(), new Term(firstAddonTerm.getText())));
         addons.add(new Addon(secondAddonName.getText(), new Term(secondAddonTerm.getText())));
         addons.add(new Addon(thirdAddonName.getText(), new Term(thirdAddonTerm.getText())));
-        actual.setAddons(addons);
+        actual.setProductAddons(addons);
     }
 
     public String getProductName() {
         return driver.findElement(firstElement).getText().split(" - ")[0];
     }
 
-    public String getProductDomain(){
+    public String getProductDomain() {
         return productDomain.getText();
     }
 
@@ -98,18 +99,14 @@ public class ShoppingCartPage extends BasePage {
         return driver.findElement(firstElement).getText().split(" - ")[1];// last 7 symbols
     }
 
-    public Product getProduct() {
+    public WebHostingProduct getProduct() {
         return actual;
     }
 
-    public void productToString(Product actual) {
-        System.out.println("Actual product in Shopping Cart: " + actual.getProductName() + " Domain name: " + actual.getProductDomain() + ", selected plan:  " + actual.getPlan() + " for  " + actual.getPlan().getTerm() + " ");
-        System.out.println("Selected addons: " + actual.getAddons());
+    public void productToString(WebHostingProduct actual) {
+        System.out.println("Actual webHostingProduct in Shopping Cart: " + actual.getProductName() + " Domain name: "
+                + actual.getProductDomain() + ", selected plan:  " + actual.getProductPlan() + " for  " + actual.getProductPlan().getTerm() + " ");
+        System.out.println("Selected addons: " + actual.getProductAddons());
         System.out.println("Total price is: " + actual.getProductPrice().getPrice());
     }
-
-//    public Addon getAddon() {
-//        return new Addon("");
-//    }
-
 }

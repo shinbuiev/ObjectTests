@@ -2,19 +2,17 @@ package Pages;
 
 import Objects.Plan;
 import Objects.Product;
+import Objects.WebHostingProduct;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.events.EventFiringWebDriver;
 
-import java.util.ArrayList;
-
 /**
  * Created by Sergiy.K on 21-Oct-16.
  */
-public class PlanPage extends BasePage {
+public class HostingPlanPage extends BasePage {
 
     @FindBy(xpath = "//*[@id='moving_object_container']/div[1]/div/main/div/div[3]/a")
     private WebElement ECONOMY_PLAN;
@@ -47,33 +45,33 @@ public class PlanPage extends BasePage {
 
     protected EventFiringWebDriver driver;
 
-    public PlanPage(EventFiringWebDriver driver) {
+    public HostingPlanPage(EventFiringWebDriver driver) {
         super(driver);
         this.driver = driver;
     }
 
-    Product actual;
+    WebHostingProduct actual;
     JavascriptExecutor jse = (JavascriptExecutor) driver;
 
-    public Product getProduct() {
+    public WebHostingProduct getProduct() {
         return actual;
     }
 
     public void clickBuyNowEconomyHosting() {
-        actual = new Product(getProductName());
-        actual.setPlan(new Plan(ECONOMY_PLAN_TEXT.getText()));
+        actual = new WebHostingProduct(getProductName());
+        actual.setProductPlan(new Plan(ECONOMY_PLAN_TEXT.getText()));
         ECONOMY_PLAN.click();
     }
 
     public void clickBuyNowPremiumHosting() {
-        actual = new Product(getProductName());
-        actual.setPlan(new Plan(PREMIUM_PLAN_TEXT.getText()));
+        actual = new WebHostingProduct(getProductName());
+        actual.setProductPlan(new Plan(PREMIUM_PLAN_TEXT.getText()));
         PREMIUM_PLAN.click();
     }
 
     public void clickBuyNowUnlimitedHosting() {
-        actual = new Product(getProductName());
-        actual.setPlan(new Plan(UNLIMITED_PLAN_TEXT.getText()));
+        actual = new WebHostingProduct(getProductName());
+        actual.setProductPlan(new Plan(UNLIMITED_PLAN_TEXT.getText()));
         UNLIMITED_PLAN.click();
     }
 
