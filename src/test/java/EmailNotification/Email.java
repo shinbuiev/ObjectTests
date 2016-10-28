@@ -3,15 +3,10 @@ package EmailNotification;
 import javax.activation.DataHandler;
 import javax.activation.DataSource;
 import javax.activation.FileDataSource;
-import javax.mail.Message;
-import javax.mail.Multipart;
-import javax.mail.Session;
-import javax.mail.Transport;
-import javax.mail.internet.InternetAddress;
-import javax.mail.internet.MimeBodyPart;
-import javax.mail.internet.MimeMessage;
-import javax.mail.internet.MimeMultipart;
-import java.util.Properties;
+import javax.mail.*;
+import javax.mail.internet.*;
+import java.io.File;
+import java.util.*;
 
 /**
  * Created by Sergiy.K on 28-Oct-16.
@@ -21,27 +16,23 @@ public class Email {
     public static void execute(String reporText, String screenName) throws Exception
 
     {
-        String path = "";
+        String path = "D:/testFolder";
 
         String[] to = {"s.konoplyaniy@gmail.com", "s.konoplyaniy@gmail.com"};
-        String[] cc = {};
-        String[] bcc = {"s.konoplaniy@gmail.com"};
+
 //
         Email.sendMail("s.konoplyaniy@gmail.com",
-                "Joker2012",
+                "Rjyjgkzybq1989",
                 "smtp.gmail.com",
-                "587",
-//                "465",
-                "true",
+                "465",
+                "false",
                 "true",
                 true,
                 "javax.net.ssl.SSLSocketFactory",
                 "false",
                 to,
-                cc,
-                bcc,
-                "<Subject line>",
-                "<Contents if any>",
+                "Test email",
+                "Contents if any",
                 path,
                 screenName);
     }
@@ -56,12 +47,11 @@ public class Email {
                                    String socketFactoryClass,
                                    String fallback,
                                    String[] to,
-                                   String[] cc,
-                                   String[] bcc,
                                    String subject,
                                    String text,
                                    String attachmentPath,
-                                   String attachmentName) {
+                                   String attachmentName)
+    {
 
 //Object Instantiation of a properties file.
         Properties props = new Properties();
@@ -118,22 +108,15 @@ public class Email {
             messageBodyPart.setFileName(attachmentName);
             multipart.addBodyPart(messageBodyPart);
 
+            File att = new File(new File(attachmentPath), attachmentName);
+            messageBodyPart.attachFile(att);
+
             msg.setContent(multipart);
             msg.setFrom(new InternetAddress(userName));
 
             for (int i = 0; i < to.length; i++) {
                 msg.addRecipient(Message.RecipientType.TO, new
                         InternetAddress(to[i]));
-            }
-
-            for (int i = 0; i < cc.length; i++) {
-                msg.addRecipient(Message.RecipientType.CC, new
-                        InternetAddress(cc[i]));
-            }
-
-            for (int i = 0; i < bcc.length; i++) {
-                msg.addRecipient(Message.RecipientType.BCC, new
-                        InternetAddress(bcc[i]));
             }
 
             msg.saveChanges();
