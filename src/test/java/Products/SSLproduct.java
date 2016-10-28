@@ -29,6 +29,12 @@ public class SSLproduct extends Product {
                     ", but in Shopping Cart it's " + product.getProductName() + "\n";
             this.saveScreenShot(product.getClass().getName(),"error3OrderPage");
             product.saveScreenShot(product.getClass().getName(),"error3ShoppingCart");
+            try {
+                email.execute(error,"C:\\Automation\\Screenshot\\TestObjects\\Errors\\" +
+                        product.getClass() + "\\" + "error3ShoppingCart" + ".jpg");
+            }
+            catch (Exception e){}
+
         }
         if (!this.getProductDomain().getDomainName().equals(product.getProductDomain().getDomainName())) {
             error = error + "Error4: Wrong product domain: on Order Page it was " + this.getProductDomain().getDomainName() +

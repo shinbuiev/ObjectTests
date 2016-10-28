@@ -1,5 +1,6 @@
 package Objects;
 
+import EmailNotification.Email;
 import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
@@ -20,6 +21,7 @@ public abstract class Product {
     private Term productTerm;
     private Plan productPlan;
 
+    public Email email = new Email();
 
     public Product(String productName) {
         this.productName = productName;
