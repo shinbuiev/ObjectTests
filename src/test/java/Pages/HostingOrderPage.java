@@ -1,6 +1,7 @@
 package Pages;
 
 import Objects.*;
+import Products.WebHostingProduct;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.events.EventFiringWebDriver;
@@ -156,7 +157,7 @@ public class HostingOrderPage extends BasePage {
     }
 
     //for addons
-    public void addAddon(final String addonName) {
+    public void addAddon(String addonName) {
 
         for (int i = 0; i < getAddonCount(); i++) {
             if (addonName.equals(NAME_ADDONS_LIST.get(i).getText())) {

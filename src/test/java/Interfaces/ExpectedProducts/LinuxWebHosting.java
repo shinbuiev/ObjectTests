@@ -1,8 +1,15 @@
 package Interfaces.ExpectedProducts;
 
 import Objects.*;
+import Products.WebHostingProduct;
+import org.apache.commons.io.FileUtils;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
 
+import java.io.File;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 /**
  * Created by Sergiy.K on 25-Oct-16.
@@ -13,7 +20,6 @@ public class LinuxWebHosting {
  *
  *
  */
-
 
     public String getProductName() {
         return "Web Hosting";
@@ -80,5 +86,9 @@ public class LinuxWebHosting {
         return error;
     }
 
+//    File scrFile = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
+//    String fn = new SimpleDateFormat("yyyy-MM-dd HH.mm.ss ").format(new Date());
+//            FileUtils.copyFile(scrFile, new File("C:\\Automation\\Screenshot\\CrazyHomePageLinks\\"
+//                                                         +fn + testResult.getName() + " " + setScreenshotName() + ".jpg"));
 
 }

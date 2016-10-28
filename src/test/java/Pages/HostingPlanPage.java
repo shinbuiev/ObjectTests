@@ -1,8 +1,7 @@
 package Pages;
 
 import Objects.Plan;
-import Objects.Product;
-import Objects.WebHostingProduct;
+import Products.WebHostingProduct;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;

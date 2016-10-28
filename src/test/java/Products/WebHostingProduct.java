@@ -1,4 +1,8 @@
-package Objects;
+package Products;
+
+import Objects.Addon;
+import Objects.Domain;
+import Objects.Product;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -47,56 +51,63 @@ public class WebHostingProduct extends Product {
         return "Product:  " + super.toString() + " domain:" + getProductDomain() + " productAddons:" + getProductAddons();
     }
 
-    //method check product from plan page and order page
-    public String getErrorOrderPage(Object o) {
-        return super.getErrorOrderPage(o);
-    }
-
     //method check product from order page and shopping cart
     public String getErrorShoppingCartPage(Object o) {
         String error = "";
-        WebHostingProduct webHostingProduct = (WebHostingProduct) o;
-        if (!this.getProductName().equals(webHostingProduct.getProductName())) {
+        WebHostingProduct product = (WebHostingProduct) o;
+        if (!this.getProductName().equals(product.getProductName())) {
             error = error + "Error3: Wrong product name: on Order Page it was " + this.getProductName() +
                     ", but in Shopping Cart it's "
-                    + webHostingProduct.getProductName() + "\n";
+                    + product.getProductName() + "\n";
+            this.saveScreenShot(product.getClass().getName(),"error3OrderPage");
+            product.saveScreenShot(product.getClass().getName(),"error3ShoppingCart");
         }
 
-        if (!this.getProductDomain().getDomainName().equals(webHostingProduct.getProductDomain().getDomainName())) {
+        if (!this.getProductDomain().getDomainName().equals(product.getProductDomain().getDomainName())) {
             error = error + "Error4: Wrong product domain: on Order Page it was " + this.getProductDomain().getDomainName() +
-                    ", but in Shopping Cart it's " + webHostingProduct.getProductDomain().getDomainName() + "\n";
+                    ", but in Shopping Cart it's " + product.getProductDomain().getDomainName() + "\n";
+            this.saveScreenShot(product.getClass().getName(),"error4OrderPage");
+            product.saveScreenShot(product.getClass().getName(),"error4ShoppingCart");
         }
-        if (!this.getProductPlan().getPlanName().equals(webHostingProduct.getProductPlan().getPlanName())) {
+        if (!this.getProductPlan().getPlanName().equals(product.getProductPlan().getPlanName())) {
             error = error + "Error5: For " + this.getProductName() + " product, Wrong Plan Name on Order Page it was: "
                     + this.getProductPlan().getPlanName() + ", but in Shopping Cart it's: "
-                    + webHostingProduct.getProductPlan().getPlanName() + "\n";
+                    + product.getProductPlan().getPlanName() + "\n";
+            this.saveScreenShot(product.getClass().getName(),"error5OrderPage");
+            product.saveScreenShot(product.getClass().getName(),"error5ShoppingCart");
         }
-        if (!this.getProductPlan().getTerm().equals(webHostingProduct.getProductPlan().getTerm())) {
+        if (!this.getProductPlan().getTerm().equals(product.getProductPlan().getTerm())) {
             error = error + "Error6: For " + this.getProductName() + " product, on Order Page was selected term of plan "
                     + this.getProductPlan().getTerm() + ", but in Shopping Cart it's: "
-                    + webHostingProduct.getProductPlan().getTerm() + "\n";
+                    + product.getProductPlan().getTerm() + "\n";
+            this.saveScreenShot(product.getClass().getName(),"error6OrderPage");
+            product.saveScreenShot(product.getClass().getName(),"error6ShoppingCart");
         }
-        if (!(this.getProductAddons().size() == webHostingProduct.getProductAddons().size())) {
+        if (!(this.getProductAddons().size() == product.getProductAddons().size())) {
             error = error + "Error7: For " + this.getProductName() + " wrong count of productAddons, expect productAddons: " + this.getProductAddons()
-                    + "\n" + "but found: " + webHostingProduct.getProductAddons() + "\n";
+                    + "\n" + "but found: " + product.getProductAddons() + "\n";
+            this.saveScreenShot(product.getClass().getName(),"error7OrderPage");
+            product.saveScreenShot(product.getClass().getName(),"error7ShoppingCart");
         }
 
-        for (int i = 0; i < webHostingProduct.getProductAddons().size(); i++) {
-            if (!this.getProductAddons().contains(webHostingProduct.getProductAddons().get(i))) {
+        for (int i = 0; i < product.getProductAddons().size(); i++) {
+            if (!this.getProductAddons().contains(product.getProductAddons().get(i))) {
                 error = error + "Error8: For " + this.getProductName() +
                         " product, Wrong Addon Name: on Order Page was selected addon "
                         + this.getProductAddons().get(i).getAddonName() +
-                        ", but in shopping Cart it's " + webHostingProduct.getProductAddons().get(i).getAddonName() + "\n";
+                        ", but in shopping Cart it's " + product.getProductAddons().get(i).getAddonName() + "\n";
+                this.saveScreenShot(product.getClass().getName(),"error8OrderPage");
+                product.saveScreenShot(product.getClass().getName(),"error8ShoppingCart");
             }
         }
 
         //ned to change logic to valid
         for (int i = 0; i < this.getProductAddons().size(); i++) {
-            if (!this.getProductAddons().get(i).getAddonTerm().equals(webHostingProduct.getProductAddons().get(i).getAddonTerm()))
+            if (!this.getProductAddons().get(i).getAddonTerm().equals(product.getProductAddons().get(i).getAddonTerm()))
                 error = error + "Error9: For " + this.getProductName() + " product, on Order Page was selected term " +
                         this.getProductAddons().get(i).getAddonTerm() +
                         ", but in Shopping Cart Term for addon " + this.getProductAddons().get(i).getAddonName() + " found term " +
-                        webHostingProduct.getProductAddons().get(i).getAddonTerm() + "\n";
+                        product.getProductAddons().get(i).getAddonTerm() + "\n";
         }
         return error;
     }

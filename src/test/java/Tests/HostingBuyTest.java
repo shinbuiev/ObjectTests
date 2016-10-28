@@ -53,14 +53,6 @@ public class HostingBuyTest {
         driver.manage().deleteAllCookies();
     }
 
-//    @Test
-//    public void testLinuxExpectedInitialize() {
-//        LinuxHosting linuxHosting = new LinuxHosting();
-//        linuxHosting.getLinuxHosting().plansToString();
-//
-//
-//    }
-
     @Test
     public void testByEconomyLinuxHosting() {
         gotoPage("https://www.crazydomains.com.au/web-hosting/");
@@ -78,11 +70,12 @@ public class HostingBuyTest {
         orderPage.inputDomainName("DomainForTesting.com");
         orderPage.clickContinueOrderButton();
         rememberProductBefore(orderPage);
-        orderPage.productToString(orderPage.getFinalProduct());
+//        orderPage.productToString(orderPage.getFinalProduct());
         shoppingCartPage.clickCart();
-        shoppingCartPage.productToString(shoppingCartPage.getProduct());
+//        shoppingCartPage.productToString(shoppingCartPage.getProduct());
         rememberProductAfter(shoppingCartPage);
         compareProductsShoppingCart();
+
         checkProductSpecification(shoppingCartPage);
         isProductOk();
     }
