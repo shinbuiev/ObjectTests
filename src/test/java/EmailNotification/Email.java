@@ -18,17 +18,18 @@ import java.util.*;
 public class Email {
     //reportFileName = TestExecutionResultFileName
 
-    public static void execute(String emailName, ErrorMessage error) throws Exception
+    public static void execute(String subjectMessage, ErrorMessage error) throws Exception
 
     {
-        String screenName1 = error.getFileName1();
-        String screenName2 = error.getFileName2();
-        String path = error.getFileFolder();
+        ArrayList<String> fileNames = error.getFileNames();
+        fileNames.size();
+        String path =  "/home/geser/Automation/Sreenshot/TestObjects/Errors/" + error.getFileFolder();
 
         String[] to = {"s.konoplyaniy@gmail.com", "s.konoplyaniy@gmail.com"};
 
-        Email.sendMail("s.konoplyaniy@gmail.com",
-                "Rjyjgkzyf1990",
+        Email.sendMail(
+                "s.konoplyaniy@gmail.com",
+                "",
                 "smtp.gmail.com",
                 "465",
                 "false",
@@ -37,10 +38,10 @@ public class Email {
                 "javax.net.ssl.SSLSocketFactory",
                 "false",
                 to,
-                emailName,
-                "Contents if any",
+                subjectMessage,
+                "Contents if any", //here must be text message on email (expected  errors describes) !!!!
                 path,
-                screenName1);
+                fileNames);
     }
 
     public static boolean sendMail(String userName,
@@ -56,7 +57,7 @@ public class Email {
                                    String subject,
                                    String text,
                                    String attachmentPath,
-                                   String attachmentName)
+                                   ArrayList<String> attachlist)
     {
 
 //Object Instantiation of a properties file.
@@ -107,17 +108,21 @@ public class Email {
 
             msg.setSubject(subject);
 
-            Multipart multipart = new MimeMultipart();
-            MimeBodyPart messageBodyPart = new MimeBodyPart();
-            DataSource source = new FileDataSource(attachmentPath);
-            messageBodyPart.setDataHandler(new DataHandler(source));
-            messageBodyPart.setFileName(attachmentName);
-            multipart.addBodyPart(messageBodyPart);
-
-            File att = new File(new File(attachmentPath), attachmentName);
-            messageBodyPart.attachFile(att);
+                DataSource source = new FileDataSource(attachmentPath);
+                MimeBodyPart messageBodyPart = new MimeBodyPart();
+                Multipart multipart = new MimeMultipart();
+                multipart.addBodyPart(messageBodyPart);
+//for add all files to attachment
+                for (int i = 0; i < attachlist.size(); i ++) {
+                    messageBodyPart = new MimeBodyPart();
+                    messageBodyPart.setDataHandler(new DataHandler(source));
+                    messageBodyPart.setFileName(attachlist.get(i));
+                    multipart.addBodyPart(messageBodyPart);
+                    i++;
+                }
 
             msg.setContent(multipart);
+
             msg.setFrom(new InternetAddress(userName));
 
             for (int i = 0; i < to.length; i++) {
