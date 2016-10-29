@@ -1,5 +1,8 @@
 package Tests;
 
+import EmailNotification.Email;
+import EmailNotification.ErrorMessage;
+import EmailNotification.TestScreenshot;
 import Interfaces.ExpectedProducts.SSLCertificatesProducts;
 import Objects.Product;
 import Pages.BasePage;
@@ -12,6 +15,8 @@ import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.Test;
 
+import java.util.ArrayList;
+
 /**
  * Created by geser on 27.10.16.
  */
@@ -20,6 +25,7 @@ public class SSLCertificateBuyTest extends HostingBuyTest {
     private Product productBefore;
     private Product productAfter;
     private String errors = "";
+    private ArrayList<String> errorList = new ArrayList<String>();
 
     SSLCertificatesPlanPage sslPage;
     SSLOrderPage sslOrderPage;
@@ -33,25 +39,18 @@ public class SSLCertificateBuyTest extends HostingBuyTest {
 
     @Test
     public void testByStandardSSlcertificate() {
-//        SSLCertificatesPlanPage sslPage = new SSLCertificatesPlanPage(driver);
-//        SSLOrderPage sslOrderPage = new SSLOrderPage(driver);
-//        ShoppingCartPage shoppingCartPage = new ShoppingCartPage(driver);
-
         gotoPage("https://www.crazydomains.com.au/ssl-certificates/");
 //        sslPage.pageDown();
-
         sslPage.selectPremiumPlan();
-//        sslPage.finalProductToString(sslPage.getWebHostingProduct());
-//        sslOrderPage.finalProductToString(sslOrderPage.getActualProduct());
         rememberProductBefore(sslPage);
         rememberProductAfter(sslOrderPage);
+        compareWithSendEmail();
         compareProductsPlanOrderPage();
 //        isProductOk();
         sslOrderPage.selectOption("24");
         sslOrderPage.pageEnd();
         sslOrderPage.inputDomainName("SSLForTesting.ru");
         sslOrderPage.clickContinueOrderButton();
-
 
         shoppingCartPage.clickCart();
         rememberProductBefore(sslOrderPage);
@@ -65,7 +64,6 @@ public class SSLCertificateBuyTest extends HostingBuyTest {
     public void isProductOk() {
         Assert.assertTrue(errors.equals(""), "\n" + errors);
     }
-
 
     public void gotoPage(String url) {
         if (!driver.getCurrentUrl().equals(url)) {
@@ -81,20 +79,38 @@ public class SSLCertificateBuyTest extends HostingBuyTest {
             errors = errors + "\n";
         }
         errors = errors + sslSpecification.isProduct(page.getProduct());
+        if (!(sslSpecification.isProduct(page.getProduct())).equals(""))
+        errorList.add(sslSpecification.isProduct(page.getProduct()));
     }
 
     public void rememberProductBefore(BasePage page) {
         productBefore = page.getProduct();
-
     }
 
     public void rememberProductAfter(BasePage page) {
         productAfter = page.getProduct();
     }
 
+    public void compareWithSendEmail(){
+        Email email = new Email();
+
+        ArrayList<ErrorMessage> list;
+         list = productBefore.getErrorMessagesListOrderPage(productAfter);
+        for (int i = 0; i < list.size(); i ++){
+            try {
+                email.execute("Result for SSL Certificate buy test ", list.get(i).getError());
+
+            } catch (Exception e) {
+                e.printStackTrace();
+                System.out.println("can't send email + \n" + e.getMessage());
+            }
+        }
+
+    }
 
     public void compareProductsPlanOrderPage() {
         errors = errors + productBefore.getErrorOrderPage(productAfter);
+        errorList.add(productBefore.getErrorOrderPage(productAfter));
     }
 
     public void compareProductsOrderShoppingCartPage() {
@@ -102,6 +118,18 @@ public class SSLCertificateBuyTest extends HostingBuyTest {
             errors = errors + "\n";
         }
         errors = errors + productBefore.getErrorShoppingCartPage(productAfter);
+        errorList.add(productBefore.getErrorShoppingCartPage(productAfter));
+    }
+
+    @AfterTest
+    public void printErrors()
+    {
+        if (errorList.size()>0)
+        {
+            for (int i = 0; i < errorList.size(); i++) {
+                System.out.println(errorList.get(i));
+            }
+        }
     }
 
     @AfterTest

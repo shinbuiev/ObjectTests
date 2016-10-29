@@ -1,6 +1,7 @@
 package Tests;
 
 import EmailNotification.Email;
+import EmailNotification.ErrorMessage;
 import EmailNotification.TestScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -55,11 +56,13 @@ public class TestEmail {
     public void sendEmail() throws Exception {
         System.out.println(System.getProperty("os.name"));
         driver.get("http://google.com.ua");
-        TestScreenshot screen = new TestScreenshot(driver);
-        screen.takeScreenshot();
-        screen.saveScreenShot("TestFolder", "TestImage1");
-        Email email = new Email();
-        email.execute("fdsfdsfsfa", "/home/geser/Automation/Sreenshot/TestObjects/Errors/TestFolder", "TestImage1.png");
+//        TestScreenshot screen = new TestScreenshot(driver);
+//        screen.takeScreenshot();
+//        screen.saveScreenShot("TestFolder", "TestImage1");
+
+
+
+//        email.execute("fdsfdsfsfa", "/home/geser/Automation/Sreenshot/TestObjects/Errors/TestFolder", "TestImage1.png");
 
     }
 

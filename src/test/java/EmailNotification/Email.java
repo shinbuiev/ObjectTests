@@ -16,19 +16,17 @@ import java.util.*;
 
 //this class can send email with attachments
 public class Email {
-    //reportFileName = TestExecutionResultFileName
 
     public static void execute(String subjectMessage, ErrorMessage error) throws Exception
 
     {
-        ArrayList<String> fileNames = error.getFileNames();
-        fileNames.size();
-        String path =  "/home/geser/Automation/Sreenshot/TestObjects/Errors/" + error.getFileFolder();
+        ArrayList<File> fileList = error.getFiles();
+        String content = error.getErrorMessage();
 
         String[] to = {"s.konoplyaniy@gmail.com", "s.konoplyaniy@gmail.com"};
 
         Email.sendMail(
-                "s.konoplyaniy@gmail.com",
+                "testobjectsdream@gmail.com",
                 "",
                 "smtp.gmail.com",
                 "465",
@@ -39,9 +37,8 @@ public class Email {
                 "false",
                 to,
                 subjectMessage,
-                "Contents if any", //here must be text message on email (expected  errors describes) !!!!
-                path,
-                fileNames);
+                content,
+                fileList);
     }
 
     public static boolean sendMail(String userName,
@@ -56,8 +53,7 @@ public class Email {
                                    String[] to,
                                    String subject,
                                    String text,
-                                   String attachmentPath,
-                                   ArrayList<String> attachlist)
+                                   ArrayList<File> fileList)
     {
 
 //Object Instantiation of a properties file.
@@ -108,15 +104,17 @@ public class Email {
 
             msg.setSubject(subject);
 
-                DataSource source = new FileDataSource(attachmentPath);
+
                 MimeBodyPart messageBodyPart = new MimeBodyPart();
                 Multipart multipart = new MimeMultipart();
-                multipart.addBodyPart(messageBodyPart);
+
 //for add all files to attachment
-                for (int i = 0; i < attachlist.size(); i ++) {
+                for (int i = 0; i < fileList.size(); i ++) {
                     messageBodyPart = new MimeBodyPart();
+                    DataSource source = new FileDataSource(fileList.get(i));
                     messageBodyPart.setDataHandler(new DataHandler(source));
-                    messageBodyPart.setFileName(attachlist.get(i));
+                    messageBodyPart.setFileName(fileList.get(i).getName());
+//                    messageBodyPart.setFileName(attachList.get(i) + ".png");
                     multipart.addBodyPart(messageBodyPart);
                     i++;
                 }

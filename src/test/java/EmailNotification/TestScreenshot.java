@@ -3,8 +3,6 @@ package EmailNotification;
 import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
-import org.openqa.selenium.support.events.EventFiringWebDriver;
-
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -19,14 +17,9 @@ public class TestScreenshot {
     String fileName;
     String screenPath;
     public static String fileAbsolutePath;
-    public static EventFiringWebDriver driver;
 
-    public static ArrayList<String> screenShotNameList;
-    public static ArrayList<String> screenShotFolderList;
-
-    public TestScreenshot(EventFiringWebDriver driver){
-    this.driver = driver;
-    }
+    public static ArrayList<String> screenShotNameList = new ArrayList<String>();
+    public static ArrayList<String> screenShotFolderList = new ArrayList<String>();
 
     public static void saveScreenShot(String folderForScreen, String nameFile) {
         try {
@@ -40,17 +33,18 @@ public class TestScreenshot {
             screenShotFolderList.add("/home/geser/Automation/Sreenshot/TestObjects/Errors/" + folderForScreen);
             screenShotNameList.add(nameFile);
 
-            System.out.println(fileAbsolutePath.replace(nameFile + ".png",""));
+//            System.out.println(fileAbsolutePath.replace(nameFile + ".png",""));
 
         } catch (IOException e) {
             System.out.println("cant create a screen shot \n" + e.getMessage());
         }
     }
+
     public static void takeScreenshot() {
         screenFile = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
     }
 
-    public void deleteScreenshot() {
-        screenFile.delete();
-    }
+//    public void deleteScreenshot() {
+//        screenFile.delete();
+//    }
 }

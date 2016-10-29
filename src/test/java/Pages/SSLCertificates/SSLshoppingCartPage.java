@@ -1,5 +1,6 @@
 package Pages.SSLCertificates;
 
+import EmailNotification.TestScreenshot;
 import Objects.*;
 import Pages.BasePage;
 import Products.SSLproduct;
@@ -75,7 +76,6 @@ public class SSLshoppingCartPage extends BasePage {
     }
 
     public SSLproduct getProduct() {
-        actual.takeScreenshot();
         return actual;
     }
 

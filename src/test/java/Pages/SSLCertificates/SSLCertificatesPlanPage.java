@@ -4,9 +4,13 @@ import Objects.Plan;
 import Products.WebHostingProduct;
 import Pages.BasePage;
 import Products.SSLproduct;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.events.EventFiringWebDriver;
+
+import java.io.File;
 
 /**
  * Created by geser on 27.10.16.
