@@ -1,32 +1,26 @@
 package Objects;
 
 import EmailNotification.Email;
-import org.apache.commons.io.FileUtils;
-import org.openqa.selenium.OutputType;
-import org.openqa.selenium.TakesScreenshot;
+import EmailNotification.ErrorMessage;
+import EmailNotification.TestScreenshot;
 
-import java.io.File;
-import java.io.IOException;
-
-import static Tests.HostingBuyTest.driver;
+import java.util.ArrayList;
 
 /**
  * Created by Sergiy.K on 28-Oct-16.
  */
 public abstract class Product {
 
-    private File scrFile;
     private String productName;
     private Price productPrice;
     private Term productTerm;
     private Plan productPlan;
-
-    public Email email = new Email();
-
     public Product(String productName) {
         this.productName = productName;
-        takeScreenshot();
+        TestScreenshot.takeScreenshot();
     }
+
+    public ArrayList<ErrorMessage> errorMessages;
 
     public String getProductName() {
         return productName;
@@ -59,20 +53,26 @@ public abstract class Product {
     //method check product from plan page and order page
     public String getErrorOrderPage(Object o) {
         String error = "";
+        String er1;
         Product product = (Product) o;
-        if (!this.getProductName().equals(product.getProductName())) {
+        if (!this.getProductName().equals(product.getProductName() + " errrrrr")) {
             error = error + "Error1: Wrong product name: on Plan Page it was " + this.getProductName() +
-                    ", but on Order Page it's: "
-                    + product.getProductName() + "\n";
-            this.saveScreenShot(product.getClass().getName(), "error1PlanPage");
-            product.saveScreenShot(product.getClass().getName(), "error1OrderPage");
+                    ", but on Order Page it's: " + product.getProductName()+ "errrrrrrrrrr" + "\n";
+            er1 = error + "Error1: Wrong product name: on Plan Page it was " + this.getProductName() +
+                    ", but on Order Page it's: " + product.getProductName() + "\n";
+            TestScreenshot.saveScreenShot(product.getClass().getName(), "WrongProductNamePlanPage");
+            TestScreenshot.saveScreenShot(product.getClass().getName(), "WrongProductNameOrderPage");
+            errorMessages.add(new ErrorMessage(er1, product.getClass().getName(), "WrongProductNamePlanPage", "WrongProductNameOrderPage"));
         }
         if (!this.getProductPlan().getPlanName().equals(product.getProductPlan().getPlanName())) {
             error = error + "Error2: For " + this.getProductName() + " webHostingProduct, Wrong Plan Name: on Plan Page it was "
                     + this.getProductPlan().getPlanName() + " but in Order Page it's: " + product.getProductPlan().getPlanName()
                     + "\n";
-            this.saveScreenShot(product.getClass().getName(), "error2PlanPage");
-            product.saveScreenShot(product.getClass().getName(), "error2OrderPage");
+            er1 = error + "Error2: For " + this.getProductName() + " webHostingProduct, Wrong Plan Name: on Plan Page it was "
+                    + this.getProductPlan().getPlanName() + " but in Order Page it's: " + product.getProductPlan().getPlanName();
+            TestScreenshot.saveScreenShot(product.getClass().getName(), "WrongPlanNamePlanPage");
+            TestScreenshot.saveScreenShot(product.getClass().getName(), "WrongPlanNameOrderPage");
+            errorMessages.add(new ErrorMessage(er1, product.getClass().getName(), "WrongPlanNamePlanPage", "WrongPlanNameOrderPage"));
         }
         return error;
     }
@@ -82,24 +82,6 @@ public abstract class Product {
     @Override
     public String toString() {
         return "Product: " + productName + " price:" + productPrice;
-    }
-
-    public void takeScreenshot() {
-        scrFile = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
-    }
-
-    public void deleteScreenshot() {
-        scrFile.delete();
-    }
-
-    public void saveScreenShot(String nameForScreen, String number) {
-        try {
-            FileUtils.copyFile(scrFile, new File("C:\\Automation\\Screenshot\\TestObjects\\Errors\\" +
-                    nameForScreen + "\\" + number + ".jpg"));
-        } catch (IOException e) {
-            System.out.println("cant create a screen shot " + e.getMessage());
-        }
-
     }
 
 }

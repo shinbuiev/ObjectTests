@@ -1,5 +1,6 @@
 package Tests;
 
+import EmailNotification.Email;
 import Interfaces.ExpectedProducts.LinuxWebHosting;
 import Objects.Product;
 import Pages.BasePage;
@@ -12,6 +13,7 @@ import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.support.events.EventFiringWebDriver;
 import org.testng.Assert;
+import org.testng.ITestResult;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.Test;
@@ -35,8 +37,15 @@ public class HostingBuyTest {
     @BeforeSuite
     public void initEnv() {
 
-      System.setProperty("webdriver.chrome.driver", "C:\\Automation\\chromedriver\\chromedriver.exe"); //Chrome driver windows
-//        System.setProperty("webdriver.chrome.driver", "/home/geser/IdeaProjects/chromedriver"); //Chrome driver linux
+        if (System.getProperty("os.name").equals("Linux"))
+            {
+              System.setProperty("webdriver.chrome.driver", "/home/geser/IdeaProjects/chromedriver"); //Chrome driver linux
+            }
+        if (System.getProperty("os.name").equals("Windows"))
+            {
+              System.setProperty("webdriver.chrome.driver", "C:\\Automation\\chromedriver\\chromedriver.exe"); //Chrome driver windows
+            }
+
         java.lang.String userAgent = "Mozilla/5.0 (Windows NT 6.3; WOW64; Dreamscape/1.0;) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/49.0.2623.87 Safari/537.36";
         ChromeOptions co = new ChromeOptions();
         co.addArguments("--disable-extensions");
@@ -82,6 +91,9 @@ public class HostingBuyTest {
 
     public void isProductOk() {
         Assert.assertTrue(errors.equals(""), "\n" + errors);
+        if (!errors.equals("")){
+
+        }
     }
 
     public void gotoPage(java.lang.String url) {

@@ -1,5 +1,7 @@
 package EmailNotification;
 
+import org.apache.commons.io.FileUtils;
+
 import javax.activation.DataHandler;
 import javax.activation.DataSource;
 import javax.activation.FileDataSource;
@@ -11,18 +13,22 @@ import java.util.*;
 /**
  * Created by Sergiy.K on 28-Oct-16.
  */
+
+//this class can send email with attachments
 public class Email {
     //reportFileName = TestExecutionResultFileName
-    public static void execute(String reporText, String screenName) throws Exception
+
+    public static void execute(String emailName, ErrorMessage error) throws Exception
 
     {
-        String path = "D:/testFolder";
+        String screenName1 = error.getFileName1();
+        String screenName2 = error.getFileName2();
+        String path = error.getFileFolder();
 
         String[] to = {"s.konoplyaniy@gmail.com", "s.konoplyaniy@gmail.com"};
 
-//
         Email.sendMail("s.konoplyaniy@gmail.com",
-                "Rjyjgkzybq1989",
+                "Rjyjgkzyf1990",
                 "smtp.gmail.com",
                 "465",
                 "false",
@@ -31,10 +37,10 @@ public class Email {
                 "javax.net.ssl.SSLSocketFactory",
                 "false",
                 to,
-                "Test email",
+                emailName,
                 "Contents if any",
                 path,
-                screenName);
+                screenName1);
     }
 
     public static boolean sendMail(String userName,
