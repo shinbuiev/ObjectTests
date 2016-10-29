@@ -2,7 +2,6 @@ package Tests;
 
 import EmailNotification.Email;
 import EmailNotification.ErrorMessage;
-import EmailNotification.TestScreenshot;
 import Interfaces.ExpectedProducts.SSLCertificatesProducts;
 import Objects.Product;
 import Pages.BasePage;
@@ -103,18 +102,6 @@ public class SSLCertificateBuyTest extends HostingBuyTest {
             e.printStackTrace();
             System.out.println("can't send email  \n" + e.getMessage());
         }
-
-//        ArrayList<ErrorMessage> list = productBefore.getErrorMessagesListOrderPage(productAfter);
-//        for (int i = 0; i < list.size(); i ++){
-//            try {
-//                email.execute("Result for SSL Certificate buy test ", list.get(i).getError());
-//
-//            } catch (Exception e) {
-//                e.printStackTrace();
-//                System.out.println("can't send email + \n" + e.getMessage());
-//            }
-//        }
-
     }
 
     public void compareProductsPlanOrderPage() {

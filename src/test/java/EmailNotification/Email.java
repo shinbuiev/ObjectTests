@@ -22,11 +22,18 @@ public class Email {
     {
         ArrayList<File> fileList = new ArrayList<File>();
         String content = "";
+
+        //больная логика!!!!!нужно фиксить
         for (int i = 0; i < errors.size(); i++) {
-            fileList.addAll(errors.get(i).getFiles());
+            for (int j = 0; j < errors.get(i).getFiles().size(); j++) {
+                if (!fileList.contains(errors.get(i).getFiles().get(j)))
+                    fileList.add(errors.get(i).getFiles().get(j));
+            }
+
             content = content + errors.get(i).getErrorMessage();
         }
         System.out.println("content = " + content);
+        System.out.println("size of file list = " + fileList.size());
         String[] to = {"s.konoplyaniy@gmail.com", "s.konoplyaniy@gmail.com"};
 
         Email.sendMail(
@@ -104,12 +111,15 @@ public class Email {
 
             MimeMessage msg = new MimeMessage(session);
 
-            msg.setText(text);
+//            msg.setText(text);
 
             msg.setSubject(subject);
 
             MimeBodyPart messageBodyPart = new MimeBodyPart();
+            messageBodyPart.setText(text);
+
             Multipart multipart = new MimeMultipart();
+            multipart.addBodyPart(messageBodyPart);
 
 //for add all files to attachment
             for (int i = 0; i < fileList.size(); i ++) {
@@ -138,7 +148,7 @@ public class Email {
             transport.sendMessage(msg, msg.getAllRecipients());
 
             transport.close();
-
+            System.out.println("size of file list = " + fileList.size());
             return true;
 
         } catch (Exception mex) {
@@ -146,11 +156,6 @@ public class Email {
             return false;
         }
     }
-
-
-
-
-
 
 //    public static void execute(String subjectMessage, ErrorMessage error) throws Exception
 //

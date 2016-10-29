@@ -3,7 +3,6 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import EmailNotification.ErrorMessage;
-import EmailNotification.TestScreenshot;
 import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
@@ -77,11 +76,9 @@ public abstract class Product {
             this.saveScreen("1", "WrongProductNamePlanPage");
             product.saveScreen("1", "WrongProductNameOrderPage");
 
-//WrongProductNameOrderPage
-//WrongProductNamePlanPage
-            new File("/home/geser/Automation/Sreenshot/TestObjects/Errors/1/WrongProductNamePlanPage.png");
             screenNamesList.add(new File("/home/geser/Automation/Sreenshot/TestObjects/Errors/1/WrongProductNamePlanPage.png"));
             screenNamesList.add(new File("/home/geser/Automation/Sreenshot/TestObjects/Errors/1/WrongProductNameOrderPage.png"));
+
             errorMessages1.add(new ErrorMessage(er1, "1/", screenNamesList));
         }
 
@@ -90,10 +87,10 @@ public abstract class Product {
                     + this.getProductPlan().getPlanName() + " but in Order Page it's: " + product.getProductPlan().getPlanName();
             this.saveScreen("2", "WrongPlanNamePlanPage");
             product.saveScreen("2", "WrongPlanNameOrderPage");
-//WrongPlanNameOrderPage
-//WrongPlanNamePlanPage
+
             screenNamesList.add(new File("/home/geser/Automation/Sreenshot/TestObjects/Errors/2/WrongPlanNamePlanPage.png"));
             screenNamesList.add(new File("/home/geser/Automation/Sreenshot/TestObjects/Errors/2/WrongPlanNameOrderPage.png"));
+
             errorMessages1.add(new ErrorMessage(er2, "2", screenNamesList));
         }
         return errorMessages1;
