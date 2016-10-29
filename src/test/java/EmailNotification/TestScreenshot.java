@@ -14,12 +14,8 @@ import static Tests.HostingBuyTest.driver;
  */
 public class TestScreenshot {
     public static File screenFile;
-    String fileName;
-    String screenPath;
-    public static String fileAbsolutePath;
-
-    public static ArrayList<String> screenShotNameList = new ArrayList<String>();
-    public static ArrayList<String> screenShotFolderList = new ArrayList<String>();
+    public static ArrayList<String> screenShotNameList = new ArrayList<String>();  //maybe need to delete this
+    public static ArrayList<String> screenShotFolderList = new ArrayList<String>();//maybe need to delete this
 
     public static void saveScreenShot(String folderForScreen, String nameFile) {
         try {
@@ -32,8 +28,6 @@ public class TestScreenshot {
 
             screenShotFolderList.add("/home/geser/Automation/Sreenshot/TestObjects/Errors/" + folderForScreen);
             screenShotNameList.add(nameFile);
-
-//            System.out.println(fileAbsolutePath.replace(nameFile + ".png",""));
 
         } catch (IOException e) {
             System.out.println("cant create a screen shot \n" + e.getMessage());

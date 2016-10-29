@@ -94,17 +94,26 @@ public class SSLCertificateBuyTest extends HostingBuyTest {
     public void compareWithSendEmail(){
         Email email = new Email();
 
-        ArrayList<ErrorMessage> list;
-         list = productBefore.getErrorMessagesListOrderPage(productAfter);
-        for (int i = 0; i < list.size(); i ++){
-            try {
-                email.execute("Result for SSL Certificate buy test ", list.get(i).getError());
-
-            } catch (Exception e) {
-                e.printStackTrace();
-                System.out.println("can't send email + \n" + e.getMessage());
-            }
+        //need add check size of list
+        ArrayList<ErrorMessage> list = productBefore.getErrorMessagesListOrderPage(productAfter);
+        System.out.println("test list size= " + list.size());
+        try {
+            email.execute("Result for SSL Certificate buy test ", list);
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("can't send email  \n" + e.getMessage());
         }
+
+//        ArrayList<ErrorMessage> list = productBefore.getErrorMessagesListOrderPage(productAfter);
+//        for (int i = 0; i < list.size(); i ++){
+//            try {
+//                email.execute("Result for SSL Certificate buy test ", list.get(i).getError());
+//
+//            } catch (Exception e) {
+//                e.printStackTrace();
+//                System.out.println("can't send email + \n" + e.getMessage());
+//            }
+//        }
 
     }
 
