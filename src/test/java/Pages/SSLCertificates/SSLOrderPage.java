@@ -1,18 +1,12 @@
 package Pages.SSLCertificates;
 
-import EmailNotification.TestScreenshot;
 import Objects.*;
 import Pages.BasePage;
-import Pages.HostingOrderPage;
 import Products.SSLproduct;
-import com.sun.corba.se.spi.activation.BadServerDefinition;
-import org.openqa.selenium.OutputType;
-import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.events.EventFiringWebDriver;
 
-import java.io.File;
 import java.util.List;
 
 /**

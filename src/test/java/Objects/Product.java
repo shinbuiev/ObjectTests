@@ -24,12 +24,6 @@ public abstract class Product {
         takeScreenshot();
     }
 
-    public ArrayList<ErrorMessage> errorMessages = new ArrayList<ErrorMessage>();
-
-    public ArrayList<ErrorMessage> getErrorMessages(){
-        return errorMessages;
-    }
-
     public String getProductName() {
         return productName;
     }
@@ -58,17 +52,18 @@ public abstract class Product {
         this.productPlan = productPlan;
     }
 
-//    public void saveScreen(String folderName, String imageName){
-//        TestScreenshot.saveScreenShot(folderName, imageName);
-//    }
+    public ArrayList<ErrorMessage> errorMessages = new ArrayList<ErrorMessage>();
 
-    public ArrayList<ErrorMessage> getErrorMessagesListOrderPage(Object o) {
+    public ArrayList<ErrorMessage> getErrorMessages(){
+        return errorMessages;
+    }
+
+    public ArrayList<ErrorMessage> comparePlanPageOrderPageProductsAndGetErrors(Object o) {
         ArrayList<ErrorMessage> errorMessages1 = new ArrayList<ErrorMessage>();
 
-        String error = "";
         String er1;
         String er2;
-        ArrayList<File> screenNamesList = new ArrayList<File>();
+        ArrayList<File> screenNamesList = new ArrayList<File>();  //must be in class not in method!!!
         Product product = (Product) o;
         if (!this.getProductName().equals(product.getProductName() + " errrrrr")) {
             er1 ="Error1: Wrong product name: on Plan Page it was " + this.getProductName() +
@@ -78,8 +73,9 @@ public abstract class Product {
 
             screenNamesList.add(new File("/home/geser/Automation/Sreenshot/TestObjects/Errors/1/WrongProductNamePlanPage.png"));
             screenNamesList.add(new File("/home/geser/Automation/Sreenshot/TestObjects/Errors/1/WrongProductNameOrderPage.png"));
-
             errorMessages1.add(new ErrorMessage(er1, "1/", screenNamesList));
+
+            errorMessages.add(new ErrorMessage(er1, "1/", screenNamesList));
         }
 
         if (!this.getProductPlan().getPlanName().equals(product.getProductPlan().getPlanName() + " wrong plan name")) {
@@ -90,21 +86,22 @@ public abstract class Product {
 
             screenNamesList.add(new File("/home/geser/Automation/Sreenshot/TestObjects/Errors/2/WrongPlanNamePlanPage.png"));
             screenNamesList.add(new File("/home/geser/Automation/Sreenshot/TestObjects/Errors/2/WrongPlanNameOrderPage.png"));
-
             errorMessages1.add(new ErrorMessage(er2, "2", screenNamesList));
+
+            errorMessages.add(new ErrorMessage(er2, "1/", screenNamesList));
         }
         return errorMessages1;
     }
 
     //method check product from plan page and order page
-    public String getErrorOrderPage(Object o) {
+    public String getErrorOrderPage(Object o) {  //must be delete after successful testing email notification
 
         String error = "";
         String er1;
         Product product = (Product) o;
-        if (!this.getProductName().equals(product.getProductName() + " errrrrr")) {
+        if (!this.getProductName().equals(product.getProductName())) {
             error = error + "Error1: Wrong product name: on Plan Page it was " + this.getProductName() +
-                    ", but on Order Page it's: " + product.getProductName()+ "errrrrrrrrrr" + "\n";
+                    ", but on Order Page it's: " + product.getProductName() + "\n";
             er1 = error + "Error1: Wrong product name: on Plan Page it was " + this.getProductName() +
                     ", but on Order Page it's: " + product.getProductName() + "\n";
             this.saveScreen("1", "WrongProductNamePlanPage");

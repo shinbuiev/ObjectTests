@@ -1,6 +1,7 @@
-package Pages;
+package Pages.WebHosting;
 
 import Objects.*;
+import Pages.BasePage;
 import Products.WebHostingProduct;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;

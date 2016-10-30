@@ -1,6 +1,7 @@
-package Pages;
+package Pages.WebHosting;
 
 import Objects.*;
+import Pages.BasePage;
 import Products.WebHostingProduct;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.FindBy;

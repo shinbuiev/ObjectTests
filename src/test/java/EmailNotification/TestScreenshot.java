@@ -12,6 +12,8 @@ import static Tests.HostingBuyTest.driver;
 /**
  * Created by geser on 29.10.16.
  */
+
+//this class must be delete
 public class TestScreenshot {
     public static File screenFile;
     public static ArrayList<String> screenShotNameList = new ArrayList<String>();  //maybe need to delete this

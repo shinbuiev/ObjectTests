@@ -1,19 +1,17 @@
 package Tests;
 
-import EmailNotification.Email;
 import Interfaces.ExpectedProducts.LinuxWebHosting;
 import Objects.Product;
 import Pages.BasePage;
-import Pages.HostingOrderPage;
-import Pages.HostingPlanPage;
-import Pages.ShoppingCartPage;
+import Pages.WebHosting.HostingOrderPage;
+import Pages.WebHosting.HostingPlanPage;
+import Pages.WebHosting.ShoppingCartPage;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.support.events.EventFiringWebDriver;
 import org.testng.Assert;
-import org.testng.ITestResult;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.Test;

@@ -8,7 +8,6 @@ import Pages.BasePage;
 import Pages.SSLCertificates.SSLCertificatesPlanPage;
 import Pages.SSLCertificates.SSLOrderPage;
 import Pages.SSLCertificates.SSLshoppingCartPage;
-import Products.SSLproduct;
 import org.testng.Assert;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeSuite;
@@ -24,7 +23,9 @@ public class SSLCertificateBuyTest extends HostingBuyTest {
     private Product productBefore;
     private Product productAfter;
     private String errors = "";
-    private ArrayList<String> errorList = new ArrayList<String>();
+    private ArrayList<String> errorList = new ArrayList<String>(); //maybe delete???????
+
+    private ArrayList<ErrorMessage> errorMessageList = new ArrayList<ErrorMessage>();
 
     SSLCertificatesPlanPage sslPage;
     SSLOrderPage sslOrderPage;
@@ -43,9 +44,9 @@ public class SSLCertificateBuyTest extends HostingBuyTest {
         sslPage.selectPremiumPlan();
         rememberProductBefore(sslPage);
         rememberProductAfter(sslOrderPage);
-        compareWithSendEmail();
-        compareProductsPlanOrderPage();
-//        isProductOk();
+        comparePlanPageAndOrderPageProducts();
+//        compareProductsPlanOrderPage(); for now it's in not actual
+
         sslOrderPage.selectOption("24");
         sslOrderPage.pageEnd();
         sslOrderPage.inputDomainName("SSLForTesting.ru");
@@ -90,18 +91,13 @@ public class SSLCertificateBuyTest extends HostingBuyTest {
         productAfter = page.getProduct();
     }
 
-    public void compareWithSendEmail(){
-        Email email = new Email();
+    public void comparePlanPageAndOrderPageProducts(){
 
-        //need add check size of list
-        ArrayList<ErrorMessage> list = productBefore.getErrorMessagesListOrderPage(productAfter);
-        System.out.println("test list size= " + list.size());
-        try {
-            email.execute("Result for SSL Certificate buy test ", list);
-        } catch (Exception e) {
-            e.printStackTrace();
-            System.out.println("can't send email  \n" + e.getMessage());
+        productBefore.comparePlanPageOrderPageProductsAndGetErrors(productAfter);
+        if (productBefore.getErrorMessages().size() > 0){
+            errorMessageList.addAll(productBefore.getErrorMessages());
         }
+
     }
 
     public void compareProductsPlanOrderPage() {
@@ -110,11 +106,26 @@ public class SSLCertificateBuyTest extends HostingBuyTest {
     }
 
     public void compareProductsOrderShoppingCartPage() {
-        if (!errors.equals("")) {
-            errors = errors + "\n";
+
+        productBefore.getErrorShoppingCartPage(productAfter);
+        if (productBefore.getErrorMessages().size() > 0){
+            errorMessageList.addAll(productBefore.getErrorMessages());
         }
-        errors = errors + productBefore.getErrorShoppingCartPage(productAfter);
-        errorList.add(productBefore.getErrorShoppingCartPage(productAfter));
+    }
+
+    @AfterTest
+    public void sendEmailNotificationWithErrors(){
+        if (errorMessageList.size() > 0)
+        {
+            Email email = new Email();
+            try {
+                email.execute("Result for SSL Certificate buy test ", errorMessageList);
+            } catch (Exception e) {
+                e.printStackTrace();
+                System.out.println("can't send email  \n" + e.getMessage());
+            }
+        }
+
     }
 
     @AfterTest
