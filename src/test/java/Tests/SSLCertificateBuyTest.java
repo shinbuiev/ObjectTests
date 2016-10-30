@@ -11,6 +11,7 @@ import Pages.SSLCertificates.SSLshoppingCartPage;
 import org.testng.Assert;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeSuite;
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 import java.util.ArrayList;
@@ -20,29 +21,42 @@ import java.util.ArrayList;
  */
 public class SSLCertificateBuyTest extends HostingBuyTest {
 
-    private Product productBefore;
-    private Product productAfter;
+
+
     private String errors = "";
-    private ArrayList<String> errorList = new ArrayList<String>(); //maybe delete???????
-
+    private Product productAfter;
+    private Product productBefore;
+    private SSLOrderPage sslOrderPage;
+    private SSLCertificatesPlanPage sslPlanPage;
+    private SSLshoppingCartPage shoppingCartPage;
+    private ArrayList<String> errorList = new ArrayList<String>(); //will be delete
     private ArrayList<ErrorMessage> errorMessageList = new ArrayList<ErrorMessage>();
+    private SSLCertificatesProducts sslSpecification = new SSLCertificatesProducts();
 
-    SSLCertificatesPlanPage sslPage;
-    SSLOrderPage sslOrderPage;
-    SSLshoppingCartPage shoppingCartPage;
-    SSLCertificatesProducts sslSpecification = new SSLCertificatesProducts();
     @BeforeSuite
     @Override
     public void initEnv() {
         super.initEnv();
     }
 
-    @Test
-    public void testByStandardSSlcertificate() {
-        gotoPage("https://www.crazydomains.com.au/ssl-certificates/");
-//        sslPage.pageDown();
-        sslPage.selectPremiumPlan();
-        rememberProductBefore(sslPage);
+    @DataProvider
+    public Object[][] getExpectedProduct(){
+        return new Object[][]{
+                {sslSpecification, sslSpecification.getProductPlans().get(0).getOrderPageUrl()},
+                {sslSpecification, sslSpecification.getProductPlans().get(1).getOrderPageUrl()},
+                {sslSpecification, sslSpecification.getProductPlans().get(2).getOrderPageUrl()},
+        };
+    }
+
+    @Test(dataProvider = "getExpectedProduct")
+    public void bySSLCertificateTest(SSLCertificatesProducts product, String plan) {
+//        gotoPage("https://www.crazydomains.com.au/ssl-certificates/");
+//        sslPlanPage.pageDown();
+//        sslPlanPage.selectPremiumPlan();
+        gotoPage(product.getProductMainPage());
+        sslPlanPage.pageDown();
+        sslPlanPage.selectPlan(plan);
+        rememberProductBefore(sslPlanPage);
         rememberProductAfter(sslOrderPage);
         comparePlanPageAndOrderPageProducts();
 
@@ -52,11 +66,14 @@ public class SSLCertificateBuyTest extends HostingBuyTest {
         sslOrderPage.clickContinueOrderButton();
 
         shoppingCartPage.clickCart();
+
         rememberProductBefore(sslOrderPage);
-        shoppingCartPage.productToString();
         rememberProductAfter(shoppingCartPage);
         compareProductsOrderPageAndShoppingCart();
+
         checkProductSpecification(shoppingCartPage);
+        shoppingCartPage.clearShoppingCart();
+
         isProductOk();
     }
 
@@ -68,7 +85,7 @@ public class SSLCertificateBuyTest extends HostingBuyTest {
         if (!driver.getCurrentUrl().equals(url)) {
             driver.get(url);
         }
-        sslPage = new SSLCertificatesPlanPage(driver);
+        sslPlanPage = new SSLCertificatesPlanPage(driver);
         sslOrderPage = new SSLOrderPage(driver);
         shoppingCartPage = new SSLshoppingCartPage(driver);
     }
@@ -120,17 +137,6 @@ public class SSLCertificateBuyTest extends HostingBuyTest {
             }
         }
 
-    }
-
-    @AfterTest
-    public void printErrors()
-    {
-        if (errorList.size()>0)
-        {
-            for (int i = 0; i < errorList.size(); i++) {
-                System.out.println(errorList.get(i));
-            }
-        }
     }
 
     @AfterTest

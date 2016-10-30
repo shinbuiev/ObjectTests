@@ -1,16 +1,12 @@
 package Pages.SSLCertificates;
 
 import Objects.Plan;
-import Products.WebHostingProduct;
 import Pages.BasePage;
-import Products.SSLproduct;
-import org.openqa.selenium.OutputType;
-import org.openqa.selenium.TakesScreenshot;
+import Products.SSLProduct;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.events.EventFiringWebDriver;
-
-import java.io.File;
 
 /**
  * Created by geser on 27.10.16.
@@ -44,9 +40,9 @@ public class SSLCertificatesPlanPage extends BasePage{
         super(driver);
     }
 
-    private SSLproduct actual;
+    private SSLProduct actual;
 
-    public SSLproduct getProduct() {
+    public SSLProduct getProduct() {
         return actual;
     }
 
@@ -54,20 +50,20 @@ public class SSLCertificatesPlanPage extends BasePage{
         return PRODUCT_NAME.getText();
     }
 
-    public void selectStandardPlan(){
-        actual = new SSLproduct(getProductName());
-        actual.setProductPlan(new Plan(STANDARD_PLAN_TEXT.getText()));
-        STANDARD_PLAN_BUTTON.click();
-    }
-    public void selectPremiumPlan(){
-        actual = new SSLproduct(getProductName());
-        actual.setProductPlan(new Plan(PREMIUM_PLAN_TEXT.getText()));
-        PREMIUM_PLAN_BUTTON.click();
-    }
-    public void selectWildCardPln(){
-        actual = new SSLproduct(getProductName());
-        actual.setProductPlan(new Plan(WILDCARD_PLAN_TEXT.getText()));
-        WILDCARD_PLAN_BUTTON.click();
+    public void selectPlan(String url){
+        actual = new SSLProduct(getProductName());
+
+        // it will be change later
+        if (url.contains("standard")){
+            actual.setProductPlan(new Plan(STANDARD_PLAN_TEXT.getText()));
+        }
+        if (url.contains("premium")){
+            actual.setProductPlan(new Plan(PREMIUM_PLAN_TEXT.getText()));
+        }
+        if (url.contains("wildcard")){
+            actual.setProductPlan(new Plan(WILDCARD_PLAN_TEXT.getText()));
+        }
+        driver.findElement(By.xpath("//a[@href='" + url + "']")).click();
     }
 
 }

@@ -13,7 +13,7 @@ import java.util.ArrayList;
 /**
  * Created by Sergiy.K on 25-Oct-16.
  */
-public class ShoppingCartPage extends BasePage {
+public class HostingShoppingCartPage extends BasePage {
     private static final By cartClick = By.xpath("//*[@id=\"all\"]/div[4]/div[2]/div[1]/div/div[1]/div/div[1]/span/a");
     private static final By firstElement = By.xpath("//*[@id=\"shopping_cart_table\"]/div[1]/div[2]/div/div[1]/div/strong");
     private static final By TOTAL_PRICE = By.xpath("//*[@id='domain_table_total']");
@@ -48,10 +48,13 @@ public class ShoppingCartPage extends BasePage {
     @FindBy(xpath = "//a[@href='confirm_delete']")
     private WebElement clearShoppingCartButton;
 
+    @FindBy(xpath = "//*[@id='cart_reset']")
+    private WebElement confirmClearCart;
+
     private WebHostingProduct actual;
     protected EventFiringWebDriver driver;
 
-    public ShoppingCartPage(EventFiringWebDriver driver) {
+    public HostingShoppingCartPage(EventFiringWebDriver driver) {
         super(driver);
         this.driver = driver;
     }
@@ -110,5 +113,6 @@ public class ShoppingCartPage extends BasePage {
 
     public void clearShoppingCart(){
         clearShoppingCartButton.click();
+        confirmClearCart.click();
     }
 }

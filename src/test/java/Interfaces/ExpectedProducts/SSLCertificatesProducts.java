@@ -1,11 +1,9 @@
 package Interfaces.ExpectedProducts;
 
-import Objects.Addon;
 import Objects.Plan;
 import Objects.Product;
 import Objects.Term;
-import Products.SSLproduct;
-import Products.WebHostingProduct;
+import Products.SSLProduct;
 
 import java.util.ArrayList;
 
@@ -16,6 +14,14 @@ public class SSLCertificatesProducts {
     public String getProductName() {
         return "SSL Certificates";
     }
+
+    public String getProductMainPage(){
+        return "https://www.crazydomains.com.au/ssl-certificates/";
+    }
+//      https://www.crazydomains.com.au/ssl-certificates/
+//     /ssl-certificates/order-standard-ssl/
+//     /ssl-certificates/order-premium-ssl/
+//     /ssl-certificates/order-wildcard-ssl/
 
     public ArrayList<Term> getProductTerms() {
         ArrayList<Term> terms = new ArrayList<Term>() {{
@@ -28,16 +34,16 @@ public class SSLCertificatesProducts {
 
     public ArrayList<Plan> getProductPlans() {
         ArrayList<Plan> plans = new ArrayList<Plan>() {{
-            add(new Plan("Standard"));
-            add(new Plan("Premium"));
-            add(new Plan("Wildcard"));
+            add(new Plan("Standard", "/ssl-certificates/order-standard-ssl/"));
+            add(new Plan("Premium", "/ssl-certificates/order-premium-ssl/"));
+            add(new Plan("Wildcard", "/ssl-certificates/order-wildcard-ssl/"));
         }};
         return plans;
     }
 
     public String isProduct(Product product) {
         // method check webHostingProduct specification
-        SSLproduct SSLproduct = (SSLproduct) product;
+        SSLProduct SSLProduct = (SSLProduct) product;
 
         String error = "";
         if (!this.getProductName().equals(product.getProductName())) {
@@ -56,5 +62,10 @@ public class SSLCertificatesProducts {
                         " , but in Shopping Cart it's: " + product.getProductTerm() + "\n";
         }
         return error;
+    }
+
+    @Override
+    public String toString() {
+        return "SSL Certificate";
     }
 }

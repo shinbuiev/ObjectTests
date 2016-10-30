@@ -2,7 +2,7 @@ package Pages.SSLCertificates;
 
 import Objects.*;
 import Pages.BasePage;
-import Products.SSLproduct;
+import Products.SSLProduct;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.events.EventFiringWebDriver;
@@ -25,8 +25,8 @@ public class SSLOrderPage extends BasePage
     private String optionPrice;
     private static int optionCount;
 
-    private SSLproduct actualProduct;
-    private SSLproduct finalProduct;
+    private SSLProduct actualProduct;
+    private SSLProduct finalProduct;
     private String domainName;
 
     @FindBy(xpath = "//*[@id='all']/div[4]/div[1]/div[1]/div/div[1]/h1")
@@ -101,17 +101,17 @@ public class SSLOrderPage extends BasePage
     public void clickContinueOrderButton() {
         actualProduct.setProductPrice(new Price(getTotalPrice()));
         actualProduct.setProductDomain(new Domain(domainName));
-        //actualProduct.setProductPlan(new Plan(getPlanName(), new Term(getOptionTerm())));
+        actualProduct.setProductPlan(new Plan(getPlanName(), new Term(getOptionTerm())));
         CONTINUE_ORDER_BUTTON.click();
     }
 
 
-    public SSLproduct getProduct() {
+    public SSLProduct getProduct() {
         if (actualProduct != null)
             return actualProduct;
         else
         {
-            actualProduct = new SSLproduct(getProductName());
+            actualProduct = new SSLProduct(getProductName());
             actualProduct.setProductPlan(new Plan(getPlanName(), new Term(getOptionTerm())));
             return actualProduct;
         }

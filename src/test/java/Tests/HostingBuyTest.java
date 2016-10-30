@@ -9,7 +9,7 @@ import Objects.Product;
 import Pages.BasePage;
 import Pages.WebHosting.HostingOrderPage;
 import Pages.WebHosting.HostingPlanPage;
-import Pages.WebHosting.ShoppingCartPage;
+import Pages.WebHosting.HostingShoppingCartPage;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
@@ -35,7 +35,7 @@ public class HostingBuyTest {
     private java.lang.String errors = "";
     HostingPlanPage hostingPlanPage;
     HostingOrderPage orderPage;
-    ShoppingCartPage shoppingCartPage;
+    HostingShoppingCartPage hostingShoppingCartPage;
     private LinuxWebHosting linuxWebHosting = new LinuxWebHosting();
     private WindowsWebHosting windowsWebHosting = new WindowsWebHosting();
     private ArrayList<ErrorMessage> errorMessageList = new ArrayList<ErrorMessage>();
@@ -99,16 +99,16 @@ public class HostingBuyTest {
         orderPage.clearDomainInputField();
         orderPage.inputDomainName("DomainForTesting.com");
         orderPage.clickContinueOrderButton();
-        shoppingCartPage.clickCart();
+        hostingShoppingCartPage.clickCart();
         //here compare product from order page and shopping cart page, add screenshots and errors to errorMessageList if exist come differences
         rememberProductBefore(orderPage);
-        rememberProductAfter(shoppingCartPage);
+        rememberProductAfter(hostingShoppingCartPage);
         compareProductsOrderPageAndShoppingCart();
         //here compare final product in shopping cart with expected product (The expected product is a product created based on specifications)
         //if exist some differences add error message to array
-        checkProductSpecification(shoppingCartPage);
-        //here check
-        shoppingCartPage.clearShoppingCart();
+        checkProductSpecification(hostingShoppingCartPage);
+        hostingShoppingCartPage.clearShoppingCart();
+
         isProductOk();
 
     }
@@ -127,7 +127,7 @@ public class HostingBuyTest {
         }
         hostingPlanPage = new HostingPlanPage(driver);
         orderPage = new HostingOrderPage(driver);
-        shoppingCartPage = new ShoppingCartPage(driver);
+        hostingShoppingCartPage = new HostingShoppingCartPage(driver);
     }
 
     public void checkProductSpecification(BasePage page) {
@@ -164,17 +164,16 @@ public class HostingBuyTest {
     @AfterTest
     public void sendEmailNotificationWithErrors(){
         if (errorMessageList.size() > 0)
-        {
-            Email email = new Email();
-            try {
-                email.execute("Result for Web Hosting buy test ", errorMessageList);
-            } catch (Exception e) {
-                e.printStackTrace();
-                System.out.println("can't send email  \n" + e.getMessage());
+            {
+                Email email = new Email();
+                try {
+                    email.execute("Result for Web Hosting buy test ", errorMessageList);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    System.out.println("can't send email  \n" + e.getMessage());
+                }
             }
         }
-
-    }
 
     @AfterTest
     public void evnSgut() {

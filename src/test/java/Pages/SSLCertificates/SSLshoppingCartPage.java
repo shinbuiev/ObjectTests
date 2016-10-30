@@ -1,16 +1,12 @@
 package Pages.SSLCertificates;
 
-import EmailNotification.TestScreenshot;
 import Objects.*;
 import Pages.BasePage;
-import Products.SSLproduct;
-import Products.WebHostingProduct;
+import Products.SSLProduct;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.events.EventFiringWebDriver;
-
-import java.io.File;
 
 /**
  * Created by Sergiy.K on 25-Oct-16.
@@ -35,8 +31,14 @@ public class SSLshoppingCartPage extends BasePage {
     @FindBy(xpath = "//*[@id='shopping_cart_table']/div[1]/div[2]/div/div[1]/div/strong")
     private WebElement productTitle;
 
+    @FindBy(xpath = "//a[@href='confirm_delete']")
+    private WebElement clearShoppingCartButton;
 
-    private SSLproduct actual;
+    @FindBy(xpath = "//*[@id='cart_reset']")
+    private WebElement confirmClearCart;
+
+
+    private SSLProduct actual;
     protected EventFiringWebDriver driver;
 
     public SSLshoppingCartPage(EventFiringWebDriver driver) {
@@ -56,7 +58,7 @@ public class SSLshoppingCartPage extends BasePage {
 
     public void clickCart() {
         cartClick.click();
-        actual = new SSLproduct(getProductName());
+        actual = new SSLProduct(getProductName());
         actual.setProductDomain(new Domain(getProductDomain()));
         actual.setProductPrice(new Price(getPrice()));
         actual.setProductTerm(new Term(productTerm.getText()));
@@ -75,7 +77,7 @@ public class SSLshoppingCartPage extends BasePage {
         return productTitle.getText().split(" ")[0];// last 7 symbols
     }
 
-    public SSLproduct getProduct() {
+    public SSLProduct getProduct() {
         return actual;
     }
 
@@ -85,4 +87,8 @@ public class SSLshoppingCartPage extends BasePage {
         System.out.println("Total price is: " + actual.getProductPrice().getPrice());
     }
 
+    public void clearShoppingCart(){
+        clearShoppingCartButton.click();
+        confirmClearCart.click();
+    }
 }

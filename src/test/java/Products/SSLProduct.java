@@ -1,7 +1,6 @@
 package Products;
 
 import EmailNotification.ErrorMessage;
-import EmailNotification.TestScreenshot;
 import Objects.*;
 
 import java.io.File;
@@ -10,10 +9,10 @@ import java.util.ArrayList;
 /**
  * Created by geser on 27.10.16.
  */
-public class SSLproduct extends Product {
+public class SSLProduct extends Product {
     private Domain productDomain;
 
-    public SSLproduct(String productName) {
+    public SSLProduct(String productName) {
         super(productName);
     }
 
@@ -28,7 +27,7 @@ public class SSLproduct extends Product {
     //method check product from order page and shopping cart
     public String getErrorShoppingCartPage(Object o) {
         String error = "";
-        SSLproduct product = (SSLproduct) o;
+        SSLProduct product = (SSLProduct) o;
 
 
         if (!this.getProductName().equals(product.getProductName())) {
