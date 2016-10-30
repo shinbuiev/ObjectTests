@@ -1,5 +1,7 @@
 package Tests;
 
+import EmailNotification.Email;
+import EmailNotification.ErrorMessage;
 import Interfaces.ExpectedProducts.LinuxWebHosting;
 import Objects.Product;
 import Pages.BasePage;
@@ -16,6 +18,7 @@ import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.Test;
 
+import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -31,6 +34,7 @@ public class HostingBuyTest {
     HostingOrderPage orderPage;
     ShoppingCartPage shoppingCartPage;
     private LinuxWebHosting linuxWebHosting = new LinuxWebHosting();
+    private ArrayList<ErrorMessage> errorMessageList = new ArrayList<ErrorMessage>();
 
     @BeforeSuite
     public void initEnv() {
@@ -66,7 +70,8 @@ public class HostingBuyTest {
         hostingPlanPage.clickBuyNowEconomyHosting();
         rememberProductBefore(hostingPlanPage);
         rememberProductAfter(orderPage);
-        compareProducts();
+        comparePlanPageAndOrderPageProducts();
+//        compareProducts();
 
         orderPage.selectOption("24");
         orderPage.addAddon("Traffic Booster");
@@ -76,12 +81,13 @@ public class HostingBuyTest {
         orderPage.clearDomainInputField();
         orderPage.inputDomainName("DomainForTesting.com");
         orderPage.clickContinueOrderButton();
-        rememberProductBefore(orderPage);
+//        rememberProductBefore(orderPage);
 //        orderPage.productToString(orderPage.getFinalProduct());
         shoppingCartPage.clickCart();
+        rememberProductBefore(orderPage);
 //        shoppingCartPage.productToString(shoppingCartPage.getProduct());
         rememberProductAfter(shoppingCartPage);
-        compareProductsShoppingCart();
+        compareProductsOrderPageAndShoppingCart();
 
         checkProductSpecification(shoppingCartPage);
         isProductOk();
@@ -114,26 +120,39 @@ public class HostingBuyTest {
         productBefore = page.getProduct();
     }
 
-    public void rememberProductBefore(HostingOrderPage page) {
-        productBefore = page.getFinalProduct();
-    }
-
     public void rememberProductAfter(BasePage page) {
         productAfter = page.getProduct();
     }
 
-    public void compareProducts() {
-        if (!errors.equals("")) {
-            errors = errors + "\n";
+    public void comparePlanPageAndOrderPageProducts(){
+
+        productBefore.comparePlanPageOrderPageProductsAndGetErrors(productAfter);
+        if (productBefore.getErrorMessages().size() > 0){
+            errorMessageList.addAll(productBefore.getErrorMessages());
         }
-        errors = errors + productBefore.getErrorOrderPage(productAfter);
+
     }
 
-    public void compareProductsShoppingCart() {
-        if (!errors.equals("")) {
-            errors = errors + "\n";
+    public void compareProductsOrderPageAndShoppingCart() {
+        productBefore.getErrorShoppingCartPage(productAfter);
+        if (productBefore.getErrorMessages().size() > 0){
+            errorMessageList.addAll(productBefore.getErrorMessages());
         }
-        errors = errors + productBefore.getErrorShoppingCartPage(productAfter);
+    }
+
+    @AfterTest
+    public void sendEmailNotificationWithErrors(){
+        if (errorMessageList.size() > 0)
+        {
+            Email email = new Email();
+            try {
+                email.execute("Result for Web Hosting buy test ", errorMessageList);
+            } catch (Exception e) {
+                e.printStackTrace();
+                System.out.println("can't send email  \n" + e.getMessage());
+            }
+        }
+
     }
 
     @AfterTest

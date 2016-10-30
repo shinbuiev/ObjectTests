@@ -45,7 +45,6 @@ public class SSLCertificateBuyTest extends HostingBuyTest {
         rememberProductBefore(sslPage);
         rememberProductAfter(sslOrderPage);
         comparePlanPageAndOrderPageProducts();
-//        compareProductsPlanOrderPage(); for now it's in not actual
 
         sslOrderPage.selectOption("24");
         sslOrderPage.pageEnd();
@@ -56,7 +55,7 @@ public class SSLCertificateBuyTest extends HostingBuyTest {
         rememberProductBefore(sslOrderPage);
         shoppingCartPage.productToString();
         rememberProductAfter(shoppingCartPage);
-        compareProductsOrderShoppingCartPage();
+        compareProductsOrderPageAndShoppingCart();
         checkProductSpecification(shoppingCartPage);
         isProductOk();
     }
@@ -100,12 +99,7 @@ public class SSLCertificateBuyTest extends HostingBuyTest {
 
     }
 
-    public void compareProductsPlanOrderPage() {
-        errors = errors + productBefore.getErrorOrderPage(productAfter);
-        errorList.add(productBefore.getErrorOrderPage(productAfter));
-    }
-
-    public void compareProductsOrderShoppingCartPage() {
+    public void compareProductsOrderPageAndShoppingCart() {
 
         productBefore.getErrorShoppingCartPage(productAfter);
         if (productBefore.getErrorMessages().size() > 0){

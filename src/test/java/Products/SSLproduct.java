@@ -56,8 +56,8 @@ public class SSLproduct extends Product {
         if (!this.getProductPlan().getPlanName().equals(product.getProductPlan().getPlanName())) {
             error = "Error5: For " + this.getProductName() + " product, Wrong Plan Name on Order Page it was: "
                     + this.getProductPlan().getPlanName() + ", but in Shopping Cart it's: " + product.getProductPlan().getPlanName() + "\n";
-            this.saveScreen("5", "WrongProductDomainOrderPage");
-            product.saveScreen("5", "WrongProductDomainShoppingCart");
+            this.saveScreen("5", "WrongPlanNameOrderPage");
+            product.saveScreen("5", "WrongPlanNameShoppingCart");
 
             ArrayList<File> screenNamesList = new ArrayList<File>();  //must be in class not in method!!!
             screenNamesList.add(new File("/home/geser/Automation/Sreenshot/TestObjects/Errors/5/WrongPlanNameOrderPage.png"));

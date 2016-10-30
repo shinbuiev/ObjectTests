@@ -69,20 +69,12 @@ public class HostingOrderPage extends BasePage {
     private String addonPrice;
     private int addonCount;
     protected EventFiringWebDriver driver;
-    private WebHostingProduct actual;
-    private WebHostingProduct finalProduct;
+    private WebHostingProduct actualProduct;
+//    private WebHostingProduct finalProduct;
 
     public HostingOrderPage(EventFiringWebDriver driver) {
         super(driver);
         this.driver = driver;
-    }
-
-    public WebHostingProduct getProduct() {
-        actual = new WebHostingProduct(getProductName());
-        actual.setProductPlan(new Plan(getPlanName(), new Term(getOptionTerm())));
-        actual.setProductPrice(new Price(getTotalPrice()));
-        actual.setProductAddons(addons);
-        return actual;
     }
 
     public void scrollDownPage() {
@@ -92,21 +84,6 @@ public class HostingOrderPage extends BasePage {
 
     public String getTotalPrice() {
         return TOTAL_PRICE.getText();
-    }
-
-    public WebHostingProduct getActualProduct() {
-        WebHostingProduct actualWebHostingProduct = new WebHostingProduct(getProductName());
-        actualWebHostingProduct.setProductPlan(new Plan(getPlanName(), getCurrentURL()));
-        ArrayList<Addon> addons = new ArrayList<Addon>();
-        for (int i = 0; i < getAddonCount(); i++) {
-            addons.add(new Addon(NAME_ADDONS_LIST.get(i).getText()));
-            System.out.println(NAME_ADDONS_LIST.get(i).getText());
-
-        }
-        for (int i = 0; i < addons.size(); i++) {
-            System.out.println(addons.get(i));
-        }
-        return actualWebHostingProduct;
     }
 
     //for options
@@ -168,13 +145,6 @@ public class HostingOrderPage extends BasePage {
         }
     }
 
-    public void productToString(WebHostingProduct actual) {
-        System.out.println("Actual webHostingProduct in Order Page: " + actual.getProductName() + " Domain name: " + actual.getProductDomain() +
-                ", selected plan:  " + actual.getProductPlan() + " for  " + actual.getProductPlan().getTerm() + " month");
-        System.out.println("Selected addons: " + actual.getProductAddons());
-        System.out.println("Total price is: " + actual.getProductPrice().getPrice());
-    }
-
     public void pageDown() {
         driver.findElement(By.xpath("/html/body")).sendKeys(Keys.END);
     }
@@ -226,8 +196,8 @@ public class HostingOrderPage extends BasePage {
     }
 
     public void inputDomainName(String domainName) {
-        this.domainName = domainName;
         DOMAIN_SEARCH_FIELD.sendKeys(domainName);
+        this.domainName = domainName;
     }
 
     public void clearDomainInputField() {
@@ -247,16 +217,24 @@ public class HostingOrderPage extends BasePage {
     }
 
     public void clickContinueOrderButton() {
-        finalProduct = new WebHostingProduct(getProductName());
-        finalProduct.setProductDomain(new Domain(domainName));
-        finalProduct.setProductPlan(new Plan(getPlanName(), new Term(getOptionTerm())));
-        finalProduct.setProductPrice(new Price(getTotalPrice()));
-        finalProduct.setProductAddons(addons);
+        actualProduct.setProductPrice(new Price(getTotalPrice()));
+        actualProduct.setProductDomain(new Domain(domainName));
+        actualProduct.setProductAddons(addons);
+        actualProduct.setProductTerm(new Term(getOptionTerm()));
+        actualProduct.setProductPlan(new Plan(getPlanName(), new Term(getOptionTerm())));
         CONTINUE_ORDER_BUTTON.click();
     }
 
-    public WebHostingProduct getFinalProduct() {
-        return finalProduct;
+    public WebHostingProduct getProduct() {
+        if (actualProduct != null){
+            return actualProduct;
+        }
+        else{
+            actualProduct = new WebHostingProduct(getProductName());
+            actualProduct.setProductPlan(new Plan(getPlanName(), new Term(getOptionTerm())));
+            return actualProduct;
+        }
+
     }
 
     public String getProductName() {
@@ -270,6 +248,5 @@ public class HostingOrderPage extends BasePage {
     public String getCurrentURL() {
         return driver.getCurrentUrl();
     }
-
 
 }

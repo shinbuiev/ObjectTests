@@ -1,10 +1,12 @@
 package Products;
 
+import EmailNotification.ErrorMessage;
 import EmailNotification.TestScreenshot;
 import Objects.Addon;
 import Objects.Domain;
 import Objects.Product;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -57,60 +59,98 @@ public class WebHostingProduct extends Product {
         String error = "";
         WebHostingProduct product = (WebHostingProduct) o;
         if (!this.getProductName().equals(product.getProductName())) {
-            error = error + "Error3: Wrong product name: on Order Page it was " + this.getProductName() +
+            error = "Error3: Wrong product name: on Order Page it was " + this.getProductName() +
                     ", but in Shopping Cart it's "
                     + product.getProductName() + "\n";
-            TestScreenshot.saveScreenShot(product.getClass().getName(), "WrongProductNameOrderPage");
-            TestScreenshot.saveScreenShot(product.getClass().getName(), "WrongProductNameShoppingCart");
+            this.saveScreen("3", "WrongProductNameOrderPage");
+            product.saveScreen("3", "WrongProductNameShoppingCart");
+
+            ArrayList<File> screenNamesList = new ArrayList<File>();  //must be in class not in method!!!
+            screenNamesList.add(new File("/home/geser/Automation/Sreenshot/TestObjects/Errors/3/WrongProductNameOrderPage.png"));
+            screenNamesList.add(new File("/home/geser/Automation/Sreenshot/TestObjects/Errors/3/WrongProductNameShoppingCart.png"));
+            errorMessages.add(new ErrorMessage(error, "3", screenNamesList));
         }
 
         if (!this.getProductDomain().getDomainName().equals(product.getProductDomain().getDomainName())) {
-            error = error + "Error4: Wrong product domain: on Order Page it was " + this.getProductDomain().getDomainName() +
+            error = "Error4: Wrong product domain: on Order Page it was " + this.getProductDomain().getDomainName() +
                     ", but in Shopping Cart it's " + product.getProductDomain().getDomainName() + "\n";
-            TestScreenshot.saveScreenShot(product.getClass().getName(), "WrongProductDomainOrderPage");
-            TestScreenshot.saveScreenShot(product.getClass().getName(), "WrongProductDomainShoppingCart");
+            this.saveScreen("4", "WrongProductDomainOrderPage");
+            product.saveScreen("4", "WrongProductDomainShoppingCart");
+
+            ArrayList<File> screenNamesList = new ArrayList<File>();  //must be in class not in method!!!
+            screenNamesList.add(new File("/home/geser/Automation/Sreenshot/TestObjects/Errors/4/WrongProductDomainOrderPage.png"));
+            screenNamesList.add(new File("/home/geser/Automation/Sreenshot/TestObjects/Errors/4/WrongProductDomainShoppingCart.png"));
+            errorMessages.add(new ErrorMessage(error,"4", screenNamesList));
         }
         if (!this.getProductPlan().getPlanName().equals(product.getProductPlan().getPlanName())) {
-            error = error + "Error5: For " + this.getProductName() + " product, Wrong Plan Name on Order Page it was: "
+            error = "Error5: For " + this.getProductName() + " product, Wrong Plan Name on Order Page it was: "
                     + this.getProductPlan().getPlanName() + ", but in Shopping Cart it's: "
                     + product.getProductPlan().getPlanName() + "\n";
-            TestScreenshot.saveScreenShot(product.getClass().getName(), "WrongPlanNameOrderPage");
-            TestScreenshot.saveScreenShot(product.getClass().getName(), "WrongPlanNameShoppingCart");
+            this.saveScreen("5", "WrongPlanNameOrderPage");
+            product.saveScreen("5", "WrongPlanNameShoppingCart");
+
+            ArrayList<File> screenNamesList = new ArrayList<File>();  //must be in class not in method!!!
+            screenNamesList.add(new File("/home/geser/Automation/Sreenshot/TestObjects/Errors/5/WrongPlanNameOrderPage.png"));
+            screenNamesList.add(new File("/home/geser/Automation/Sreenshot/TestObjects/Errors/5/WrongPlanNameShoppingCart.png"));
+            errorMessages.add(new ErrorMessage(error,"5", screenNamesList));
         }
         if (!this.getProductPlan().getTerm().equals(product.getProductPlan().getTerm())) {
-            error = error + "Error6: For " + this.getProductName() + " product, on Order Page was selected term of plan "
+            error = "Error6: For " + this.getProductName() + " product, on Order Page was selected term of plan "
                     + this.getProductPlan().getTerm() + ", but in Shopping Cart it's: "
                     + product.getProductPlan().getTerm() + "\n";
-            TestScreenshot.saveScreenShot(product.getClass().getName(), "WrongPlanTermOrderPage");
-            TestScreenshot.saveScreenShot(product.getClass().getName(), "WrongPlanTermShoppingCart");
+            this.saveScreen("6", "WrongPlanTermOrderPage");
+            product.saveScreen("6", "WrongPlanTermShoppingCart");
+
+            ArrayList<File> screenNamesList = new ArrayList<File>();  //must be in class not in method!!!
+            screenNamesList.add(new File("/home/geser/Automation/Sreenshot/TestObjects/Errors/6/WrongPlanTermOrderPage.png"));
+            screenNamesList.add(new File("/home/geser/Automation/Sreenshot/TestObjects/Errors/6/WrongPlanTermShoppingCart.png"));
+            errorMessages.add(new ErrorMessage(error, "6", screenNamesList));
         }
         if (!(this.getProductAddons().size() == product.getProductAddons().size())) {
-            error = error + "Error7: For " + this.getProductName() + " wrong count of product Addons, expect productAddons: " + this.getProductAddons()
+            error = "Error7: For " + this.getProductName() + " wrong count of product Addons, expect productAddons: " + this.getProductAddons()
                     + "\n" + "but found: " + product.getProductAddons() + "\n";
-            TestScreenshot.saveScreenShot(product.getClass().getName(), "WrongCountAddonsOrderPage");
-            TestScreenshot.saveScreenShot(product.getClass().getName(), "WrongCountAddonsShoppingCart");
+            this.saveScreen("7", "WrongAddonCountOrderPage");
+            product.saveScreen("7", "WrongAddonCountShoppingCart");
+
+            ArrayList<File> screenNamesList = new ArrayList<File>();  //must be in class not in method!!!
+            screenNamesList.add(new File("/home/geser/Automation/Sreenshot/TestObjects/Errors/7/WrongAddonCountOrderPage.png"));
+            screenNamesList.add(new File("/home/geser/Automation/Sreenshot/TestObjects/Errors/7/WrongAddonCountShoppingCart.png"));
+            errorMessages.add(new ErrorMessage(error, "7", screenNamesList));
         }
 
         for (int i = 0; i < product.getProductAddons().size(); i++) {
             if (!this.getProductAddons().contains(product.getProductAddons().get(i))) {
-                error = error + "Error8: For " + this.getProductName() +
+                error = "Error8: For " + this.getProductName() +
                         " product, Wrong Addon Name: on Order Page was selected addon "
                         + this.getProductAddons().get(i).getAddonName() +
                         ", but in shopping Cart it's " + product.getProductAddons().get(i).getAddonName() + "\n";
-                TestScreenshot.saveScreenShot(product.getClass().getName(), "WrongAddonNameOrderPage");
-                TestScreenshot.saveScreenShot(product.getClass().getName(), "WrongAddonNameShoppingCart");
+
+                this.saveScreen("8", "WrongAddonNameOrderPage");
+                product.saveScreen("8", "WrongAddonNameShoppingCart");
+
+                ArrayList<File> screenNamesList = new ArrayList<File>();  //must be in class not in method!!!
+                screenNamesList.add(new File("/home/geser/Automation/Sreenshot/TestObjects/Errors/8/WrongAddonNameOrderPage.png"));
+                screenNamesList.add(new File("/home/geser/Automation/Sreenshot/TestObjects/Errors/8/WrongAddonNameShoppingCart.png"));
+                errorMessages.add(new ErrorMessage(error, "8", screenNamesList));
             }
         }
 
         //ned to change logic to valid
         for (int i = 0; i < this.getProductAddons().size(); i++) {
             if (!this.getProductAddons().get(i).getAddonTerm().equals(product.getProductAddons().get(i).getAddonTerm()))
-                error = error + "Error9: For " + this.getProductName() + " product, on Order Page was selected term " +
+                error = "Error9: For " + this.getProductName() + " product, on Order Page was selected term " +
                         this.getProductAddons().get(i).getAddonTerm() +
                         ", but in Shopping Cart Term for addon " + this.getProductAddons().get(i).getAddonName() + " found term " +
                         product.getProductAddons().get(i).getAddonTerm() + "\n";
-            TestScreenshot.saveScreenShot(product.getClass().getName(), "WrongAddonTermOrderPage");
-            TestScreenshot.saveScreenShot(product.getClass().getName(), "WrongAddonTermShoppingCart");
+
+            this.saveScreen("9", "WrongAddonTermOrderPage");
+            product.saveScreen("9", "WrongAddonTermShoppingCart");
+
+            ArrayList<File> screenNamesList = new ArrayList<File>();  //must be in class not in method!!!
+            screenNamesList.add(new File("/home/geser/Automation/Sreenshot/TestObjects/Errors/9/WrongAddonTermOrderPage.png"));
+            screenNamesList.add(new File("/home/geser/Automation/Sreenshot/TestObjects/Errors/9/WrongAddonTermShoppingCart.png"));
+            errorMessages.add(new ErrorMessage(error, "9", screenNamesList));
+
         }
         return error;
     }

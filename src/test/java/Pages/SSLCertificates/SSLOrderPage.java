@@ -101,9 +101,7 @@ public class SSLOrderPage extends BasePage
     public void clickContinueOrderButton() {
         actualProduct.setProductPrice(new Price(getTotalPrice()));
         actualProduct.setProductDomain(new Domain(domainName));
-        actualProduct.setProductPlan(new Plan(getPlanName(), new Term(getOptionTerm())));
-        System.out.println("final: " + actualProduct.getProductName() + " " + actualProduct.getProductDomain() + " " + actualProduct.getProductTerm() + " " +
-                actualProduct.getProductPrice() + " " + actualProduct.getProductPlan());
+        //actualProduct.setProductPlan(new Plan(getPlanName(), new Term(getOptionTerm())));
         CONTINUE_ORDER_BUTTON.click();
     }
 
@@ -115,10 +113,8 @@ public class SSLOrderPage extends BasePage
         {
             actualProduct = new SSLproduct(getProductName());
             actualProduct.setProductPlan(new Plan(getPlanName(), new Term(getOptionTerm())));
+            return actualProduct;
         }
-
-        System.out.println("start: "+ actualProduct);
-        return actualProduct;
     }
 
 }
