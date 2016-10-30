@@ -45,6 +45,9 @@ public class ShoppingCartPage extends BasePage {
     @FindBy(xpath = "//*[@id=\"shopping_cart_table\"]/div[1]/div[2]/div[4]/div[2]/div/div/div[1]/div[1]/a/span")
     private WebElement thirdAddonTerm;
 
+    @FindBy(xpath = "//a[@href='confirm_delete']")
+    private WebElement clearShoppingCartButton;
+
     private WebHostingProduct actual;
     protected EventFiringWebDriver driver;
 
@@ -105,10 +108,7 @@ public class ShoppingCartPage extends BasePage {
         return actual;
     }
 
-    public void productToString(WebHostingProduct actual) {
-        System.out.println("Actual webHostingProduct in Shopping Cart: " + actual.getProductName() + " Domain name: "
-                + actual.getProductDomain() + ", selected plan:  " + actual.getProductPlan() + " for  " + actual.getProductPlan().getTerm() + " ");
-        System.out.println("Selected addons: " + actual.getProductAddons());
-        System.out.println("Total price is: " + actual.getProductPrice().getPrice());
+    public void clearShoppingCart(){
+        clearShoppingCartButton.click();
     }
 }

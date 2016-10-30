@@ -14,15 +14,6 @@ import org.openqa.selenium.support.events.EventFiringWebDriver;
  */
 public class HostingPlanPage extends BasePage {
 
-    @FindBy(xpath = "//*[@id='moving_object_container']/div[1]/div/main/div/div[3]/a")
-    private WebElement ECONOMY_PLAN;
-
-    @FindBy(xpath = "//*[@id=\"moving_object\"]/div/div[2]/a")
-    private WebElement PREMIUM_PLAN;
-
-    @FindBy(xpath = "//*[@id='moving_object_container']/div[3]/div/main/div/div[2]/a/span")
-    private WebElement UNLIMITED_PLAN;
-
     @FindBy(xpath = "//*[@id='moving_object_container']/div[1]/div/header/div[1]")
     private WebElement ECONOMY_PLAN_TEXT;
 
@@ -57,22 +48,20 @@ public class HostingPlanPage extends BasePage {
         return actual;
     }
 
-    public void clickBuyNowEconomyHosting() {
+    public void selectPlan(String url){
         actual = new WebHostingProduct(getProductName());
-        actual.setProductPlan(new Plan(ECONOMY_PLAN_TEXT.getText()));
-        ECONOMY_PLAN.click();
-    }
 
-    public void clickBuyNowPremiumHosting() {
-        actual = new WebHostingProduct(getProductName());
-        actual.setProductPlan(new Plan(PREMIUM_PLAN_TEXT.getText()));
-        PREMIUM_PLAN.click();
-    }
-
-    public void clickBuyNowUnlimitedHosting() {
-        actual = new WebHostingProduct(getProductName());
-        actual.setProductPlan(new Plan(UNLIMITED_PLAN_TEXT.getText()));
-        UNLIMITED_PLAN.click();
+        // it will be change later
+        if (url.contains("economy")){
+            actual.setProductPlan(new Plan(ECONOMY_PLAN_TEXT.getText()));
+        }
+        if (url.contains("premium")){
+            actual.setProductPlan(new Plan(PREMIUM_PLAN_TEXT.getText()));
+        }
+        if (url.contains("unlimited")){
+            actual.setProductPlan(new Plan(UNLIMITED_PLAN_TEXT.getText()));
+        }
+        driver.findElement(By.xpath("//a[@href='" + url + "']")).click();
     }
 
     public String getProductName() {

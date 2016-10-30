@@ -2,7 +2,9 @@ package Tests;
 
 import EmailNotification.Email;
 import EmailNotification.ErrorMessage;
+import Interfaces.ExpectedProducts.BaseExpectedProduct;
 import Interfaces.ExpectedProducts.LinuxWebHosting;
+import Interfaces.ExpectedProducts.WindowsWebHosting;
 import Objects.Product;
 import Pages.BasePage;
 import Pages.WebHosting.HostingOrderPage;
@@ -16,6 +18,7 @@ import org.openqa.selenium.support.events.EventFiringWebDriver;
 import org.testng.Assert;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeSuite;
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 import java.util.ArrayList;
@@ -34,6 +37,7 @@ public class HostingBuyTest {
     HostingOrderPage orderPage;
     ShoppingCartPage shoppingCartPage;
     private LinuxWebHosting linuxWebHosting = new LinuxWebHosting();
+    private WindowsWebHosting windowsWebHosting = new WindowsWebHosting();
     private ArrayList<ErrorMessage> errorMessageList = new ArrayList<ErrorMessage>();
 
     @BeforeSuite
@@ -64,14 +68,28 @@ public class HostingBuyTest {
         driver.manage().deleteAllCookies();
     }
 
-    @Test
-    public void testByEconomyLinuxHosting() {
-        gotoPage("https://www.crazydomains.com.au/web-hosting/");
-        hostingPlanPage.clickBuyNowEconomyHosting();
+    //data provider for get expect product and try to buy product
+    @DataProvider
+    public Object[][] getExpectedProduct(){
+        return new Object[][]{
+                {windowsWebHosting, windowsWebHosting.getProductPlans().get(0).getOrderPageUrl()},
+                {windowsWebHosting, windowsWebHosting.getProductPlans().get(1).getOrderPageUrl()},
+                {windowsWebHosting, windowsWebHosting.getProductPlans().get(2).getOrderPageUrl()},
+                {linuxWebHosting, linuxWebHosting.getProductPlans().get(0).getOrderPageUrl()},
+                {linuxWebHosting, linuxWebHosting.getProductPlans().get(1).getOrderPageUrl()},
+                {linuxWebHosting, linuxWebHosting.getProductPlans().get(2).getOrderPageUrl()},
+        };
+    }
+
+    @Test(dataProvider = "getExpectedProduct")
+    public void byHostingTest(BaseExpectedProduct product, String plan) {
+
+        gotoPage(product.getProductMainPage());
+        hostingPlanPage.selectPlan(plan);
+        //here compare product from plan page and order page, add screenshots and errors to errorMessageList if exist come differences
         rememberProductBefore(hostingPlanPage);
         rememberProductAfter(orderPage);
         comparePlanPageAndOrderPageProducts();
-//        compareProducts();
 
         orderPage.selectOption("24");
         orderPage.addAddon("Traffic Booster");
@@ -81,19 +99,22 @@ public class HostingBuyTest {
         orderPage.clearDomainInputField();
         orderPage.inputDomainName("DomainForTesting.com");
         orderPage.clickContinueOrderButton();
-//        rememberProductBefore(orderPage);
-//        orderPage.productToString(orderPage.getFinalProduct());
         shoppingCartPage.clickCart();
+        //here compare product from order page and shopping cart page, add screenshots and errors to errorMessageList if exist come differences
         rememberProductBefore(orderPage);
-//        shoppingCartPage.productToString(shoppingCartPage.getProduct());
         rememberProductAfter(shoppingCartPage);
         compareProductsOrderPageAndShoppingCart();
-
+        //here compare final product in shopping cart with expected product (The expected product is a product created based on specifications)
+        //if exist some differences add error message to array
         checkProductSpecification(shoppingCartPage);
+        //here check
+        shoppingCartPage.clearShoppingCart();
         isProductOk();
+
     }
 
     public void isProductOk() {
+        //must remake the logic: add possibility check the errorMessageList
         Assert.assertTrue(errors.equals(""), "\n" + errors);
         if (!errors.equals("")){
 

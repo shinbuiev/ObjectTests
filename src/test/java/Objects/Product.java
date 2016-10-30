@@ -80,7 +80,7 @@ public abstract class Product {
 
         if (!this.getProductPlan().getPlanName().equals(product.getProductPlan().getPlanName())) {
 
-            error = "Error2: For " + this.getProductName() + " webHostingProduct, Wrong Plan Name: on Plan Page it was "
+            error = "Error2: For " + this.getProductName() + " Product, Wrong Plan Name: on Plan Page it was "
                     + this.getProductPlan().getPlanName() + " but in Order Page it's: " + product.getProductPlan().getPlanName();
             this.saveScreen("2", "WrongPlanNamePlanPage");
             product.saveScreen("2", "WrongPlanNameOrderPage");

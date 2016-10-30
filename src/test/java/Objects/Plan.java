@@ -25,9 +25,15 @@ public class Plan {
     }
 
     public Plan(String planName, String orderPageUrl) {
-        this.orderPageUrl = orderPageUrl;
         this.planName = planName;
+        this.orderPageUrl = orderPageUrl;
     }
+
+//    public Plan(String planName,  String planPageUrl, String orderPageUrl) {
+//        this.planName = planName;
+//        this.planPageUrl = planPageUrl;
+//        this.orderPageUrl = orderPageUrl;
+//    }
 
     public Plan(String planName, String Url, ArrayList<Term> terms, ArrayList<Addon> addons) {
         this.planName = planName;

@@ -1,38 +1,30 @@
 package Interfaces.ExpectedProducts;
 
-import Objects.*;
+import Objects.Addon;
+import Objects.Plan;
+import Objects.Product;
+import Objects.Term;
 import Products.WebHostingProduct;
-import org.apache.commons.io.FileUtils;
-import org.openqa.selenium.OutputType;
-import org.openqa.selenium.TakesScreenshot;
 
-import java.io.File;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 
 /**
- * Created by Sergiy.K on 25-Oct-16.
+ * Created by geser on 30.10.16.
  */
-public class LinuxWebHosting extends BaseExpectedProduct{
-/*
- *   input here features!!!
- *
- *
- */
-
+public class WindowsWebHosting extends BaseExpectedProduct{
     public String getProductName() {
-        return "Web Hosting";
+        return "Windows Hosting";
     }
 
     public String getProductMainPage(){
-        return "https://www.crazydomains.com.au/web-hosting/";
+        return "https://www.crazydomains.com.au/windows-hosting/";
     }
 
-//    https://www.crazydomains.com.au/web-hosting/
-//    https://www.crazydomains.com.au/web-hosting/order-economy-linux-hosting/
-//    https://www.crazydomains.com.au/web-hosting/order-premium-linux-hosting/
-//    https://www.crazydomains.com.au/web-hosting/order-unlimited-linux-hosting/
+//
+//    https://www.crazydomains.com.au/windows-hosting/order-economy-windows-hosting/
+//    https://www.crazydomains.com.au/windows-hosting/order-premium-windows-hosting/
+//    https://www.crazydomains.com.au/windows-hosting/order-unlimited-windows-hosting/
+//
 
     public ArrayList<Term> getProductTerms() {
         ArrayList<Term> terms = new ArrayList<Term>() {{
@@ -46,9 +38,9 @@ public class LinuxWebHosting extends BaseExpectedProduct{
 
     public ArrayList<Plan> getProductPlans() {
         ArrayList<Plan> plans = new ArrayList<Plan>() {{
-            add(new Plan("Economy", "/web-hosting/order-economy-linux-hosting/"));
-            add(new Plan("Premium", "/web-hosting/order-premium-linux-hosting/"));
-            add(new Plan("Unlimited","/web-hosting/order-unlimited-linux-hosting/"));
+            add(new Plan("Economy", "/windows-hosting/order-economy-windows-hosting/"));
+            add(new Plan("Premium", "/windows-hosting/order-premium-windows-hosting/"));
+            add(new Plan("Unlimited","/windows-hosting/order-unlimited-windows-hosting/"));
         }};
         return plans;
     }
@@ -97,6 +89,7 @@ public class LinuxWebHosting extends BaseExpectedProduct{
 
     @Override
     public String toString() {
-        return "Web Hosting:";
+        return "Windows Web Hosting:";
     }
 }
+
