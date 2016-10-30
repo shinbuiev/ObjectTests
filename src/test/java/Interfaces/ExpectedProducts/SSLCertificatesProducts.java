@@ -18,10 +18,6 @@ public class SSLCertificatesProducts {
     public String getProductMainPage(){
         return "https://www.crazydomains.com.au/ssl-certificates/";
     }
-//      https://www.crazydomains.com.au/ssl-certificates/
-//     /ssl-certificates/order-standard-ssl/
-//     /ssl-certificates/order-premium-ssl/
-//     /ssl-certificates/order-wildcard-ssl/
 
     public ArrayList<Term> getProductTerms() {
         ArrayList<Term> terms = new ArrayList<Term>() {{

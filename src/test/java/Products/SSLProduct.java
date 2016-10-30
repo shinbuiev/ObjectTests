@@ -28,7 +28,7 @@ public class SSLProduct extends Product {
     public String getErrorShoppingCartPage(Object o) {
         String error = "";
         SSLProduct product = (SSLProduct) o;
-
+        //will be refactor for this
 
         if (!this.getProductName().equals(product.getProductName())) {
             error = "Error3: Wrong product name: on Order Page it was " + this.getProductName() +

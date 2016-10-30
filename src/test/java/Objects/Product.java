@@ -60,7 +60,7 @@ public abstract class Product {
 
     public ArrayList<ErrorMessage> comparePlanPageOrderPageProductsAndGetErrors(Object o) {
         ArrayList<ErrorMessage> errorMessages1 = new ArrayList<ErrorMessage>();
-
+        //here need to refactor method save screen shot and add ro errorMessages
         String error;
 
         Product product = (Product) o;

@@ -1,7 +1,6 @@
 package Products;
 
 import EmailNotification.ErrorMessage;
-import EmailNotification.TestScreenshot;
 import Objects.Addon;
 import Objects.Domain;
 import Objects.Product;
@@ -18,7 +17,6 @@ public class WebHostingProduct extends Product {
 
     private Domain productDomain;
     private ArrayList<Addon> productAddons;
-    private String productPlanPageUrl; //maybe not need this
 
     //constructors
     public WebHostingProduct(String productName) {

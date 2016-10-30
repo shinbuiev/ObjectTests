@@ -33,9 +33,9 @@ public class HostingBuyTest {
     private Product productBefore;
     private Product productAfter;
     private java.lang.String errors = "";
-    HostingPlanPage hostingPlanPage;
-    HostingOrderPage orderPage;
-    HostingShoppingCartPage hostingShoppingCartPage;
+    private HostingOrderPage orderPage;
+    private HostingPlanPage hostingPlanPage;
+    private HostingShoppingCartPage hostingShoppingCartPage;
     private LinuxWebHosting linuxWebHosting = new LinuxWebHosting();
     private WindowsWebHosting windowsWebHosting = new WindowsWebHosting();
     private ArrayList<ErrorMessage> errorMessageList = new ArrayList<ErrorMessage>();
@@ -59,7 +59,6 @@ public class HostingBuyTest {
         DesiredCapabilities cap = DesiredCapabilities.chrome();
         cap.setCapability(ChromeOptions.CAPABILITY, co);
         WebDriver webDriver = new ChromeDriver(cap);
-        //WebDriver webDriver = new ChromeDriver();
         driver = new EventFiringWebDriver(webDriver);
         //use this Highlight if need, when you debug your test
 //        driver.register(new ListenerThatHiglilightsElements("#FFFF00", 1, 200, TimeUnit.MILLISECONDS));
@@ -151,7 +150,6 @@ public class HostingBuyTest {
         if (productBefore.getErrorMessages().size() > 0){
             errorMessageList.addAll(productBefore.getErrorMessages());
         }
-
     }
 
     public void compareProductsOrderPageAndShoppingCart() {

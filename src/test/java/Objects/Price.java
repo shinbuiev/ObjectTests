@@ -18,8 +18,6 @@ public class Price {
 
         if (this.price.equals(price1.price)) return true;
         else return false;
-//        return price != null ? price.equals(price1.price) : price1.price == null;
-
     }
 
     @Override

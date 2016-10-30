@@ -29,12 +29,6 @@ public class Plan {
         this.orderPageUrl = orderPageUrl;
     }
 
-//    public Plan(String planName,  String planPageUrl, String orderPageUrl) {
-//        this.planName = planName;
-//        this.planPageUrl = planPageUrl;
-//        this.orderPageUrl = orderPageUrl;
-//    }
-
     public Plan(String planName, String Url, ArrayList<Term> terms, ArrayList<Addon> addons) {
         this.planName = planName;
         this.orderPageUrl = Url;
@@ -74,7 +68,6 @@ public class Plan {
         this.term = term;
     }
 
-
     public String getOrderPageUrl() {
         return orderPageUrl;
     }
@@ -91,20 +84,6 @@ public class Plan {
         this.planName = planName;
     }
 
-    public String planToString() {
-        String result = "For " + planName + " plan " + "\n";
-//        result = result + getOrderPageUrl() + "\n";
-        result = result + "Terms:" + "\n";
-        for (int i = 0; i < terms.size(); i++) {
-            result = result + terms.get(i) + "\n";
-        }
-        result = result + "Addons: " + "\n";
-        for (int i = 0; i < addons.size(); i++) {
-            result = result + addons.get(i) + "\n";
-        }
-        return result;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -113,13 +92,7 @@ public class Plan {
         Plan plan = (Plan) o;
 
         if (!this.planName.equals(plan.planName)) return false;
-//
-//        if ((this.planPageUrl!=null)&& pl&&(!this.orderPageUrl.equals(plan.orderPageUrl))) return false;
-//        if (!this.planPageUrl.equals(plan.planPageUrl)) return false;
-//        if (!this.term.equals(plan.term)) return false;
-//        if (!this.terms.equals(plan.terms)) return false;
-//        if (!this.addons.equals(plan.addons)) return false;
-        //дописати!!!!
+        //remake this
         else return true;
 
     }

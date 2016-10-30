@@ -13,21 +13,11 @@ import org.openqa.selenium.support.events.EventFiringWebDriver;
  */
 public class SSLCertificatesPlanPage extends BasePage{
 
-    @FindBy(xpath = "//*[@id='moving_object_container']/div[1]/div/main/div/div[3]/a")
-    private WebElement STANDARD_PLAN_BUTTON;
-
     @FindBy(xpath = "//*[@id='moving_object_container']/div[1]/div/header/div[1]")
     private WebElement STANDARD_PLAN_TEXT;
 
-    @FindBy(xpath = "//*[@id='moving_object']/a")
-    private WebElement PREMIUM_PLAN_BUTTON;
-
     @FindBy(xpath = "//*[@id='moving_object_container']/div[2]/div/header/div[1]")
     private WebElement PREMIUM_PLAN_TEXT;
-
-
-    @FindBy(xpath = "//*[@id='moving_object_container']/div[3]/div/main/div/div[2]/a/span")
-    private WebElement WILDCARD_PLAN_BUTTON;
 
     @FindBy(xpath = "//*[@id='moving_object_container']/div[3]/div/header/div[1]")
     private WebElement WILDCARD_PLAN_TEXT;

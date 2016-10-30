@@ -21,8 +21,6 @@ import java.util.ArrayList;
  */
 public class SSLCertificateBuyTest extends HostingBuyTest {
 
-
-
     private String errors = "";
     private Product productAfter;
     private Product productBefore;
@@ -50,9 +48,7 @@ public class SSLCertificateBuyTest extends HostingBuyTest {
 
     @Test(dataProvider = "getExpectedProduct")
     public void bySSLCertificateTest(SSLCertificatesProducts product, String plan) {
-//        gotoPage("https://www.crazydomains.com.au/ssl-certificates/");
-//        sslPlanPage.pageDown();
-//        sslPlanPage.selectPremiumPlan();
+
         gotoPage(product.getProductMainPage());
         sslPlanPage.pageDown();
         sslPlanPage.selectPlan(plan);
@@ -90,6 +86,7 @@ public class SSLCertificateBuyTest extends HostingBuyTest {
         shoppingCartPage = new SSLshoppingCartPage(driver);
     }
 
+    //change logic!!!
     public void checkProductSpecification(BasePage page) {
         if (!errors.equals("")) {
             errors = errors + "\n";
@@ -108,12 +105,10 @@ public class SSLCertificateBuyTest extends HostingBuyTest {
     }
 
     public void comparePlanPageAndOrderPageProducts(){
-
         productBefore.comparePlanPageOrderPageProductsAndGetErrors(productAfter);
         if (productBefore.getErrorMessages().size() > 0){
             errorMessageList.addAll(productBefore.getErrorMessages());
         }
-
     }
 
     public void compareProductsOrderPageAndShoppingCart() {
@@ -136,7 +131,6 @@ public class SSLCertificateBuyTest extends HostingBuyTest {
                 System.out.println("can't send email  \n" + e.getMessage());
             }
         }
-
     }
 
     @AfterTest

@@ -42,7 +42,7 @@ public class Addon {
 
     @Override
     public boolean equals(Object o) {
-//        if (this == o) return true;
+
         if (o == null || getClass() != o.getClass()) return false;
 
         boolean result = false;
@@ -72,15 +72,13 @@ public class Addon {
     public String toString() {
         if (addonPrice != null) {
             return "Addon: " + addonName + " price: " + addonPrice;
-            //+ " TERM is disable for now???";
         }
         if (addonPrice != null && addonTerm != null) {
             return "Addon: " + addonName + " price: " + addonPrice + " term: " + addonTerm;
         }
         if (addonTerm != null)
             return "Addon: " + addonName + " term: " + addonTerm;
-//                    + " PRICE is disable for now???";
         else return addonName;
-
     }
+
 }

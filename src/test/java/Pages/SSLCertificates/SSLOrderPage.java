@@ -12,13 +12,11 @@ import java.util.List;
 /**
  * Created by geser on 27.10.16.
  */
-public class SSLOrderPage extends BasePage
-//        extends HostingOrderPage
-{
+public class SSLOrderPage extends BasePage{
+
     public SSLOrderPage(EventFiringWebDriver driver) {
         super(driver);
     }
-//    protected EventFiringWebDriver driver;
 
     private boolean optionStatus;
     private static String optionTerm;

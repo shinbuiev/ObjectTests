@@ -20,12 +20,6 @@ public class WindowsWebHosting extends BaseExpectedProduct{
         return "https://www.crazydomains.com.au/windows-hosting/";
     }
 
-//
-//    https://www.crazydomains.com.au/windows-hosting/order-economy-windows-hosting/
-//    https://www.crazydomains.com.au/windows-hosting/order-premium-windows-hosting/
-//    https://www.crazydomains.com.au/windows-hosting/order-unlimited-windows-hosting/
-//
-
     public ArrayList<Term> getProductTerms() {
         ArrayList<Term> terms = new ArrayList<Term>() {{
             add(new Term("12"));
