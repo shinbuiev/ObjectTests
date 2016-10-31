@@ -3,13 +3,14 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import EmailNotification.ErrorMessage;
+import Pages.BasePage;
 import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.events.EventFiringWebDriver;
 
-import static Tests.HostingBuyTest.driver;
+
 
 /**
  * Created by Sergiy.K on 28-Oct-16.
@@ -22,14 +23,16 @@ public abstract class Product {
     private Term productTerm;
     private Plan productPlan;
 
+
     public Product(String productName) {
         this.productName = productName;
-        takeScreenshot();
+       // takeScreenshot();
     }
     public Product(EventFiringWebDriver driver) {
         this.driver=driver;
 
     }
+
 
     public String getProductName() {
         return productName;

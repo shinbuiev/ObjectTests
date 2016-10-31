@@ -4,6 +4,7 @@ import Objects.Plan;
 import Pages.BasePage;
 import Products.SSLProduct;
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.events.EventFiringWebDriver;
@@ -26,7 +27,7 @@ public class SSLCertificatesPlanPage extends BasePage{
     @FindBy(xpath = "//*[@class='title-h1']")
     private static WebElement PRODUCT_NAME;
 
-    public SSLCertificatesPlanPage(EventFiringWebDriver driver) {
+    public SSLCertificatesPlanPage(WebDriver driver) {
         super(driver);
     }
 
