@@ -47,7 +47,7 @@ public class SSLCertificateBuyTest extends HostingBuyTest {
     }
 
     @Test(dataProvider = "getExpectedProduct")
-    public void bySSLCertificateTest(SSLCertificatesProducts product, String plan) {
+    public void buySSLCertificateTest(SSLCertificatesProducts product, String plan) {
 
         gotoPage(product.getProductMainPage());
         sslPlanPage.pageDown();

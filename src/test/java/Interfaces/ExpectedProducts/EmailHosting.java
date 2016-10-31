@@ -1,0 +1,86 @@
+package Interfaces.ExpectedProducts;
+
+import Objects.Addon;
+import Objects.Plan;
+import Objects.Product;
+import Objects.Term;
+import Products.EmailHostingProduct;
+import Products.WebHostingProduct;
+
+import java.util.ArrayList;
+
+/**
+ * Created by geser on 31.10.16.
+ */
+public class EmailHosting extends BaseExpectedProduct{
+    public String getProductName() {
+        return "Email Hosting";
+    }
+
+    public String getProductMainPage(){
+        return "https://www.crazydomains.com.au/email-hosting/";
+    }
+
+    public ArrayList<Term> getProductTerms() {
+        ArrayList<Term> terms = new ArrayList<Term>() {{
+            add(new Term("12"));
+            add(new Term("24"));
+            add(new Term("36"));
+            add(new Term("120"));
+        }};
+        return terms;
+    }
+
+    public ArrayList<Plan> getProductPlans() {
+        ArrayList<Plan> plans = new ArrayList<Plan>() {{
+            add(new Plan("Personal", "/email-hosting/order-personal-email/"));
+            add(new Plan("Group", "/email-hosting/order-group-email/"));
+            add(new Plan("Unlimited","/email-hosting/order-unlimited-email/"));
+        }};
+        return plans;
+    }
+
+    public ArrayList<Addon> getProductAddons() {
+        final ArrayList<Addon> addons = new ArrayList<Addon>() {{
+            add(new Addon("Premium Email Protection"));
+        }};
+        return addons;
+    }
+
+    public String isProduct(Product product) {
+        // method check webHostingProduct specification
+        EmailHostingProduct webHostingProduct = (EmailHostingProduct) product;
+
+        String error = "";
+        if (!this.getProductName().equals(webHostingProduct.getProductName())) {
+            error = error + "Specification Error1: Wrong product name: in specification it was " +
+                    this.getProductName() + ", but in Shopping Cart it's: " + webHostingProduct.getProductName() + "\n";
+        }
+
+        if (!this.getProductPlans().contains(webHostingProduct.getProductPlan())) {
+            error = error + "Specification Error2: Wrong plan name: on Order Page it was " + this.getProductPlans() +
+                    ", but in Shopping Cart it's: " + webHostingProduct.getProductPlan() + " specific error" + "\n";
+        }
+
+        for (int i = 0; i < webHostingProduct.getProductAddons().size(); i++) {
+            if (!this.getProductAddons().contains(webHostingProduct.getProductAddons().get(i))) {
+                error = error + "Specification Error3: Wrong addon name: in specification it was " + this.getProductAddons() +
+                        "\n" + ", but in Shopping Cart it's: " + webHostingProduct.getProductAddons().get(i) + "\n";
+            }
+        }
+
+        for (int i = 0; i < getProductTerms().size(); i++) {
+            if (!this.getProductTerms().contains(product.getProductTerm()))
+                error = error + "Specification Error4: Wrong product Term: in specification it was " + this.getProductTerms() +
+                        " , but in Shopping Cart it's: " + product.getProductTerm() + "\n";
+        }
+
+        return error;
+    }
+
+    @Override
+    public String toString() {
+        return "Email Hosting:";
+    }
+}
+

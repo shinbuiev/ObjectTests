@@ -8,6 +8,9 @@ import Interfaces.ExpectedProducts.LinuxWebHosting;
 import Interfaces.ExpectedProducts.WindowsWebHosting;
 import Objects.Product;
 import Pages.BasePage;
+import Pages.EmailHosting.EmailHostingOrderPage;
+import Pages.EmailHosting.EmailHostingPlanPage;
+import Pages.EmailHosting.EmailHostingShoppingCart;
 import Pages.WebHosting.HostingOrderPage;
 import Pages.WebHosting.HostingPlanPage;
 import Pages.WebHosting.HostingShoppingCartPage;
@@ -26,63 +29,34 @@ import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 
 /**
- * Created by Sergiy.K on 21-Oct-16.
+ * Created by geser on 31.10.16.
  */
-public class HostingBuyTest extends BasicTest{
+public class EmailHostingBuyTest extends BasicTest{
 //    public static EventFiringWebDriver driver;
+
+    private EmailHosting emailHosting = new EmailHosting();
 
     private Product productBefore;
     private Product productAfter;
     private java.lang.String errors = "";
-    private HostingOrderPage orderPage;
-    private HostingPlanPage hostingPlanPage;
-    private HostingShoppingCartPage hostingShoppingCartPage;
-    private LinuxWebHosting linuxWebHosting = new LinuxWebHosting();
-    private WindowsWebHosting windowsWebHosting = new WindowsWebHosting();
+    private EmailHostingOrderPage orderPage;
+    private EmailHostingPlanPage hostingPlanPage;
+    private EmailHostingShoppingCart hostingShoppingCartPage;
     private ArrayList<ErrorMessage> errorMessageList = new ArrayList<ErrorMessage>();
 
-//    @BeforeSuite
-//    public void initEnv() {
-//
-//        if (System.getProperty("os.name").equals("Linux"))
-//            {
-//              System.setProperty("webdriver.chrome.driver", "/home/geser/IdeaProjects/chromedriver"); //Chrome driver linux
-//            }
-//        if (System.getProperty("os.name").equals("Windows 10"))
-//            {
-//              System.setProperty("webdriver.chrome.driver", "C:\\Automation\\chromedriver\\chromedriver.exe"); //Chrome driver windows
-//            }
-//
-//        java.lang.String userAgent = "Mozilla/5.0 (Windows NT 6.3; WOW64; Dreamscape/1.0;) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/49.0.2623.87 Safari/537.36";
-//        ChromeOptions co = new ChromeOptions();
-//        co.addArguments("--disable-extensions");
-//        co.addArguments("--user-agent=" + userAgent);
-//        DesiredCapabilities cap = DesiredCapabilities.chrome();
-//        cap.setCapability(ChromeOptions.CAPABILITY, co);
-//        WebDriver webDriver = new ChromeDriver(cap);
-//        driver = new EventFiringWebDriver(webDriver);
-//        //use this Highlight if need, when you debug your test
-////        driver.register(new ListenerThatHiglilightsElements("#FFFF00", 1, 200, TimeUnit.MILLISECONDS));
-//        driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
-//        driver.manage().window().maximize();
-//        driver.manage().deleteAllCookies();
-//    }
 
     //data provider for get expect product and try to buy product
     @DataProvider
     public Object[][] getExpectedProduct(){
         return new Object[][]{
-                {windowsWebHosting, windowsWebHosting.getProductPlans().get(0).getOrderPageUrl()},
-                {windowsWebHosting, windowsWebHosting.getProductPlans().get(1).getOrderPageUrl()},
-                {windowsWebHosting, windowsWebHosting.getProductPlans().get(2).getOrderPageUrl()},
-                {linuxWebHosting, linuxWebHosting.getProductPlans().get(0).getOrderPageUrl()},
-                {linuxWebHosting, linuxWebHosting.getProductPlans().get(1).getOrderPageUrl()},
-                {linuxWebHosting, linuxWebHosting.getProductPlans().get(2).getOrderPageUrl()},
+                {emailHosting, emailHosting.getProductPlans().get(0).getOrderPageUrl()},
+                {emailHosting, emailHosting.getProductPlans().get(1).getOrderPageUrl()},
+                {emailHosting, emailHosting.getProductPlans().get(2).getOrderPageUrl()},
         };
     }
 
     @Test(dataProvider = "getExpectedProduct")
-    public void buyHostingTest(BaseExpectedProduct product, String plan) {
+    public void buyEmailHostingTest(BaseExpectedProduct product, String plan) {
 
         gotoPage(product.getProductMainPage());
         hostingPlanPage.selectPlan(plan);
@@ -91,13 +65,11 @@ public class HostingBuyTest extends BasicTest{
         rememberProductAfter(orderPage);
         comparePlanPageAndOrderPageProducts();
 
-//        orderPage.selectOption("24");
-//        orderPage.addAddon("Traffic Booster");
+        orderPage.selectOption("24");
         orderPage.addAddon("Premium Email Protection");
-//        orderPage.addAddon("Secure Web Hosting");
         orderPage.pageDown();
         orderPage.clearDomainInputField();
-        orderPage.inputDomainName("DomainForTesting.com");
+        orderPage.inputDomainName("EmailHosingTest.com");
         orderPage.clickContinueOrderButton();
         hostingShoppingCartPage.clickCart();
         //here compare product from order page and shopping cart page, add screenshots and errors to errorMessageList if exist come differences
@@ -125,16 +97,16 @@ public class HostingBuyTest extends BasicTest{
         if (!driver.getCurrentUrl().equals(url)) {
             driver.get(url);
         }
-        hostingPlanPage = new HostingPlanPage(driver);
-        orderPage = new HostingOrderPage(driver);
-        hostingShoppingCartPage = new HostingShoppingCartPage(driver);
+        hostingPlanPage = new EmailHostingPlanPage(driver);
+        orderPage = new EmailHostingOrderPage(driver);
+        hostingShoppingCartPage = new EmailHostingShoppingCart(driver);
     }
 
     public void checkProductSpecification(BasePage page) {
         if (!errors.equals("")) {
             errors = errors + "\n";
         }
-        errors = errors + linuxWebHosting.isProduct(page.getProduct());
+        errors = errors + emailHosting.isProduct(page.getProduct());
     }
 
     public void rememberProductBefore(BasePage page) {
@@ -164,16 +136,16 @@ public class HostingBuyTest extends BasicTest{
     @AfterTest
     public void sendEmailNotificationWithErrors(){
         if (errorMessageList.size() > 0)
-            {
-                Email email = new Email();
-                try {
-                    email.execute("Result for Web Hosting buy test ", errorMessageList);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    System.out.println("can't send email  \n" + e.getMessage());
-                }
+        {
+            Email email = new Email();
+            try {
+                email.execute("Result for Web Hosting buy test ", errorMessageList);
+            } catch (Exception e) {
+                e.printStackTrace();
+                System.out.println("can't send email  \n" + e.getMessage());
             }
         }
+    }
 
     @AfterTest
     public void evnSgut() {
@@ -181,3 +153,4 @@ public class HostingBuyTest extends BasicTest{
             driver.quit();
     }
 }
+
