@@ -43,29 +43,9 @@ public class HostingBuyTest {
     @BeforeSuite
     public void initEnv() {
 
-        if (System.getProperty("os.name").equals("Linux"))
-            {
-              System.setProperty("webdriver.chrome.driver", "/home/geser/IdeaProjects/chromedriver"); //Chrome driver linux
-            }
-        if (System.getProperty("os.name").equals("Windows"))
-            {
-              System.setProperty("webdriver.chrome.driver", "C:\\Automation\\chromedriver\\chromedriver.exe"); //Chrome driver windows
-            }
 
-        java.lang.String userAgent = "Mozilla/5.0 (Windows NT 6.3; WOW64; Dreamscape/1.0;) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/49.0.2623.87 Safari/537.36";
-        ChromeOptions co = new ChromeOptions();
-        co.addArguments("--disable-extensions");
-        co.addArguments("--user-agent=" + userAgent);
-        DesiredCapabilities cap = DesiredCapabilities.chrome();
-        cap.setCapability(ChromeOptions.CAPABILITY, co);
-        WebDriver webDriver = new ChromeDriver(cap);
-        driver = new EventFiringWebDriver(webDriver);
-        //use this Highlight if need, when you debug your test
-//        driver.register(new ListenerThatHiglilightsElements("#FFFF00", 1, 200, TimeUnit.MILLISECONDS));
-        driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
-        driver.manage().window().maximize();
-        driver.manage().deleteAllCookies();
     }
+
 
     //data provider for get expect product and try to buy product
     @DataProvider

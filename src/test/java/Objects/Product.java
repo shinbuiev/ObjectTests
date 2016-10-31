@@ -6,6 +6,8 @@ import EmailNotification.ErrorMessage;
 import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.support.events.EventFiringWebDriver;
 
 import static Tests.HostingBuyTest.driver;
 
@@ -13,6 +15,7 @@ import static Tests.HostingBuyTest.driver;
  * Created by Sergiy.K on 28-Oct-16.
  */
 public abstract class Product {
+    private EventFiringWebDriver driver;
     public File screenFile;
     private String productName;
     private Price productPrice;
@@ -22,6 +25,10 @@ public abstract class Product {
     public Product(String productName) {
         this.productName = productName;
         takeScreenshot();
+    }
+    public Product(EventFiringWebDriver driver) {
+        this.driver=driver;
+
     }
 
     public String getProductName() {
