@@ -26,6 +26,7 @@ public class Term {
     }
 
     @Override
+
     public int hashCode() {
         return term.hashCode();
     }
