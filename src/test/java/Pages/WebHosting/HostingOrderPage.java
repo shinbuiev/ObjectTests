@@ -43,6 +43,9 @@ public class HostingOrderPage extends BasePage {
     @FindBy(xpath = "//*[@id='domain_available_tick']")
     private WebElement DOMAIN_AVAILABLE_TICK;
 
+    @FindBy(xpath = "//*[@id='domain_available_cross']")
+    private WebElement DOMAIN_NOT_AVAILABLE_TICK;
+
     @FindBy(xpath = "//*[contains(text(),'Continue Order')]")
     private WebElement CONTINUE_ORDER_BUTTON;
 
@@ -55,22 +58,101 @@ public class HostingOrderPage extends BasePage {
     @FindBy(xpath = "//*[@class='plan-title-square row _middle _center']")
     private WebElement PLAN_NAME_TEXT;
 
-    //for options
-    private boolean optionStatus;
-    private String optionTerm;
-    private String optionPrice;
-    private int optionCount;
+    @FindBy(xpath = "//*[@id='crazy_order_web_hosting_form']/div[3]/div[2]/div[1]/div[1]/div/div/label")
+    private WebElement trafficBoosterCheckBox;
 
-    private String domainName;
+    @FindBy(xpath = "//*[@id='crazy_order_web_hosting_form']/div[3]/div[2]/div[1]/div[3]/div/span")
+    private WebElement trafficBoosterName;
+
+    @FindBy(xpath = "//*[@id='search_booster_promo_price']")
+    private WebElement trafficBoosterPrice;
+
+    @FindBy(xpath = "//*[@id='crazy_order_web_hosting_form']/div[3]/div[2]/div[2]/div[1]/div/div/label")
+    private WebElement WebAnalyticsCheckBox;
+
+    @FindBy(xpath = "//*[@id='crazy_order_web_hosting_form']/div[3]/div[2]/div[2]/div[3]/div/span")
+    private WebElement WebAnalyticsName;
+
+    @FindBy(xpath = "//*[@id='webstats_promo_price']")
+    private WebElement WebAnalyticsPrice;
+
+    @FindBy(xpath = "//*[@id='crazy_order_web_hosting_form']/div[3]/div[2]/div[3]/div[1]/div/div/label")
+    private WebElement PremiumEmailProtectionCheckBox;
+
+    @FindBy(xpath = "//*[@id='crazy_order_web_hosting_form']/div[3]/div[2]/div[3]/div[3]/div/span")
+    private WebElement PremiumEmailProtectionName;
+
+    @FindBy(xpath = "//*[@id='spam_protection_promo_price']")
+    private WebElement PremiumEmailProtectionPrice;
+
+    @FindBy(xpath = "//*[@id='crazy_order_web_hosting_form']/div[3]/div[2]/div[4]/div[1]/div/div/label")
+    private WebElement SecureWebHostingCheckBox;
+
+    @FindBy(xpath = "//*[@id='crazy_order_web_hosting_form']/div[3]/div[2]/div[4]/div[3]/div/span")
+    private WebElement SecureWebHostingName;
+
+    @FindBy(xpath = "//*[@id='ssl_security_promo_price']")
+    private WebElement SecureWebHostingPrice;
+
+    @FindBy(xpath = ".//*[@id='crazy_order_web_hosting_form']/div[3]/div[2]/div[5]/div[1]/div/div/label")
+    private WebElement mailingListManagerCheckBox;
+
+    @FindBy(xpath = "//*[@id='crazy_order_web_hosting_form']/div[3]/div[2]/div[5]/div[3]/div/span")
+    private WebElement mailingListManagerName;
+
+    @FindBy(xpath = ".//*[@id='mailing_list_sell_price']")
+    private WebElement mailingListManagerPrice;
+
+
+    @FindBy(xpath = "//*[@id='crazy_order_web_hosting_form']/div[3]/div[2]/div[5]/div[1]/div/div/label")
+    private WebElement optionTerm12MonthRadiobutton;
+
+    @FindBy(xpath = "//*[@id='crazy_order_web_hosting_form']/div[3]/div[2]/div[5]/div[1]/div/div/label")
+    private WebElement optionTerm12MonthName;
+
+    @FindBy(xpath = "//*[@id='crazy_order_web_hosting_form']/div[3]/div[2]/div[5]/div[1]/div/div/label")
+    private WebElement optionTerm12MonthPrice;
+
+    @FindBy(xpath = "//*[@id='crazy_order_web_hosting_form']/div[1]/div[2]/div[2]/div[1]/div/div/label")
+    private WebElement optionTerm24MonthRadiobutton;
+
+    //*[@class='bold'][contains(text(),'24')]
+    //*[@id='crazy_order_web_hosting_form']/div[1]/div[2]/div[2]/div[2]/div/span
+    @FindBy(xpath = "//*[@class='bold'][contains(text(),'24')]")
+    private WebElement optionTerm24MonthName;
+
+    @FindBy(xpath = "//*[@id='148_promo_price']")
+    private WebElement optionTerm24MonthPrice;
+
+    @FindBy(xpath = "//*[@id='mailing_list_sell_price']")
+    private WebElement optionTerm36MonthRadiobutton;
+
+    @FindBy(xpath = "//*[@id='mailing_list_sell_price']")
+    private WebElement optionTerm36MonthName;
+
+    @FindBy(xpath = "//*[@id='mailing_list_sell_price']")
+    private WebElement optionTerm36MonthPrice;
+
+    @FindBy(xpath = "//*[@id='mailing_list_sell_price']")
+    private WebElement optionTerm120MonthRadiobutton;
+
+    @FindBy(xpath = "//*[@id='mailing_list_sell_price']")
+    private WebElement optionTerm120MonthName;
+
+    @FindBy(xpath = "//*[@id='mailing_list_sell_price']")
+    private WebElement optionTerm120MonthPrice;
+
+    @FindBy(xpath = "//*[@id='domain_price']")
+    private WebElement registerNewDomainPrice;
+
+    private Plan productPlan;
+    private Domain productDomain;
+
     //for addons
     private ArrayList<Addon> addons = new ArrayList<Addon>();
-    private boolean addonStatus;
-    private String addonName;
-    private String addonPrice;
-    private int addonCount;
+
     protected EventFiringWebDriver driver;
     private WebHostingProduct actualProduct;
-//    private WebHostingProduct finalProduct;
 
     public HostingOrderPage(EventFiringWebDriver driver) {
         super(driver);
@@ -82,122 +164,66 @@ public class HostingOrderPage extends BasePage {
         jse.executeScript("scroll(0, 1800);");
     }
 
-    public String getTotalPrice() {
-        return TOTAL_PRICE.getText();
+    public void addTrafficBooster(){
+        addons.add(new Addon(trafficBoosterName.getText(),new Term(productPlan.getPlanName()), new Price(trafficBoosterPrice.getText())));
+        trafficBoosterName.click();
     }
 
-    //for options
-    public void selectOption(String term) {
-        for (int i = 0; i < getOptionCount(); i++) {
-            if (NAME_PLANS_OPTIONS_LIST.get(i).getText().equals(term)) {
-                NAME_PLANS_OPTIONS_LIST.get(i).click();
-                setOptionTerm(term);
-            }
-        }
+    public void addWebAnalytics(){
+        addons.add(new Addon(trafficBoosterName.getText(),new Term(productPlan.getPlanName()), new Price(trafficBoosterPrice.getText())));
+        trafficBoosterName.click();
     }
 
-    public void selectAllTerms(ArrayList<Term> terms) {
-        // need add check size
-        for (int j = 0; j < terms.size(); j++) {
-            selectOption(terms.get(j).toString());
-        }
+    public void addPremiumEmailProtection(){
+        addons.add(new Addon(trafficBoosterName.getText(),new Term(productPlan.getPlanName()), new Price(trafficBoosterPrice.getText())));
+        trafficBoosterName.click();
     }
 
-    public boolean getStatusOption(String plan) {
-        for (int i = 0; i < getOptionCount(); i++) {
-            if (NAME_PLANS_OPTIONS_LIST.get(i).getText().equals(plan)) {
-                optionStatus = NAME_PLANS_OPTIONS_LIST.get(i).isSelected();
-            }
-        }
-        return optionStatus;
+    public void addSecureWebHosting(){
+        addons.add(new Addon(trafficBoosterName.getText(),new Term(productPlan.getPlanName()), new Price(trafficBoosterPrice.getText())));
+        trafficBoosterName.click();
     }
 
-    public void setOptionStatus(boolean optionStatus) {
-        this.optionStatus = optionStatus;
+    public void addMailingListManager(){
+        addons.add(new Addon(trafficBoosterName.getText(),new Term(productPlan.getPlanName()), new Price(trafficBoosterPrice.getText())));
+        trafficBoosterName.click();
     }
 
-    public String getOptionTerm() {
-        return optionTerm;
+    public void select12monthOptionTerm(){
+        productPlan = new Plan(optionTerm12MonthName.getText(), new Price(optionTerm12MonthPrice.getText()));
+        optionTerm12MonthRadiobutton.click();
     }
 
-    public void setOptionTerm(String nameOption) {
-        this.optionTerm = nameOption;
+    public void select24monthOptionTerm(){
+        productPlan = new Plan(optionTerm24MonthName.getText(), new Price(optionTerm24MonthPrice.getText()));
+        optionTerm24MonthRadiobutton.click();
     }
 
-    public String getOptionPrice() {
-        return optionPrice;
+    public void select36monthOptionTerm(){
+        productPlan = new Plan(optionTerm36MonthName.getText(), new Price(optionTerm36MonthPrice.getText()));
+        optionTerm36MonthRadiobutton.click();
     }
 
-    public void setOptionPrice(String optionPrice) {
-        this.optionPrice = optionPrice;
+    public void select120monthOptionTerm(){
+        productPlan = new Plan(optionTerm120MonthName.getText(), new Price(optionTerm120MonthPrice.getText()));
+        optionTerm120MonthRadiobutton.click();
     }
 
-    public int getOptionCount() {
-        optionCount = (NAME_PLANS_OPTIONS_LIST).size();
-        return optionCount;
-    }
 
-    //for addons
-    public void addAddon(String addonName) {
-        for (int i = 0; i < getAddonCount(); i++) {
-            if (addonName.equals(NAME_ADDONS_LIST.get(i).getText())) {
-                NAME_ADDONS_LIST.get(i).click();
-                addons.add(new Addon(addonName, new Term(getOptionTerm())));
-            } else {
-
-            }
-        }
-    }
-
-    public void addAddons(ArrayList<Addon> addons) {
-        for (int i = 0; i < addons.size(); i++) {
-            addAddon(addons.get(i).toString());
-        }
-    }
-
-    public void pageDown() {
-        driver.findElement(By.xpath("/html/body")).sendKeys(Keys.END);
-    }
-
-    public boolean getAddonStatus(String addonName) {
-        for (int i = 0; i < getAddonCount(); i++) {
-            if (addonName.equals(NAME_ADDONS_LIST.get(i).getText())) {
-                NAME_ADDONS_LIST.get(i).isSelected();
-            }
-        }
-        return addonStatus;
-    }
-
-    public void setAddonStatus(boolean addonStatus) {
-        this.addonStatus = addonStatus;
+    public Price getTotalPrice() {
+        return new Price(TOTAL_PRICE.getText());
     }
 
     public String getAddonName() {
-        return addonName;
-    }
-
-    public void setAddonName(String addonName) {
-        this.addonName = addonName;
+        return productDomain.getDomainName();
     }
 
     public String getAddonPrice() {
-        return addonPrice;
-    }
-
-    public void setAddonPrice(String addonPrice) {
-        this.addonPrice = addonPrice;
-    }
-
-    public int getAddonCount() {
-        addonCount = NAME_ADDONS_LIST.size();
-        return addonCount;
-    }
-
-    public void setAddonCount(int addonCount) {
-        this.addonCount = addonCount;
+        return productDomain.getDomainPrice().getPrice();
     }
 
     public void clickRegisterNewDomain() {
+        productDomain.setDomainPrice(new Price(getRegisterNewDomainPrice()));
         REGISTER_A_NEW_DOMAIN_RADIO_BUTTON.click();
     }
 
@@ -205,12 +231,16 @@ public class HostingOrderPage extends BasePage {
         I_OWN_THIS_DOMAIN_NAME_RADIO_BUTTON.click();
     }
 
+    // here can be validation!!!!
     public void inputDomainName(String domainName) {
+        productDomain = new Domain(domainName);
         DOMAIN_SEARCH_FIELD.sendKeys(domainName);
-        this.domainName = domainName;
     }
 
     public void clearDomainInputField() {
+        if (!productDomain.getDomainName().equals(""))
+//                || productDomain != null)
+            productDomain = new Domain("");
         DOMAIN_SEARCH_FIELD.clear();
     }
 
@@ -227,24 +257,19 @@ public class HostingOrderPage extends BasePage {
     }
 
     public void clickContinueOrderButton() {
-        actualProduct.setProductPrice(new Price(getTotalPrice()));
-        actualProduct.setProductDomain(new Domain(domainName));
-        actualProduct.setProductAddons(addons);
-        actualProduct.setProductTerm(new Term(getOptionTerm()));
-        actualProduct.setProductPlan(new Plan(getPlanName(), new Term(getOptionTerm())));
         CONTINUE_ORDER_BUTTON.click();
     }
 
-    public WebHostingProduct getProduct() {
-        if (actualProduct != null) {
-            return actualProduct;
-        } else {
-            actualProduct = new WebHostingProduct(getProductName());
-            actualProduct.setProductPlan(new Plan(getPlanName(), new Term(getOptionTerm())));
-            return actualProduct;
-        }
-
+    public WebHostingProduct getProduct(){
+        actualProduct = new WebHostingProduct(getProductName());
+        actualProduct.setProductPlan(productPlan);
+        actualProduct.setProductAddons(addons);
+        actualProduct.setProductPrice(getTotalPrice());
+        actualProduct.setProductDomain(productDomain);
+        System.out.println(actualProduct);
+        return actualProduct;
     }
+
 
     public String getProductName() {
         return PRODUCT_NAME_TITLE_TEXT.getText();
@@ -252,10 +277,6 @@ public class HostingOrderPage extends BasePage {
 
     public String getPlanName() {
         return PLAN_NAME_TEXT.getText();
-    }
-
-    public String getCurrentURL() {
-        return driver.getCurrentUrl();
     }
 
 }

@@ -4,6 +4,7 @@ import EmailNotification.ErrorMessage;
 import Objects.Addon;
 import Objects.Domain;
 import Objects.Product;
+import org.openqa.selenium.WebDriver;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -14,7 +15,6 @@ import java.util.Comparator;
  * Created by Sergiy.K on 21-Oct-16.
  */
 public class WebHostingProduct extends Product {
-
     private Domain productDomain;
     private ArrayList<Addon> productAddons;
 

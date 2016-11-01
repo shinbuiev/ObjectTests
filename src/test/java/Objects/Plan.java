@@ -12,11 +12,18 @@ public class Plan {
     private Term term;
     private ArrayList<Term> terms;
     private ArrayList<Addon> addons;
+    private Price planPrice;
+
 
     //constructors
 
     public Plan(String planName) {
         this.planName = planName;
+    }
+
+    public Plan(String planName, Price planPrice){
+        this.planName = planName;
+        this.planPrice = planPrice;
     }
 
     public Plan(String planName, Term term) {
@@ -34,6 +41,14 @@ public class Plan {
         this.orderPageUrl = Url;
         this.terms = terms;
         this.addons = addons;
+    }
+
+    public Price getPlanPrice() {
+        return planPrice;
+    }
+
+    public void setPlanPrice(Price planPrice) {
+        this.planPrice = planPrice;
     }
 
     public void setPlanPageUrl(String planPageUrl) {

@@ -41,26 +41,15 @@ public class HostingPlanPage extends BasePage {
         this.driver = driver;
     }
 
-    WebHostingProduct actual;
+    WebHostingProduct actual = new WebHostingProduct(getProductName()+ " wrong");
+    //to this page need to add methods for testing tool tips
 
     public WebHostingProduct getProduct() {
-        return new WebHostingProduct(getProductName()+ " wrong");
-//        return actual;
+        return actual;
     }
 
     public void selectPlan(String url){
         actual = new WebHostingProduct(getProductName()+ " wrong");
-
-        // it will be change later
-//        if (url.contains("economy")){
-//            actual.setProductPlan(new Plan(ECONOMY_PLAN_TEXT.getText()));
-//        }
-//        if (url.contains("premium")){
-//            actual.setProductPlan(new Plan(PREMIUM_PLAN_TEXT.getText()));
-//        }
-//        if (url.contains("unlimited")){
-//            actual.setProductPlan(new Plan(UNLIMITED_PLAN_TEXT.getText()));
-//        }
         driver.findElement(By.xpath("//a[@href='" + url + "']")).click();
     }
 

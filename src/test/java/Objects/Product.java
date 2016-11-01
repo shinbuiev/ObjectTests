@@ -15,6 +15,7 @@ import static Tests.HostingBuyTest.driver;
  * Created by Sergiy.K on 28-Oct-16.
  */
 public abstract class Product {
+
     public File screenFile;
     private String productName;
     private Price productPrice;

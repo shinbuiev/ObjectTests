@@ -1,35 +1,22 @@
 package Tests;
 
-import EmailNotification.Email;
 import EmailNotification.ErrorMessage;
 import Interfaces.ExpectedProducts.BaseExpectedProduct;
-import Interfaces.ExpectedProducts.EmailHosting;
 import Interfaces.ExpectedProducts.LinuxWebHosting;
 import Interfaces.ExpectedProducts.WindowsWebHosting;
+import Objects.Price;
 import Objects.Product;
-import Objects.Term;
 import Pages.BasePage;
 import Pages.WebHosting.HostingOrderPage;
 import Pages.WebHosting.HostingPlanPage;
 import Pages.WebHosting.HostingShoppingCartPage;
-import org.apache.commons.io.FileUtils;
-import org.openqa.selenium.OutputType;
-import org.openqa.selenium.TakesScreenshot;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.chrome.ChromeOptions;
-import org.openqa.selenium.remote.DesiredCapabilities;
-import org.openqa.selenium.support.events.EventFiringWebDriver;
 import org.testng.Assert;
 import org.testng.annotations.AfterTest;
-import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.concurrent.TimeUnit;
 
 /**
  * Created by Sergiy.K on 21-Oct-16.
@@ -37,6 +24,8 @@ import java.util.concurrent.TimeUnit;
 public class HostingBuyTest extends BasicTest {
     private File screenFile;
 
+    private Price priceBefore;
+    private Price priceAfter;
     private Product productBefore;
     private Product productAfter;
     private java.lang.String errors = "";
@@ -68,19 +57,68 @@ public class HostingBuyTest extends BasicTest {
         //here compare product from plan page and order page, add screenshots and errors to errorMessageList if exist come differences
         rememberProductAfter(orderPage);
         comparePlanPageAndOrderPageProducts();
-        orderPage.selectAllTerms(product.getProductTerms());
-        orderPage.addAddons(product.getProductAddons());
+
+
+        //PLANS
+        rememberTotalPriceBeforeSelect();
+        orderPage.select24monthOptionTerm();
+        rememberTotalPriceAfterSelect();
+        comparePrices();
+
+        rememberTotalPriceBeforeSelect();
+        orderPage.select36monthOptionTerm();
+        rememberTotalPriceAfterSelect();
+        comparePrices();
+
+        rememberTotalPriceBeforeSelect();
+        orderPage.select120monthOptionTerm();
+        rememberTotalPriceAfterSelect();
+        comparePrices();
+
+        rememberTotalPriceBeforeSelect();
+        orderPage.select12monthOptionTerm();
+        rememberTotalPriceAfterSelect();
+        comparePrices();
+
+        //ADDONS
+
         orderPage.pageDown();
-        orderPage.clearDomainInputField();
-        orderPage.inputDomainName("DomainForTesting.com");
-        rememberProductBefore(orderPage);
-        orderPage.clickContinueOrderButton();
-        hostingShoppingCartPage.clickCart();
-        //here compare product from order page and shopping cart page, add screenshots and errors to errorMessageList if exist come differences
-        rememberProductAfter(hostingShoppingCartPage);
-        compareProductsOrderPageAndShoppingCart();
-        hostingShoppingCartPage.clearShoppingCart();
-        isProductOk();
+        rememberTotalPriceBeforeSelect();
+        orderPage.addTrafficBooster();
+        rememberTotalPriceAfterSelect();
+        comparePrices();
+
+        rememberTotalPriceBeforeSelect();
+        orderPage.addWebAnalytics();
+        rememberTotalPriceAfterSelect();
+        comparePrices();
+
+        rememberTotalPriceBeforeSelect();
+        orderPage.addPremiumEmailProtection();
+        rememberTotalPriceAfterSelect();
+        comparePrices();
+
+        rememberTotalPriceBeforeSelect();
+        orderPage.addSecureWebHosting();
+        rememberTotalPriceAfterSelect();
+        comparePrices();
+
+        rememberTotalPriceBeforeSelect();
+        orderPage.addMailingListManager();
+        rememberTotalPriceAfterSelect();
+        comparePrices();
+
+//        orderPage.pageEnd();
+//        orderPage.clearDomainInputField();
+//        orderPage.inputDomainName("DomainForTesting.com");
+//        rememberProductBefore(orderPage);
+//        orderPage.clickContinueOrderButton();
+//        hostingShoppingCartPage.clickCart();
+//        //here compare product from order page and shopping cart page, add screenshots and errors to errorMessageList if exist come differences
+//        rememberProductAfter(hostingShoppingCartPage);
+//        compareProductsOrderPageAndShoppingCart();
+//        hostingShoppingCartPage.clearShoppingCart();
+//        isProductOk();
 
     }
 
@@ -105,6 +143,25 @@ public class HostingBuyTest extends BasicTest {
     public void rememberProductAfter(BasePage page) {
         productAfter = page.getProduct();
         productAfter.takeScreenshot();
+    }
+
+    public void rememberTotalPriceBeforeSelect(){
+        priceBefore = orderPage.getTotalPrice();
+    }
+
+    public void rememberTotalPriceAfterSelect(){
+        priceAfter = orderPage.getTotalPrice();
+    }
+
+    public void comparePrices(){
+        if (priceBefore.getPrice().equals(priceAfter.getPrice()))
+        {
+            errorMessageList.add(new ErrorMessage("error with prices after action"));
+        }
+        else
+        {
+            System.out.println(" colo price ");
+        }
     }
 
     public void comparePlanPageAndOrderPageProducts() {

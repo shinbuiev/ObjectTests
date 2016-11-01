@@ -7,10 +7,20 @@ public class Domain {
     private String name;
     private String domainName;
     private String domainTld;
-//  need to remake this class!!!
+    private Price domainPrice;
+
+    //  need to remake this class!!!
 
     public Domain(String name){
         this.name = name;
+    }
+
+    public Price getDomainPrice() {
+        return domainPrice;
+    }
+
+    public void setDomainPrice(Price domainPrice) {
+        this.domainPrice = domainPrice;
     }
 
     public String getDomainTld() {
