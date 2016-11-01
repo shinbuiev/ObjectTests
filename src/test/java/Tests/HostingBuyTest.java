@@ -42,8 +42,17 @@ public class HostingBuyTest {
 
     @BeforeSuite
     public void initEnv() {
-
-
+        System.setProperty("webdriver.chrome.driver", "C:\\Automation\\chromedriver\\chromedriver.exe"); //Chrome driver
+        String userAgent = "Mozilla/5.0 (Windows NT 6.3; WOW64; Dreamscape/1.0;) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/49.0.2623.87 Safari/537.36";
+        ChromeOptions co = new ChromeOptions();
+        co.addArguments("--disable-extensions");
+        co.addArguments("--user-agent=" + userAgent);
+        DesiredCapabilities cap = DesiredCapabilities.chrome();
+        cap.setCapability(ChromeOptions.CAPABILITY, co);
+        WebDriver webDriver = new ChromeDriver(cap);
+        driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
+        driver.manage().window().maximize();
+        driver.manage().deleteAllCookies();
     }
 
 
