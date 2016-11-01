@@ -45,6 +45,21 @@ public class HostingShoppingCartPage extends BasePage {
     @FindBy(xpath = "//*[@id=\"shopping_cart_table\"]/div[1]/div[2]/div[4]/div[2]/div/div/div[1]/div[1]/a/span")
     private WebElement thirdAddonTerm;
 
+
+    @FindBy(xpath = "//*[@id=\"shopping_cart_table\"]/div[1]/div[2]/div[5]/div[1]/span")
+    private WebElement fourthAddonName;
+
+    @FindBy(xpath = "//*[@id=\"shopping_cart_table\"]/div[1]/div[2]/div[5]/div[2]/div/div/div[1]/div[1]/a/span")
+    private WebElement fourthAddonTerm;
+
+    @FindBy(xpath = "//*[@id=\"shopping_cart_table\"]/div[1]/div[2]/div[6]/div[1]/span")
+    private WebElement fifthAddonName;
+
+    @FindBy(xpath = "//*[@id=\"shopping_cart_table\"]/div[1]/div[2]/div[6]/div[2]/div/div/div[1]/div[1]/a/span")
+    private WebElement fifthAddonTerm;
+
+
+
     @FindBy(xpath = "//a[@href='confirm_delete']")
     private WebElement clearShoppingCartButton;
 
@@ -92,6 +107,8 @@ public class HostingShoppingCartPage extends BasePage {
         addons.add(new Addon(firstAddonName.getText(), new Term(firstAddonTerm.getText())));
         addons.add(new Addon(secondAddonName.getText(), new Term(secondAddonTerm.getText())));
         addons.add(new Addon(thirdAddonName.getText(), new Term(thirdAddonTerm.getText())));
+        addons.add(new Addon(fourthAddonName.getText(), new Term(fourthAddonTerm.getText())));
+        addons.add(new Addon(fifthAddonName.getText(), new Term(fifthAddonTerm.getText())));
         actual.setProductAddons(addons);
     }
 
@@ -112,7 +129,7 @@ public class HostingShoppingCartPage extends BasePage {
     }
 
     public void clearShoppingCart(){
-        clearShoppingCartButton.click();
-        confirmClearCart.click();
+//        clearShoppingCartButton.click();
+//        confirmClearCart.click();
     }
 }

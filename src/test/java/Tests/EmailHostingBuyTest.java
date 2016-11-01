@@ -127,6 +127,7 @@ public class EmailHostingBuyTest extends BasicTest{
     }
 
     public void compareProductsOrderPageAndShoppingCart() {
+
         productBefore.getErrorShoppingCartPage(productAfter);
         if (productBefore.getErrorMessages().size() > 0){
             errorMessageList.addAll(productBefore.getErrorMessages());
@@ -135,16 +136,16 @@ public class EmailHostingBuyTest extends BasicTest{
 
     @AfterTest
     public void sendEmailNotificationWithErrors(){
-        if (errorMessageList.size() > 0)
-        {
-            Email email = new Email();
-            try {
-                email.execute("Result for Web Hosting buy test ", errorMessageList);
-            } catch (Exception e) {
-                e.printStackTrace();
-                System.out.println("can't send email  \n" + e.getMessage());
-            }
-        }
+//        if (errorMessageList.size() > 0)
+//        {
+//            Email email = new Email();
+//            try {
+//                email.execute("Result for Web Hosting buy test ", errorMessageList);
+//            } catch (Exception e) {
+//                e.printStackTrace();
+//                System.out.println("can't send email  \n" + e.getMessage());
+//            }
+//        }
     }
 
     @AfterTest

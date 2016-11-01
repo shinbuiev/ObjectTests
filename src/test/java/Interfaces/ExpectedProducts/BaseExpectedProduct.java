@@ -1,5 +1,6 @@
 package Interfaces.ExpectedProducts;
 
+import Objects.Addon;
 import Objects.Plan;
 import Objects.Term;
 
@@ -14,5 +15,6 @@ public abstract class BaseExpectedProduct {
     public abstract String getProductName();
     public abstract ArrayList<Term> getProductTerms();
     public abstract ArrayList<Plan> getProductPlans();
+    public abstract ArrayList<Addon> getProductAddons();
 
 }

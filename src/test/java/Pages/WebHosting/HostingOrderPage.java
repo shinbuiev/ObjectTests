@@ -96,6 +96,13 @@ public class HostingOrderPage extends BasePage {
         }
     }
 
+    public void selectAllTerms(ArrayList<Term> terms) {
+        // need add check size
+        for (int j = 0; j < terms.size(); j++) {
+            selectOption(terms.get(j).toString());
+        }
+    }
+
     public boolean getStatusOption(String plan) {
         for (int i = 0; i < getOptionCount(); i++) {
             if (NAME_PLANS_OPTIONS_LIST.get(i).getText().equals(plan)) {
@@ -130,18 +137,21 @@ public class HostingOrderPage extends BasePage {
         return optionCount;
     }
 
-    public void setOptionCount(int optionCount) {
-        this.optionCount = optionCount;
-    }
-
     //for addons
     public void addAddon(String addonName) {
-
         for (int i = 0; i < getAddonCount(); i++) {
             if (addonName.equals(NAME_ADDONS_LIST.get(i).getText())) {
                 NAME_ADDONS_LIST.get(i).click();
                 addons.add(new Addon(addonName, new Term(getOptionTerm())));
+            } else {
+
             }
+        }
+    }
+
+    public void addAddons(ArrayList<Addon> addons) {
+        for (int i = 0; i < addons.size(); i++) {
+            addAddon(addons.get(i).toString());
         }
     }
 
@@ -226,10 +236,9 @@ public class HostingOrderPage extends BasePage {
     }
 
     public WebHostingProduct getProduct() {
-        if (actualProduct != null){
+        if (actualProduct != null) {
             return actualProduct;
-        }
-        else{
+        } else {
             actualProduct = new WebHostingProduct(getProductName());
             actualProduct.setProductPlan(new Plan(getPlanName(), new Term(getOptionTerm())));
             return actualProduct;

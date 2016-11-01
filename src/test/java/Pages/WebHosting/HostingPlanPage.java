@@ -42,57 +42,30 @@ public class HostingPlanPage extends BasePage {
     }
 
     WebHostingProduct actual;
-    JavascriptExecutor jse = (JavascriptExecutor) driver;
 
     public WebHostingProduct getProduct() {
-        return actual;
+        return new WebHostingProduct(getProductName()+ " wrong");
+//        return actual;
     }
 
     public void selectPlan(String url){
-        actual = new WebHostingProduct(getProductName());
+        actual = new WebHostingProduct(getProductName()+ " wrong");
 
         // it will be change later
-        if (url.contains("economy")){
-            actual.setProductPlan(new Plan(ECONOMY_PLAN_TEXT.getText()));
-        }
-        if (url.contains("premium")){
-            actual.setProductPlan(new Plan(PREMIUM_PLAN_TEXT.getText()));
-        }
-        if (url.contains("unlimited")){
-            actual.setProductPlan(new Plan(UNLIMITED_PLAN_TEXT.getText()));
-        }
+//        if (url.contains("economy")){
+//            actual.setProductPlan(new Plan(ECONOMY_PLAN_TEXT.getText()));
+//        }
+//        if (url.contains("premium")){
+//            actual.setProductPlan(new Plan(PREMIUM_PLAN_TEXT.getText()));
+//        }
+//        if (url.contains("unlimited")){
+//            actual.setProductPlan(new Plan(UNLIMITED_PLAN_TEXT.getText()));
+//        }
         driver.findElement(By.xpath("//a[@href='" + url + "']")).click();
     }
 
     public String getProductName() {
         return TITLE_PRODUCT.getText();
-    }
-
-
-    public String getUrlEconomyHostingButtonAtTheBottom() {
-        return driver.findElement(ECONOMY_HOSTING_BUTTON_AT_THE_BOTTOM).getAttribute("href");
-    }
-
-    public String getUrlPremiumHostingButtonAtTheBottom() {
-        return driver.findElement(PREMIUM_HOSTING_BUTTON_AT_THE_BOTTOM).getAttribute("href");
-    }
-
-    public String getUrlUnlimitedHostingButtonAtTheBottom() {
-        return driver.findElement(UNLIMITED_HOSTING_BUTTON_AT_THE_BOTTOM).getAttribute("href");
-    }
-
-    public void clickMoreLessButton() {
-        driver.findElement(MORE_LESS_BUTTON).click();
-    }
-
-    public String getCurrentURL() {
-        return driver.getCurrentUrl();
-    }
-
-
-    public String getLastTableElementText() {
-        jse.executeScript("scroll(0, 1300);");
-        return LAST_ELEMENT_OF_THE_TABLE.getText();
     }
 
 }

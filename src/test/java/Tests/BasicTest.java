@@ -35,8 +35,6 @@ public class BasicTest {
         cap.setCapability(ChromeOptions.CAPABILITY, co);
         WebDriver webDriver = new ChromeDriver(cap);
         driver = new EventFiringWebDriver(webDriver);
-        //use this Highlight if need, when you debug your test
-//        driver.register(new ListenerThatHiglilightsElements("#FFFF00", 1, 200, TimeUnit.MILLISECONDS));
         driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
         driver.manage().window().maximize();
         driver.manage().deleteAllCookies();

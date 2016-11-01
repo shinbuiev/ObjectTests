@@ -15,20 +15,16 @@ import java.util.*;
 //this class can send email with attachments
 public class Email {
 
-    public static void execute(String subjectMessage, ArrayList<ErrorMessage> errors) throws Exception
+    public static void execute(String subjectMessage, ArrayList<ErrorMessage> errors, ArrayList<File> screenFiles) throws Exception
 
     {
-        ArrayList<File> fileList = new ArrayList<File>();
+        ArrayList<File> fileList = screenFiles;
         String content = "";
 
         for (int i = 0; i < errors.size(); i++) {
-            for (int j = 0; j < errors.get(i).getFiles().size(); j++) {
-                if (!fileList.contains(errors.get(i).getFiles().get(j)))
-                    fileList.add(errors.get(i).getFiles().get(j));
-            }
-
             content = content + errors.get(i).getErrorMessage();
         }
+
         System.out.println("content = " + content);
         System.out.println("size of file list = " + fileList.size());
         String[] to = {"s.konoplyaniy@gmail.com", "s.konoplyaniy@gmail.com"};
