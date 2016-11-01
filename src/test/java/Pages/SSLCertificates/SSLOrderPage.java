@@ -3,6 +3,7 @@ package Pages.SSLCertificates;
 import Objects.*;
 import Pages.BasePage;
 import Products.SSLProduct;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.events.EventFiringWebDriver;
@@ -14,7 +15,7 @@ import java.util.List;
  */
 public class SSLOrderPage extends BasePage{
 
-    public SSLOrderPage(EventFiringWebDriver driver) {
+    public SSLOrderPage(WebDriver driver) {
         super(driver);
     }
 

@@ -4,6 +4,7 @@ import Objects.*;
 import Pages.BasePage;
 import Products.WebHostingProduct;
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.events.EventFiringWebDriver;
@@ -52,9 +53,9 @@ public class HostingShoppingCartPage extends BasePage {
     private WebElement confirmClearCart;
 
     private WebHostingProduct actual;
-    protected EventFiringWebDriver driver;
+    protected WebDriver driver;
 
-    public HostingShoppingCartPage(EventFiringWebDriver driver) {
+    public HostingShoppingCartPage(WebDriver driver) {
         super(driver);
         this.driver = driver;
     }

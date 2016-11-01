@@ -15,6 +15,7 @@ import java.util.List;
  */
 public class HostingOrderPage extends BasePage {
 
+
     @FindBy(xpath = "//*[@class='bold item-name']")
     private List<WebElement> NAME_ADDONS_LIST;
 
@@ -68,11 +69,13 @@ public class HostingOrderPage extends BasePage {
     private String addonName;
     private String addonPrice;
     private int addonCount;
-    protected EventFiringWebDriver driver;
+    protected WebDriver driver;
     private WebHostingProduct actualProduct;
 //    private WebHostingProduct finalProduct;
 
-    public HostingOrderPage(EventFiringWebDriver driver) {
+
+
+    public HostingOrderPage(WebDriver driver) {
         super(driver);
         this.driver = driver;
     }

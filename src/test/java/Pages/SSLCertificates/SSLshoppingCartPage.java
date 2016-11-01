@@ -4,6 +4,7 @@ import Objects.*;
 import Pages.BasePage;
 import Products.SSLProduct;
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.events.EventFiringWebDriver;
@@ -39,9 +40,9 @@ public class SSLshoppingCartPage extends BasePage {
 
 
     private SSLProduct actual;
-    protected EventFiringWebDriver driver;
+    protected WebDriver driver;
 
-    public SSLshoppingCartPage(EventFiringWebDriver driver) {
+    public SSLshoppingCartPage(WebDriver driver) {
         super(driver);
         this.driver = driver;
     }
