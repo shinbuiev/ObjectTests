@@ -42,6 +42,7 @@ public class HostingBuyTest {
 
     @BeforeSuite
     public void initEnv() {
+        //testByValik
         System.setProperty("webdriver.chrome.driver", "C:\\Automation\\chromedriver\\chromedriver.exe"); //Chrome driver
         String userAgent = "Mozilla/5.0 (Windows NT 6.3; WOW64; Dreamscape/1.0;) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/49.0.2623.87 Safari/537.36";
         ChromeOptions co = new ChromeOptions();
