@@ -24,14 +24,16 @@ import org.testng.annotations.Test;
 import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 
+import static Pages.BasePage.productAfter;
+import static Pages.BasePage.productBefore;
+
 /**
  * Created by Sergiy.K on 21-Oct-16.
  */
 public class HostingBuyTest {
     public static EventFiringWebDriver driver;
 
-    private Product productBefore;
-    private Product productAfter;
+
     private java.lang.String errors = "";
     private HostingOrderPage orderPage;
     private HostingPlanPage hostingPlanPage;
@@ -43,9 +45,29 @@ public class HostingBuyTest {
     @BeforeSuite
     public void initEnv() {
 
+        if (System.getProperty("os.name").equals("Linux"))
+            {
+              System.setProperty("webdriver.chrome.driver", "/home/geser/IdeaProjects/chromedriver"); //Chrome driver linux
+            }
+        if (System.getProperty("os.name").equals("Windows"))
+            {
+              System.setProperty("webdriver.chrome.driver", "C:\\Automation\\chromedriver\\chromedriver.exe"); //Chrome driver windows
+            }
 
+        java.lang.String userAgent = "Mozilla/5.0 (Windows NT 6.3; WOW64; Dreamscape/1.0;) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/49.0.2623.87 Safari/537.36";
+        ChromeOptions co = new ChromeOptions();
+        co.addArguments("--disable-extensions");
+        co.addArguments("--user-agent=" + userAgent);
+        DesiredCapabilities cap = DesiredCapabilities.chrome();
+        cap.setCapability(ChromeOptions.CAPABILITY, co);
+        WebDriver webDriver = new ChromeDriver(cap);
+        driver = new EventFiringWebDriver(webDriver);
+        //use this Highlight if need, when you debug your test
+//        driver.register(new ListenerThatHiglilightsElements("#FFFF00", 1, 200, TimeUnit.MILLISECONDS));
+        driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+        driver.manage().window().maximize();
+        driver.manage().deleteAllCookies();
     }
-
 
     //data provider for get expect product and try to buy product
     @DataProvider
@@ -66,8 +88,8 @@ public class HostingBuyTest {
         gotoPage(product.getProductMainPage());
         hostingPlanPage.selectPlan(plan);
         //here compare product from plan page and order page, add screenshots and errors to errorMessageList if exist come differences
-        rememberProductBefore(hostingPlanPage);
-        rememberProductAfter(orderPage);
+        BasePage.rememberProductBefore(hostingPlanPage);
+        BasePage.rememberProductAfter(orderPage);
         comparePlanPageAndOrderPageProducts();
 
         orderPage.selectOption("24");
@@ -80,8 +102,8 @@ public class HostingBuyTest {
         orderPage.clickContinueOrderButton();
         hostingShoppingCartPage.clickCart();
         //here compare product from order page and shopping cart page, add screenshots and errors to errorMessageList if exist come differences
-        rememberProductBefore(orderPage);
-        rememberProductAfter(hostingShoppingCartPage);
+        BasePage.rememberProductBefore(orderPage);
+        BasePage.rememberProductAfter(hostingShoppingCartPage);
         compareProductsOrderPageAndShoppingCart();
         //here compare final product in shopping cart with expected product (The expected product is a product created based on specifications)
         //if exist some differences add error message to array
@@ -116,13 +138,7 @@ public class HostingBuyTest {
         errors = errors + linuxWebHosting.isProduct(page.getProduct());
     }
 
-    public void rememberProductBefore(BasePage page) {
-        productBefore = page.getProduct();
-    }
 
-    public void rememberProductAfter(BasePage page) {
-        productAfter = page.getProduct();
-    }
 
     public void comparePlanPageAndOrderPageProducts(){
 

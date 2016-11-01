@@ -11,7 +11,8 @@ import org.openqa.selenium.support.events.EventFiringWebDriver;
  * Created by Sergiy.K on 21-Oct-16.
  */
 public abstract class BasePage {
-
+    public static Product productBefore;
+    public static Product productAfter;
     @FindBy(xpath = "/html/body")
     private WebElement CLICK;
 
@@ -36,6 +37,14 @@ public abstract class BasePage {
         return driver.getCurrentUrl();
 
 
+    }
+
+    public static void rememberProductBefore(BasePage page) {
+        productBefore = page.getProduct();
+    }
+
+    public static void rememberProductAfter(BasePage page) {
+        productAfter = page.getProduct();
     }
 
 }

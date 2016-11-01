@@ -216,13 +216,14 @@ public class HostingOrderPage extends BasePage {
         return DOMAIN_AVAILABLE_TICK.isEnabled();
     }
 
-    public void clickContinueOrderButton() {
+    public HostingShoppingCartPage clickContinueOrderButton() {
         actualProduct.setProductPrice(new Price(getTotalPrice()));
         actualProduct.setProductDomain(new Domain(domainName));
         actualProduct.setProductAddons(addons);
         actualProduct.setProductTerm(new Term(getOptionTerm()));
         actualProduct.setProductPlan(new Plan(getPlanName(), new Term(getOptionTerm())));
         CONTINUE_ORDER_BUTTON.click();
+        return new HostingShoppingCartPage(driver);
     }
 
     public WebHostingProduct getProduct() {

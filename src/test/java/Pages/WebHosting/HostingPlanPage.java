@@ -1,5 +1,6 @@
 package Pages.WebHosting;
 
+import Features.OrderPage;
 import Objects.Plan;
 import Pages.BasePage;
 import Products.WebHostingProduct;
@@ -48,7 +49,7 @@ public class HostingPlanPage extends BasePage {
         return actual;
     }
 
-    public void selectPlan(String url){
+    public OrderPage selectPlan(String url){
         actual = new WebHostingProduct(getProductName());
 
         // it will be change later
@@ -62,6 +63,7 @@ public class HostingPlanPage extends BasePage {
             actual.setProductPlan(new Plan(UNLIMITED_PLAN_TEXT.getText()));
         }
         driver.findElement(By.xpath("//a[@href='" + url + "']")).click();
+        return new OrderPage(driver);
     }
 
     public String getProductName() {
