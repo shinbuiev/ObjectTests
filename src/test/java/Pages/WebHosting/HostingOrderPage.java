@@ -4,6 +4,7 @@ import Objects.*;
 import Pages.BasePage;
 import Products.WebHostingProduct;
 import org.openqa.selenium.*;
+import org.openqa.selenium.support.CacheLookup;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.events.EventFiringWebDriver;
 
@@ -22,128 +23,178 @@ public class HostingOrderPage extends BasePage {
     private List<WebElement> NAME_PLANS_OPTIONS_LIST;
 
     //connect to block
+    @CacheLookup
     @FindBy(xpath = "//*[@id='domain_price']")
     private WebElement DOMAIN_PRICE;
 
+    @CacheLookup
     @FindBy(xpath = "//*[@class='requiredField']")
     private WebElement DOMAIN_NAME_VALIDATION_ERROR;
 
-    @FindBy(xpath = "//*[@for='domain_name_own']")
+    @CacheLookup
+    @FindBy(xpath = "//*[@for='domain_name_own']/span")
     private WebElement I_OWN_THIS_DOMAIN_NAME_RADIO_BUTTON;
 
-    @FindBy(xpath = "//*[@for='domain_name_register']")
+    @CacheLookup
+    @FindBy(xpath = "//*[@for='domain_name_register']/span")
     private WebElement REGISTER_A_NEW_DOMAIN_RADIO_BUTTON;
 
+    @CacheLookup
     @FindBy(xpath = "//*[@id='search_domain_input']")
     private WebElement DOMAIN_SEARCH_FIELD;
 
+    @CacheLookup
     @FindBy(xpath = "/html/body")
     private WebElement CLICK;
 
+    @CacheLookup
     @FindBy(xpath = "//*[@id='domain_available_tick']")
     private WebElement DOMAIN_AVAILABLE_TICK;
 
+    @CacheLookup
     @FindBy(xpath = "//*[@id='domain_available_cross']")
     private WebElement DOMAIN_NOT_AVAILABLE_TICK;
 
+    @CacheLookup
     @FindBy(xpath = "//*[contains(text(),'Continue Order')]")
     private WebElement CONTINUE_ORDER_BUTTON;
 
+    @CacheLookup
     @FindBy(xpath = "//*[@id='total']")
     private WebElement TOTAL_PRICE;
 
+    @CacheLookup
     @FindBy(xpath = "//*[@class = 'main-title']")
     private WebElement PRODUCT_NAME_TITLE_TEXT;
 
+    @CacheLookup
     @FindBy(xpath = "//*[@class='plan-title-square row _middle _center']")
     private WebElement PLAN_NAME_TEXT;
 
+    @CacheLookup
     @FindBy(xpath = "//*[@id='crazy_order_web_hosting_form']/div[3]/div[2]/div[1]/div[1]/div/div/label")
     private WebElement trafficBoosterCheckBox;
 
+    @CacheLookup
     @FindBy(xpath = "//*[@id='crazy_order_web_hosting_form']/div[3]/div[2]/div[1]/div[3]/div/span")
     private WebElement trafficBoosterName;
 
+    @CacheLookup
     @FindBy(xpath = "//*[@id='search_booster_promo_price']")
     private WebElement trafficBoosterPrice;
 
+    @CacheLookup
     @FindBy(xpath = "//*[@id='crazy_order_web_hosting_form']/div[3]/div[2]/div[2]/div[1]/div/div/label")
     private WebElement WebAnalyticsCheckBox;
 
+    @CacheLookup
     @FindBy(xpath = "//*[@id='crazy_order_web_hosting_form']/div[3]/div[2]/div[2]/div[3]/div/span")
     private WebElement WebAnalyticsName;
 
+    @CacheLookup
     @FindBy(xpath = "//*[@id='webstats_promo_price']")
     private WebElement WebAnalyticsPrice;
 
+    @CacheLookup
     @FindBy(xpath = "//*[@id='crazy_order_web_hosting_form']/div[3]/div[2]/div[3]/div[1]/div/div/label")
     private WebElement PremiumEmailProtectionCheckBox;
 
+    @CacheLookup
     @FindBy(xpath = "//*[@id='crazy_order_web_hosting_form']/div[3]/div[2]/div[3]/div[3]/div/span")
     private WebElement PremiumEmailProtectionName;
 
+    @CacheLookup
     @FindBy(xpath = "//*[@id='spam_protection_promo_price']")
     private WebElement PremiumEmailProtectionPrice;
 
+    @CacheLookup
     @FindBy(xpath = "//*[@id='crazy_order_web_hosting_form']/div[3]/div[2]/div[4]/div[1]/div/div/label")
     private WebElement SecureWebHostingCheckBox;
 
+    @CacheLookup
     @FindBy(xpath = "//*[@id='crazy_order_web_hosting_form']/div[3]/div[2]/div[4]/div[3]/div/span")
     private WebElement SecureWebHostingName;
 
+    @CacheLookup
     @FindBy(xpath = "//*[@id='ssl_security_promo_price']")
     private WebElement SecureWebHostingPrice;
 
+    @CacheLookup
     @FindBy(xpath = ".//*[@id='crazy_order_web_hosting_form']/div[3]/div[2]/div[5]/div[1]/div/div/label")
     private WebElement mailingListManagerCheckBox;
 
+    @CacheLookup
     @FindBy(xpath = "//*[@id='crazy_order_web_hosting_form']/div[3]/div[2]/div[5]/div[3]/div/span")
     private WebElement mailingListManagerName;
 
+    @CacheLookup
     @FindBy(xpath = ".//*[@id='mailing_list_sell_price']")
     private WebElement mailingListManagerPrice;
 
-
-    @FindBy(xpath = "//*[@id='crazy_order_web_hosting_form']/div[3]/div[2]/div[5]/div[1]/div/div/label")
+    @CacheLookup
+    @FindBy(xpath = "(//div[starts-with(@class,\"_hover\")]/div)[1]/div/div/div/input")
     private WebElement optionTerm12MonthRadiobutton;
 
+    @CacheLookup
     @FindBy(xpath = "//*[@id='crazy_order_web_hosting_form']/div[3]/div[2]/div[5]/div[1]/div/div/label")
     private WebElement optionTerm12MonthName;
 
+    @CacheLookup
     @FindBy(xpath = "//*[@id='crazy_order_web_hosting_form']/div[3]/div[2]/div[5]/div[1]/div/div/label")
     private WebElement optionTerm12MonthPrice;
 
+    @CacheLookup
     @FindBy(xpath = "//*[@id='crazy_order_web_hosting_form']/div[1]/div[2]/div[2]/div[1]/div/div/label")
     private WebElement optionTerm24MonthRadiobutton;
 
-    //*[@class='bold'][contains(text(),'24')]
-    //*[@id='crazy_order_web_hosting_form']/div[1]/div[2]/div[2]/div[2]/div/span
+    @CacheLookup
     @FindBy(xpath = "//*[@class='bold'][contains(text(),'24')]")
     private WebElement optionTerm24MonthName;
 
+    @CacheLookup
     @FindBy(xpath = "//*[@id='148_promo_price']")
     private WebElement optionTerm24MonthPrice;
 
+    @CacheLookup
     @FindBy(xpath = "//*[@id='mailing_list_sell_price']")
     private WebElement optionTerm36MonthRadiobutton;
 
+    @CacheLookup
     @FindBy(xpath = "//*[@id='mailing_list_sell_price']")
     private WebElement optionTerm36MonthName;
 
+    @CacheLookup
     @FindBy(xpath = "//*[@id='mailing_list_sell_price']")
     private WebElement optionTerm36MonthPrice;
 
+    @CacheLookup
     @FindBy(xpath = "//*[@id='mailing_list_sell_price']")
     private WebElement optionTerm120MonthRadiobutton;
 
+    @CacheLookup
     @FindBy(xpath = "//*[@id='mailing_list_sell_price']")
     private WebElement optionTerm120MonthName;
 
+    @CacheLookup
     @FindBy(xpath = "//*[@id='mailing_list_sell_price']")
     private WebElement optionTerm120MonthPrice;
 
+    @CacheLookup
     @FindBy(xpath = "//*[@id='domain_price']")
     private WebElement registerNewDomainPrice;
+
+
+    @FindBy(xpath = "//div[starts-with(@class,\"g-custom-radio\")]/input")
+    private List<WebElement> planRadioButtonsStatus;
+
+    @FindBy(xpath = "//div[starts-with(@class,\"g-custom-checkbox\")]/input")
+    private List<WebElement> addonCheckBoxStatusStatus;
+
+    @FindBy(xpath = "//span[@class = 'bold item-name']")
+    private List<WebElement> addonNames;
+
+    @FindBy(xpath = "//span[starts-with(@class,\"item-name\")]")
+    private List<WebElement> planRadioButtonsNames;
 
     private Plan productPlan;
     private Domain productDomain;
@@ -159,56 +210,44 @@ public class HostingOrderPage extends BasePage {
         this.driver = driver;
     }
 
+    public void setPlan(String plan) {
+        for (int i = 0; i < planRadioButtonsNames.size(); i++) {
+            if (planRadioButtonsNames.get(i).getText().equals(plan))
+                planRadioButtonsNames.get(i).click();
+        }
+    }
+
+    public void setAddon(String addon) {
+        for (int i = 0; i < addonNames.size(); i++) {
+            if (addonNames.get(i).getText().equals(addon))
+                addonNames.get(i).click();
+        }
+    }
+
+    public void getPlans() {
+        for (int i = 0; i < 4; i++) {
+            if (planRadioButtonsStatus.get(i).isSelected())
+            System.out.println("was selected plan " + " name: " + planRadioButtonsNames.get(i).getText());
+        }
+    }
+
+    public void getAddons() {
+        for (int i = 0; i < 4; i++) {
+            if (addonCheckBoxStatusStatus.get(i).isSelected())
+            System.out.println("Was selected addons: " + addonNames.get(i).getText());
+        }
+    }
+
+    public void getDomainStatus() {
+        System.out.println("I own this domain checkbox status:   " + I_OWN_THIS_DOMAIN_NAME_RADIO_BUTTON.isSelected());
+        System.out.println("Register new domain checkbox status: " + REGISTER_A_NEW_DOMAIN_RADIO_BUTTON.isSelected());
+    }
+
+
     public void scrollDownPage() {
         JavascriptExecutor jse = (JavascriptExecutor) driver;
         jse.executeScript("scroll(0, 1800);");
     }
-
-    public void addTrafficBooster(){
-        addons.add(new Addon(trafficBoosterName.getText(),new Term(productPlan.getPlanName()), new Price(trafficBoosterPrice.getText())));
-        trafficBoosterName.click();
-    }
-
-    public void addWebAnalytics(){
-        addons.add(new Addon(trafficBoosterName.getText(),new Term(productPlan.getPlanName()), new Price(trafficBoosterPrice.getText())));
-        trafficBoosterName.click();
-    }
-
-    public void addPremiumEmailProtection(){
-        addons.add(new Addon(trafficBoosterName.getText(),new Term(productPlan.getPlanName()), new Price(trafficBoosterPrice.getText())));
-        trafficBoosterName.click();
-    }
-
-    public void addSecureWebHosting(){
-        addons.add(new Addon(trafficBoosterName.getText(),new Term(productPlan.getPlanName()), new Price(trafficBoosterPrice.getText())));
-        trafficBoosterName.click();
-    }
-
-    public void addMailingListManager(){
-        addons.add(new Addon(trafficBoosterName.getText(),new Term(productPlan.getPlanName()), new Price(trafficBoosterPrice.getText())));
-        trafficBoosterName.click();
-    }
-
-    public void select12monthOptionTerm(){
-        productPlan = new Plan(optionTerm12MonthName.getText(), new Price(optionTerm12MonthPrice.getText()));
-        optionTerm12MonthRadiobutton.click();
-    }
-
-    public void select24monthOptionTerm(){
-        productPlan = new Plan(optionTerm24MonthName.getText(), new Price(optionTerm24MonthPrice.getText()));
-        optionTerm24MonthRadiobutton.click();
-    }
-
-    public void select36monthOptionTerm(){
-        productPlan = new Plan(optionTerm36MonthName.getText(), new Price(optionTerm36MonthPrice.getText()));
-        optionTerm36MonthRadiobutton.click();
-    }
-
-    public void select120monthOptionTerm(){
-        productPlan = new Plan(optionTerm120MonthName.getText(), new Price(optionTerm120MonthPrice.getText()));
-        optionTerm120MonthRadiobutton.click();
-    }
-
 
     public Price getTotalPrice() {
         return new Price(TOTAL_PRICE.getText());
@@ -260,7 +299,7 @@ public class HostingOrderPage extends BasePage {
         CONTINUE_ORDER_BUTTON.click();
     }
 
-    public WebHostingProduct getProduct(){
+    public WebHostingProduct getProduct() {
         actualProduct = new WebHostingProduct(getProductName());
         actualProduct.setProductPlan(productPlan);
         actualProduct.setProductAddons(addons);

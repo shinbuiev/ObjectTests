@@ -61,52 +61,54 @@ public class HostingBuyTest extends BasicTest {
 
         //PLANS
         rememberTotalPriceBeforeSelect();
-        orderPage.select24monthOptionTerm();
-        rememberTotalPriceAfterSelect();
-        comparePrices();
 
-        rememberTotalPriceBeforeSelect();
-        orderPage.select36monthOptionTerm();
-        rememberTotalPriceAfterSelect();
-        comparePrices();
-
-        rememberTotalPriceBeforeSelect();
-        orderPage.select120monthOptionTerm();
-        rememberTotalPriceAfterSelect();
-        comparePrices();
-
-        rememberTotalPriceBeforeSelect();
-        orderPage.select12monthOptionTerm();
-        rememberTotalPriceAfterSelect();
-        comparePrices();
-
-        //ADDONS
-
-        orderPage.pageDown();
-        rememberTotalPriceBeforeSelect();
-        orderPage.addTrafficBooster();
-        rememberTotalPriceAfterSelect();
-        comparePrices();
-
-        rememberTotalPriceBeforeSelect();
-        orderPage.addWebAnalytics();
-        rememberTotalPriceAfterSelect();
-        comparePrices();
-
-        rememberTotalPriceBeforeSelect();
-        orderPage.addPremiumEmailProtection();
-        rememberTotalPriceAfterSelect();
-        comparePrices();
-
-        rememberTotalPriceBeforeSelect();
-        orderPage.addSecureWebHosting();
-        rememberTotalPriceAfterSelect();
-        comparePrices();
-
-        rememberTotalPriceBeforeSelect();
-        orderPage.addMailingListManager();
-        rememberTotalPriceAfterSelect();
-        comparePrices();
+//        orderPage.select24monthOptionTerm();
+//
+//        rememberTotalPriceAfterSelect();
+//        comparePrices();
+//
+//        rememberTotalPriceBeforeSelect();
+//        orderPage.select36monthOptionTerm();
+//        rememberTotalPriceAfterSelect();
+//        comparePrices();
+//
+//        rememberTotalPriceBeforeSelect();
+//        orderPage.select120monthOptionTerm();
+//        rememberTotalPriceAfterSelect();
+//        comparePrices();
+//
+//        rememberTotalPriceBeforeSelect();
+//        orderPage.select12monthOptionTerm();
+//        rememberTotalPriceAfterSelect();
+//        comparePrices();
+//
+//        //ADDONS
+//
+//        orderPage.pageDown();
+//        rememberTotalPriceBeforeSelect();
+//        orderPage.addTrafficBooster();
+//        rememberTotalPriceAfterSelect();
+//        comparePrices();
+//
+//        rememberTotalPriceBeforeSelect();
+//        orderPage.addWebAnalytics();
+//        rememberTotalPriceAfterSelect();
+//        comparePrices();
+//
+//        rememberTotalPriceBeforeSelect();
+//        orderPage.addPremiumEmailProtection();
+//        rememberTotalPriceAfterSelect();
+//        comparePrices();
+//
+//        rememberTotalPriceBeforeSelect();
+//        orderPage.addSecureWebHosting();
+//        rememberTotalPriceAfterSelect();
+//        comparePrices();
+//
+//        rememberTotalPriceBeforeSelect();
+//        orderPage.addMailingListManager();
+//        rememberTotalPriceAfterSelect();
+//        comparePrices();
 
 //        orderPage.pageEnd();
 //        orderPage.clearDomainInputField();
