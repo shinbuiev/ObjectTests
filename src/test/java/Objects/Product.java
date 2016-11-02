@@ -78,8 +78,6 @@ public abstract class Product {
                     new File("/home/geser/Automation/SreenShot/TestObjects/Errors/"
                             + folderForScreen + "/" +
                             nameFile + ".png"));
-            System.out.println("file " + f1.getAbsolutePath() + " will be moved to error path" );
-
         } catch (IOException e) {
             System.out.println("cant create a screen shot \n" + e.getMessage());
         }
@@ -87,7 +85,6 @@ public abstract class Product {
 
     public void takeScreenshot() {
         screenFile = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
-        System.out.println("file here: " + screenFile.getAbsolutePath());
     }
 
 

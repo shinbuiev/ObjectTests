@@ -7,6 +7,7 @@ import org.openqa.selenium.*;
 import org.openqa.selenium.support.CacheLookup;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.events.EventFiringWebDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -238,8 +239,8 @@ public class HostingOrderPage extends BasePage {
     }
 
     public Plan getProductPlan() {
-        if (productPlan!= null)
-            productPlan = null;
+//        if (productPlan!= null)
+//            productPlan = null;
         for (int i = 0; i < 4; i++) {
             if (planRadioButtonsStatus.get(i).isSelected())
                 productPlan = new Plan(planRadioButtonsNames.get(i).getText());
@@ -248,11 +249,11 @@ public class HostingOrderPage extends BasePage {
     }
 
     public ArrayList<Addon> getProductAddons() {
-        if (addons.size()>0)
-        {
-            addons = null;
-            addons = new ArrayList<Addon>();
-        }
+//        if (addons.size()>0)
+//        {
+//            addons = null;
+//            addons = new ArrayList<Addon>();
+//        }
         for (int i = 0; i < addonCheckBoxStatusStatus.size(); i++) {
             if (addonCheckBoxStatusStatus.get(i).isSelected())
             {
@@ -267,7 +268,6 @@ public class HostingOrderPage extends BasePage {
         System.out.println("Register new domain checkbox status: " + REGISTER_A_NEW_DOMAIN_RADIO_BUTTON_STATUS.isSelected());
     }
 
-
     public void scrollDownPage() {
         JavascriptExecutor jse = (JavascriptExecutor) driver;
         jse.executeScript("scroll(0, 1800);");
@@ -277,19 +277,12 @@ public class HostingOrderPage extends BasePage {
         return new Price(TOTAL_PRICE.getText());
     }
 
-    public String getAddonName() {
-        return productDomain.getDomainName();
-    }
-
-    public String getAddonPrice() {
-        return productDomain.getDomainPrice().getPrice();
-    }
-
     public void clickRegisterNewDomain() {
         REGISTER_A_NEW_DOMAIN_RADIO_BUTTON.click();
     }
 
     public void clickIownThisDomain() {
+
         I_OWN_THIS_DOMAIN_NAME_RADIO_BUTTON.click();
     }
 
@@ -306,6 +299,7 @@ public class HostingOrderPage extends BasePage {
     public String getRegisterNewDomainPrice() {
         return DOMAIN_PRICE.getText();
     }
+
 
     public String getValidationErrorMessage() {
         return DOMAIN_NAME_VALIDATION_ERROR.getText();

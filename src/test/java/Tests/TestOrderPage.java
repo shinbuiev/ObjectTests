@@ -46,10 +46,10 @@ public class TestOrderPage extends BasicTest {
     @DataProvider
     public Object[][] getExpectedProduct() {
         return new Object[][]{
-                {windowsWebHosting, windowsWebHosting.getProductPlans().get(0).getOrderPageUrl()},
+//                {windowsWebHosting, windowsWebHosting.getProductPlans().get(0).getOrderPageUrl()},
 //                {windowsWebHosting, windowsWebHosting.getProductPlans().get(1).getOrderPageUrl()},
 //                {windowsWebHosting, windowsWebHosting.getProductPlans().get(2).getOrderPageUrl()},
-//                {linuxWebHosting, linuxWebHosting.getProductPlans().get(0).getOrderPageUrl()},
+                {linuxWebHosting, linuxWebHosting.getProductPlans().get(0).getOrderPageUrl()},
 //                {linuxWebHosting, linuxWebHosting.getProductPlans().get(1).getOrderPageUrl()},
 //                {linuxWebHosting, linuxWebHosting.getProductPlans().get(2).getOrderPageUrl()},
         };
@@ -114,7 +114,7 @@ public class TestOrderPage extends BasicTest {
         comparePrices();
 
 
-        //CONNECT TO BLOCK VALIDATION
+        //CONNECT TO BLOCK VALIDATION   here need to change logic!!!!!
         //empty field  own this domain
         orderPage.pageEnd();
         orderPage.clearDomainInputField();
@@ -125,27 +125,32 @@ public class TestOrderPage extends BasicTest {
 
         //empty field  register domain
         orderPage.pageEnd();
-        orderPage.clearDomainInputField();
-        orderPage.clickOnPage();
         orderPage.clickRegisterNewDomain();
+        orderPage.inputDomainName("asasdasdadasds.com");
+        orderPage.clickOnPage();  //here need to add wait green light))!!!!!
+        orderPage.clearDomainInputField();
         orderPage.clickOnPage();
         orderPage.clickContinueOrderButton();
         checkErrorMessage();
 
         //domain with wrong tld own this domain
         orderPage.pageEnd();
+        orderPage.clickIownThisDomain();
+        orderPage.inputDomainName("asasdasdadasds.com");
+        orderPage.clickOnPage();
         orderPage.clearDomainInputField();
         orderPage.clickOnPage();
-        orderPage.clickIownThisDomain();
         orderPage.inputDomainName(domainWithWrongTld);
         orderPage.clickOnPage();
         checkStatusDomainAvailableTickStatus();
 
         //domain with wrong tld register new domain
         orderPage.pageEnd();
+        orderPage.clickRegisterNewDomain();
+        orderPage.inputDomainName("asasdasdadasds.com");
+        orderPage.clickOnPage();
         orderPage.clearDomainInputField();
         orderPage.clickOnPage();
-        orderPage.clickRegisterNewDomain();
         orderPage.inputDomainName(domainWithWrongTld);
         orderPage.clickOnPage();
         orderPage.clickContinueOrderButton();
@@ -153,18 +158,22 @@ public class TestOrderPage extends BasicTest {
 
         //incorrect domain own this domain
         orderPage.pageEnd();
+        orderPage.clickIownThisDomain();
+        orderPage.inputDomainName("asasdasdadasds.com");
+        orderPage.clickOnPage();
         orderPage.clearDomainInputField();
         orderPage.clickOnPage();
-        orderPage.clickIownThisDomain();
         orderPage.inputDomainName(incorrectDomain);
+        orderPage.clickOnPage();
         orderPage.clickContinueOrderButton();
         checkErrorMessage();
 
         //incorrect domain register new domain
         orderPage.pageEnd();
-        orderPage.clearDomainInputField();
-        orderPage.clickOnPage();
         orderPage.clickRegisterNewDomain();
+        orderPage.inputDomainName("asasdasdadasds.com");
+        orderPage.clickOnPage();
+        orderPage.clearDomainInputField();
         orderPage.inputDomainName(incorrectDomain);
         orderPage.clickContinueOrderButton();
         checkErrorMessage();
@@ -175,8 +184,8 @@ public class TestOrderPage extends BasicTest {
         orderPage.clickIownThisDomain();
         orderPage.inputDomainName("DomainHosting.com");
         orderPage.clickOnPage();
-        orderPage.clickContinueOrderButton();
         rememberProductBefore(orderPage);
+        orderPage.clickContinueOrderButton();
         hostingShoppingCartPage.clickCart();
 
         rememberProductAfter(hostingShoppingCartPage);
@@ -186,7 +195,7 @@ public class TestOrderPage extends BasicTest {
     }
 
 
-    public void isProductOk() {
+    private void isProductOk() {
         Assert.assertTrue(errorMessageList.size() == 0, "\n" + errorMessageList);
     }
 
