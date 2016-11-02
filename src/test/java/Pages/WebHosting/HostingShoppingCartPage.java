@@ -129,7 +129,7 @@ public class HostingShoppingCartPage extends BasePage {
     }
 
     public void clearShoppingCart(){
-//        clearShoppingCartButton.click();
-//        confirmClearCart.click();
+//        clearShoppingCartButton.clickOnPage();
+//        confirmClearCart.clickOnPage();
     }
 }

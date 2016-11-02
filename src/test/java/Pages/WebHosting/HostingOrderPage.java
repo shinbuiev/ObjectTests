@@ -32,11 +32,19 @@ public class HostingOrderPage extends BasePage {
     private WebElement DOMAIN_NAME_VALIDATION_ERROR;
 
     @CacheLookup
-    @FindBy(xpath = "//*[@for='domain_name_own']/span")
+    @FindBy(xpath = "//*[@id='domain_name_own']")
+    private WebElement I_OWN_THIS_DOMAIN_NAME_RADIO_BUTTON_STATUS;
+
+    @CacheLookup
+    @FindBy(xpath = "//*[@id='domain_name_register']")
+    private WebElement REGISTER_A_NEW_DOMAIN_RADIO_BUTTON_STATUS;
+
+    @CacheLookup
+    @FindBy(xpath = "//*[@for='domain_name_own']")
     private WebElement I_OWN_THIS_DOMAIN_NAME_RADIO_BUTTON;
 
     @CacheLookup
-    @FindBy(xpath = "//*[@for='domain_name_register']/span")
+    @FindBy(xpath = "//*[@for='domain_name_register']")
     private WebElement REGISTER_A_NEW_DOMAIN_RADIO_BUTTON;
 
     @CacheLookup
@@ -212,35 +220,51 @@ public class HostingOrderPage extends BasePage {
 
     public void setPlan(String plan) {
         for (int i = 0; i < planRadioButtonsNames.size(); i++) {
-            if (planRadioButtonsNames.get(i).getText().equals(plan))
+            if (planRadioButtonsNames.get(i).getText().equals(plan)) {
                 planRadioButtonsNames.get(i).click();
+            }
         }
     }
 
     public void setAddon(String addon) {
         for (int i = 0; i < addonNames.size(); i++) {
-            if (addonNames.get(i).getText().equals(addon))
+            if (addonNames.get(i).getText().equals(addon)) {
                 addonNames.get(i).click();
+                if (!addonCheckBoxStatusStatus.get(i).isSelected()){   //add addon work not correctly on site, if very quickly add addon
+                    addonNames.get(i).click();
+                }
+            }
         }
     }
 
-    public void getPlans() {
+    public Plan getProductPlan() {
+        if (productPlan!= null)
+            productPlan = null;
         for (int i = 0; i < 4; i++) {
             if (planRadioButtonsStatus.get(i).isSelected())
-            System.out.println("was selected plan " + " name: " + planRadioButtonsNames.get(i).getText());
+                productPlan = new Plan(planRadioButtonsNames.get(i).getText());
         }
+        return productPlan;
     }
 
-    public void getAddons() {
-        for (int i = 0; i < 4; i++) {
-            if (addonCheckBoxStatusStatus.get(i).isSelected())
-            System.out.println("Was selected addons: " + addonNames.get(i).getText());
+    public ArrayList<Addon> getProductAddons() {
+        if (addons.size()>0)
+        {
+            addons = null;
+            addons = new ArrayList<Addon>();
         }
+        for (int i = 0; i < addonCheckBoxStatusStatus.size(); i++) {
+            if (addonCheckBoxStatusStatus.get(i).isSelected())
+            {
+                addons.add(new Addon(addonNames.get(i).getText()));
+            }
+        }
+        return addons;
     }
 
     public void getDomainStatus() {
-        System.out.println("I own this domain checkbox status:   " + I_OWN_THIS_DOMAIN_NAME_RADIO_BUTTON.isSelected());
-        System.out.println("Register new domain checkbox status: " + REGISTER_A_NEW_DOMAIN_RADIO_BUTTON.isSelected());
+        System.out.println("I own this domain checkbox status:   " + I_OWN_THIS_DOMAIN_NAME_RADIO_BUTTON_STATUS.isSelected());
+        System.out.println("Register new domain checkbox status: " + REGISTER_A_NEW_DOMAIN_RADIO_BUTTON_STATUS.isSelected());
     }
 
 
@@ -262,7 +286,6 @@ public class HostingOrderPage extends BasePage {
     }
 
     public void clickRegisterNewDomain() {
-        productDomain.setDomainPrice(new Price(getRegisterNewDomainPrice()));
         REGISTER_A_NEW_DOMAIN_RADIO_BUTTON.click();
     }
 
@@ -277,9 +300,6 @@ public class HostingOrderPage extends BasePage {
     }
 
     public void clearDomainInputField() {
-        if (!productDomain.getDomainName().equals(""))
-//                || productDomain != null)
-            productDomain = new Domain("");
         DOMAIN_SEARCH_FIELD.clear();
     }
 
@@ -299,13 +319,17 @@ public class HostingOrderPage extends BasePage {
         CONTINUE_ORDER_BUTTON.click();
     }
 
+    public void clickOnPage(){
+        CLICK.click();
+    }
+
     public WebHostingProduct getProduct() {
         actualProduct = new WebHostingProduct(getProductName());
-        actualProduct.setProductPlan(productPlan);
-        actualProduct.setProductAddons(addons);
+        actualProduct.setProductPlan(getProductPlan());
+        actualProduct.setProductAddons(getProductAddons());
         actualProduct.setProductPrice(getTotalPrice());
         actualProduct.setProductDomain(productDomain);
-        System.out.println(actualProduct);
+        System.out.println(actualProduct.toString());
         return actualProduct;
     }
 

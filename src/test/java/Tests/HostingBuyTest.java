@@ -54,7 +54,6 @@ public class HostingBuyTest extends BasicTest {
         gotoPage(product.getProductMainPage());
         rememberProductBefore(hostingPlanPage);
         hostingPlanPage.selectPlan(plan);
-        //here compare product from plan page and order page, add screenshots and errors to errorMessageList if exist come differences
         rememberProductAfter(orderPage);
         comparePlanPageAndOrderPageProducts();
 

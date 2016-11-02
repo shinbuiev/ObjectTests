@@ -113,7 +113,7 @@ public class EmailHostingShoppingCart extends BasePage{
     }
 
     public void clearShoppingCart(){
-//        clearShoppingCartButton.click();
-//        confirmClearCart.click();
+//        clearShoppingCartButton.clickOnPage();
+//        confirmClearCart.clickOnPage();
     }
 }

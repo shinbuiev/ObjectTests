@@ -49,7 +49,7 @@ public class WebHostingProduct extends Product {
 
     @Override
     public String toString() {
-        return "Product:  " + super.toString() + " domain:" + getProductDomain() + " productAddons:" + getProductAddons();
+        return super.toString() + " plan: " + getProductPlan() + " domain:" + getProductDomain() + " productAddons:" + getProductAddons();
     }
 
     //method check product from order page and shopping cart

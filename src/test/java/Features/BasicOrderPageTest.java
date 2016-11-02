@@ -224,11 +224,11 @@
 //            //*[@id='cart_control']/span[2]
 //            if (!driver.findElement(By.xpath("//*[@id=\"cart_control\"]/span")).getText().equals("0 items")) {
 //                driver.manage().timeouts().implicitlyWait(2, TimeUnit.SECONDS);
-//                driver.findElement(HEADER_DROP_DOWN).click();
-//                driver.findElement(VIEW_CART_BUTTON).click();
-//                driver.findElement(EMPTY_CART).click();
+//                driver.findElement(HEADER_DROP_DOWN).clickOnPage();
+//                driver.findElement(VIEW_CART_BUTTON).clickOnPage();
+//                driver.findElement(EMPTY_CART).clickOnPage();
 //                waitElement(DELETE_ALL_BUTTON);
-//                driver.findElement(DELETE_ALL_BUTTON).click();
+//                driver.findElement(DELETE_ALL_BUTTON).clickOnPage();
 //                //verify that the cart is empty
 //                waitUntilTextPresentInElement(HEADER_DROP_DOWN, "0 items");
 //                driver.get(BASE_URL + "logout/");

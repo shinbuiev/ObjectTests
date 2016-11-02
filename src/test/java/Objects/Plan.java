@@ -17,6 +17,7 @@ public class Plan {
 
     //constructors
 
+    public Plan(){}
     public Plan(String planName) {
         this.planName = planName;
     }
