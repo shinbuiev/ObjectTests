@@ -1,5 +1,6 @@
 package Pages;
 
+import Interfaces.ExpectedProducts.EventFiringWebDriverWrapper;
 import Objects.Product;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
@@ -18,9 +19,9 @@ public abstract class BasePage {
     @FindBy(xpath = "/html/body")
     private WebElement CLICK;
 
-    protected WebDriver driver;
+    protected EventFiringWebDriverWrapper driver;
 
-    public BasePage(EventFiringWebDriver driver) {
+    public BasePage(EventFiringWebDriverWrapper driver) {
         this.driver = driver;
         PageFactory.initElements(driver,this);
     }
@@ -33,10 +34,11 @@ public abstract class BasePage {
         CLICK.sendKeys(Keys.PAGE_DOWN);
     }
 
-    public void waitElement(WebElement element)
-    {
-        new WebDriverWait(driver,7).until(ExpectedConditions.visibilityOf(element));
-    }
+//    public void waitElementAndClick(WebElement element)
+//    {
+//        new WebDriverWait(driver,4).until(ExpectedConditions.visibilityOf(element));
+//        element.click();
+//    }
 
     public abstract Product getProduct();
 

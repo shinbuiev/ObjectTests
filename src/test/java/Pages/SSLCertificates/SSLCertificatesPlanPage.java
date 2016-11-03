@@ -1,5 +1,6 @@
 package Pages.SSLCertificates;
 
+import Interfaces.ExpectedProducts.EventFiringWebDriverWrapper;
 import Objects.Plan;
 import Pages.BasePage;
 import Products.SSLProduct;
@@ -26,7 +27,7 @@ public class SSLCertificatesPlanPage extends BasePage{
     @FindBy(xpath = "//*[@class='title-h1']")
     private static WebElement PRODUCT_NAME;
 
-    public SSLCertificatesPlanPage(EventFiringWebDriver driver) {
+    public SSLCertificatesPlanPage(EventFiringWebDriverWrapper driver) {
         super(driver);
     }
 

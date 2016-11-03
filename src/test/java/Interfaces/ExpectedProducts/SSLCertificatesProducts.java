@@ -21,9 +21,9 @@ public class SSLCertificatesProducts {
 
     public ArrayList<Term> getProductTerms() {
         ArrayList<Term> terms = new ArrayList<Term>() {{
-            add(new Term("12"));
-            add(new Term("24"));
-            add(new Term("36"));
+            add(new Term("12 month"));
+            add(new Term("24 month"));
+            add(new Term("36 month"));
         }};
         return terms;
     }

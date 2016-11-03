@@ -1,5 +1,6 @@
 package Pages.EmailHosting;
 
+import Interfaces.ExpectedProducts.EventFiringWebDriverWrapper;
 import Objects.Plan;
 import Objects.Product;
 import Pages.BasePage;
@@ -11,6 +12,8 @@ import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.events.EventFiringWebDriver;
+
+import static Tests.BasicTest.driver;
 
 /**
  * Created by geser on 31.10.16.
@@ -39,9 +42,9 @@ public class EmailHostingPlanPage extends BasePage{
 
     protected EventFiringWebDriver driver;
 
-    public EmailHostingPlanPage(EventFiringWebDriver driver) {
+    public EmailHostingPlanPage(EventFiringWebDriverWrapper driver) {
         super(driver);
-        this.driver = driver;
+
     }
 
     EmailHostingProduct actual;
@@ -54,16 +57,6 @@ public class EmailHostingPlanPage extends BasePage{
     public void selectPlan(String url){
         actual = new EmailHostingProduct(getProductName());
 
-        // it will be change later
-        if (url.contains("personal")){
-            actual.setProductPlan(new Plan(ECONOMY_PLAN_TEXT.getText()));
-        }
-        if (url.contains("group")){
-            actual.setProductPlan(new Plan(PREMIUM_PLAN_TEXT.getText()));
-        }
-        if (url.contains("unlimited")){
-            actual.setProductPlan(new Plan(UNLIMITED_PLAN_TEXT.getText()));
-        }
         driver.findElement(By.xpath("//a[@href='" + url + "']")).click();
     }
 

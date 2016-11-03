@@ -56,7 +56,9 @@ public class SSLCertificateBuyTest extends HostingBuyTest {
         rememberProductAfter(sslOrderPage);
         comparePlanPageAndOrderPageProducts();
 
-        sslOrderPage.selectOption("24");
+        sslOrderPage.selectAllTerms(product.getProductTerms());
+
+//        sslOrderPage.selectOption(product.getProductTerms());
         sslOrderPage.pageEnd();
         sslOrderPage.inputDomainName("SSLForTesting.ru");
         sslOrderPage.clickContinueOrderButton();

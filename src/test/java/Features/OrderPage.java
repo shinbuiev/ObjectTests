@@ -1,5 +1,6 @@
 package Features;
 
+import Interfaces.ExpectedProducts.EventFiringWebDriverWrapper;
 import Objects.Product;
 import Pages.BasePage;
 import org.openqa.selenium.By;
@@ -41,7 +42,7 @@ public class OrderPage extends BasePage{
     private String addonPrice;
     private int addonCount;
 
-    public OrderPage(EventFiringWebDriver driver) {
+    public OrderPage(EventFiringWebDriverWrapper driver) {
         super(driver);
     }
 

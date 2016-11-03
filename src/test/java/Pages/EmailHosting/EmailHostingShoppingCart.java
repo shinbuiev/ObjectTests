@@ -1,5 +1,6 @@
 package Pages.EmailHosting;
 
+import Interfaces.ExpectedProducts.EventFiringWebDriverWrapper;
 import Objects.*;
 import Pages.BasePage;
 import Products.EmailHostingProduct;
@@ -55,7 +56,7 @@ public class EmailHostingShoppingCart extends BasePage{
     private EmailHostingProduct actual;
     protected EventFiringWebDriver driver;
 
-    public EmailHostingShoppingCart(EventFiringWebDriver driver) {
+    public EmailHostingShoppingCart(EventFiringWebDriverWrapper driver) {
         super(driver);
         this.driver = driver;
     }

@@ -58,6 +58,8 @@ public class HostingBuyTest extends BasicTest {
         comparePlanPageAndOrderPageProducts();
 
 
+
+
         //PLANS
         rememberTotalPriceBeforeSelect();
 

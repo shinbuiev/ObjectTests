@@ -1,5 +1,6 @@
 package Tests;
 
+import Interfaces.ExpectedProducts.EventFiringWebDriverWrapper;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
@@ -13,7 +14,7 @@ import java.util.concurrent.TimeUnit;
  * Created by geser on 31.10.16.
  */
 public class BasicTest {
-    public static EventFiringWebDriver driver;
+    public static EventFiringWebDriverWrapper driver;
 
     @BeforeSuite
     public void initEnv() {
@@ -34,7 +35,8 @@ public class BasicTest {
         DesiredCapabilities cap = DesiredCapabilities.chrome();
         cap.setCapability(ChromeOptions.CAPABILITY, co);
         WebDriver webDriver = new ChromeDriver(cap);
-        driver = new EventFiringWebDriver(webDriver);
+        driver = new EventFiringWebDriverWrapper(webDriver);
+//        driver = new EventFiringWebDriver(webDriver);
         driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
         driver.manage().window().maximize();
         driver.manage().deleteAllCookies();

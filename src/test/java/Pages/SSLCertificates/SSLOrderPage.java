@@ -1,5 +1,6 @@
 package Pages.SSLCertificates;
 
+import Interfaces.ExpectedProducts.EventFiringWebDriverWrapper;
 import Objects.*;
 import Pages.BasePage;
 import Products.SSLProduct;
@@ -7,6 +8,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.events.EventFiringWebDriver;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -14,7 +16,7 @@ import java.util.List;
  */
 public class SSLOrderPage extends BasePage{
 
-    public SSLOrderPage(EventFiringWebDriver driver) {
+    public SSLOrderPage(EventFiringWebDriverWrapper driver) {
         super(driver);
     }
 
@@ -72,6 +74,13 @@ public class SSLOrderPage extends BasePage{
                 setOptionTerm(term);
             }
         }
+    }
+
+    public void selectAllTerms(ArrayList<Term> terms){
+        for (int i = 0; i < terms.size(); i++) {
+            selectOption(terms.get(i).getTerm());
+        }
+
     }
 
     public void setOptionTerm(String nameOption) {

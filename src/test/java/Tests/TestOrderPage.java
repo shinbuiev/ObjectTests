@@ -59,7 +59,9 @@ public class TestOrderPage extends BasicTest {
     public void test1(BaseExpectedProduct product, String url) {
         gotoPage(product.getProductMainPage());
         rememberProductBefore(hostingPlanPage);
+
         hostingPlanPage.selectPlan(url);
+
         rememberProductAfter(orderPage);
         comparePlanPageAndOrderPageProducts();
 
@@ -189,7 +191,7 @@ public class TestOrderPage extends BasicTest {
         hostingShoppingCartPage.clickCart();
 
         rememberProductAfter(hostingShoppingCartPage);
-        compareProductsOrderPageAndShoppingCart();
+//        compareProductsOrderPageAndShoppingCart();
 //        hostingShoppingCartPage.clearShoppingCart();
         isProductOk();
     }

@@ -1,5 +1,6 @@
 package Pages.WebHosting;
 
+import Interfaces.ExpectedProducts.EventFiringWebDriverWrapper;
 import Objects.*;
 import Pages.BasePage;
 import Products.WebHostingProduct;
@@ -58,18 +59,30 @@ public class HostingShoppingCartPage extends BasePage {
     @FindBy(xpath = "//*[@id=\"shopping_cart_table\"]/div[1]/div[2]/div[6]/div[2]/div/div/div[1]/div[1]/a/span")
     private WebElement fifthAddonTerm;
 
-
-
     @FindBy(xpath = "//a[@href='confirm_delete']")
     private WebElement clearShoppingCartButton;
 
     @FindBy(xpath = "//*[@id='cart_reset']")
     private WebElement confirmClearCart;
 
+    @FindBy(xpath = "//strong[@class = 'cuteText']")
+    private WebElement PRODUCTS_NAME_LIST;
+
+    @FindBy(xpath = "//strong[@class = 'cuteText']")
+    private WebElement PRODUCTS_TERM_LIST;
+
+    //   //div[contains(@class, 'table-upgrade')]/div/span[starts-with(@class,'upgrade-title')]  it's equals
+    @FindBy(xpath = "//span[starts-with(@class,'upgrade-title')]")
+    private WebElement ADDONS_NAME_LIST;
+
+    @FindBy(xpath = "(//div[contains(@class, 'table-upgrade')])/div[2]/*/select/option/")
+    private WebElement ADDONS_TERM_LIST;
+
+
     private WebHostingProduct actual;
     protected EventFiringWebDriver driver;
 
-    public HostingShoppingCartPage(EventFiringWebDriver driver) {
+    public HostingShoppingCartPage(EventFiringWebDriverWrapper driver) {
         super(driver);
         this.driver = driver;
     }
@@ -86,6 +99,8 @@ public class HostingShoppingCartPage extends BasePage {
             }
         }
     }
+
+
 
 
     public int getProductCount() {
@@ -113,7 +128,7 @@ public class HostingShoppingCartPage extends BasePage {
     }
 
     public String getProductName() {
-        return driver.findElement(firstElement).getText().split(" - ")[0];
+        return PRODUCTS_NAME_LIST.getText().split(" - ")[0];
     }
 
     public String getProductDomain() {
@@ -121,10 +136,14 @@ public class HostingShoppingCartPage extends BasePage {
     }
 
     public String getProductPlan() {
-        return driver.findElement(firstElement).getText().split(" - ")[1];// last 7 symbols
+        return PRODUCTS_NAME_LIST.getText().split(" - ")[1];// last 7 symbols
     }
 
+    Product testShop;
     public WebHostingProduct getProduct() {
+        testShop = new WebHostingProduct(getProductName());
+
+
         return actual;
     }
 

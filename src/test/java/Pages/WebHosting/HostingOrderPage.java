@@ -1,5 +1,6 @@
 package Pages.WebHosting;
 
+import Interfaces.ExpectedProducts.EventFiringWebDriverWrapper;
 import Objects.*;
 import Pages.BasePage;
 import Products.WebHostingProduct;
@@ -7,7 +8,7 @@ import org.openqa.selenium.*;
 import org.openqa.selenium.support.CacheLookup;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.events.EventFiringWebDriver;
-import org.openqa.selenium.support.ui.ExpectedConditions;
+
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,11 +42,11 @@ public class HostingOrderPage extends BasePage {
     private WebElement REGISTER_A_NEW_DOMAIN_RADIO_BUTTON_STATUS;
 
     @CacheLookup
-    @FindBy(xpath = "//*[@for='domain_name_own']")
+    @FindBy(xpath = "//div[@class='g-custom-radio']/label")
     private WebElement I_OWN_THIS_DOMAIN_NAME_RADIO_BUTTON;
 
     @CacheLookup
-    @FindBy(xpath = "//*[@for='domain_name_register']")
+    @FindBy(xpath = "//*[@class='g-custom-radio _no-margin']/label")
     private WebElement REGISTER_A_NEW_DOMAIN_RADIO_BUTTON;
 
     @CacheLookup
@@ -214,10 +215,11 @@ public class HostingOrderPage extends BasePage {
     protected EventFiringWebDriver driver;
     private WebHostingProduct actualProduct;
 
-    public HostingOrderPage(EventFiringWebDriver driver) {
+    public HostingOrderPage(EventFiringWebDriverWrapper driver) {
         super(driver);
         this.driver = driver;
     }
+
 
     public void setPlan(String plan) {
         for (int i = 0; i < planRadioButtonsNames.size(); i++) {
@@ -231,7 +233,7 @@ public class HostingOrderPage extends BasePage {
         for (int i = 0; i < addonNames.size(); i++) {
             if (addonNames.get(i).getText().equals(addon)) {
                 addonNames.get(i).click();
-                if (!addonCheckBoxStatusStatus.get(i).isSelected()){   //add addon work not correctly on site, if very quickly add addon
+                if (!addonCheckBoxStatusStatus.get(i).isSelected()) {   //add addon work not correctly on site, if very quickly add addon
                     addonNames.get(i).click();
                 }
             }
@@ -248,6 +250,7 @@ public class HostingOrderPage extends BasePage {
         return productPlan;
     }
 
+
     public ArrayList<Addon> getProductAddons() {
 //        if (addons.size()>0)
 //        {
@@ -255,8 +258,7 @@ public class HostingOrderPage extends BasePage {
 //            addons = new ArrayList<Addon>();
 //        }
         for (int i = 0; i < addonCheckBoxStatusStatus.size(); i++) {
-            if (addonCheckBoxStatusStatus.get(i).isSelected())
-            {
+            if (addonCheckBoxStatusStatus.get(i).isSelected()) {
                 addons.add(new Addon(addonNames.get(i).getText()));
             }
         }
@@ -278,11 +280,12 @@ public class HostingOrderPage extends BasePage {
     }
 
     public void clickRegisterNewDomain() {
+//        waitElementAndClick(REGISTER_A_NEW_DOMAIN_RADIO_BUTTON);
         REGISTER_A_NEW_DOMAIN_RADIO_BUTTON.click();
     }
 
     public void clickIownThisDomain() {
-
+//        waitElementAndClick(I_OWN_THIS_DOMAIN_NAME_RADIO_BUTTON);
         I_OWN_THIS_DOMAIN_NAME_RADIO_BUTTON.click();
     }
 
@@ -313,7 +316,7 @@ public class HostingOrderPage extends BasePage {
         CONTINUE_ORDER_BUTTON.click();
     }
 
-    public void clickOnPage(){
+    public void clickOnPage() {
         CLICK.click();
     }
 

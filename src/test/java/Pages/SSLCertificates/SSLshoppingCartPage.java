@@ -1,5 +1,6 @@
 package Pages.SSLCertificates;
 
+import Interfaces.ExpectedProducts.EventFiringWebDriverWrapper;
 import Objects.*;
 import Pages.BasePage;
 import Products.SSLProduct;
@@ -41,7 +42,7 @@ public class SSLshoppingCartPage extends BasePage {
     private SSLProduct actual;
     protected EventFiringWebDriver driver;
 
-    public SSLshoppingCartPage(EventFiringWebDriver driver) {
+    public SSLshoppingCartPage(EventFiringWebDriverWrapper driver) {
         super(driver);
         this.driver = driver;
     }

@@ -1,5 +1,6 @@
 package Pages.WebHosting;
 
+import Interfaces.ExpectedProducts.EventFiringWebDriverWrapper;
 import Objects.Plan;
 import Pages.BasePage;
 import Products.WebHostingProduct;
@@ -36,7 +37,7 @@ public class HostingPlanPage extends BasePage {
 
     protected EventFiringWebDriver driver;
 
-    public HostingPlanPage(EventFiringWebDriver driver) {
+    public HostingPlanPage(EventFiringWebDriverWrapper driver) {
         super(driver);
         this.driver = driver;
     }

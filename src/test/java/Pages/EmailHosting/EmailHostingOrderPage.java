@@ -1,5 +1,6 @@
 package Pages.EmailHosting;
 
+import Interfaces.ExpectedProducts.EventFiringWebDriverWrapper;
 import Objects.*;
 import Pages.BasePage;
 import Products.EmailHostingProduct;
@@ -75,9 +76,8 @@ public class EmailHostingOrderPage  extends BasePage{
     private EmailHostingProduct actualProduct;
 //    private WebHostingProduct finalProduct;
 
-    public EmailHostingOrderPage(EventFiringWebDriver driver) {
+    public EmailHostingOrderPage(EventFiringWebDriverWrapper driver) {
         super(driver);
-        this.driver = driver;
     }
 
     public void scrollDownPage() {
