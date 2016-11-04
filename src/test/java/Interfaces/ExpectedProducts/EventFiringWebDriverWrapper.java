@@ -38,7 +38,9 @@ public class EventFiringWebDriverWrapper extends EventFiringWebDriver {
             element = findElementTest(by);
 //            element = super.findElement(by);
         } catch (NoSuchElementException e) {
+/// div class closeChat
 
+            //   //*[@id="lz_ec_image2"] click here than close
             System.out.println("No such element");
 //            System.out.println("ERROR" + e.getMessage());
 //            new WebDriverWait(driver, 4).until(ExpectedConditions.invisibilityOfElementLocated(by));
