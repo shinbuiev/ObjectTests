@@ -1,6 +1,7 @@
 package Tests;
 
 import Interfaces.ExpectedProducts.EventFiringWebDriverWrapper;
+import Interfaces.ListenerThatHiglilightsElements;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
@@ -36,6 +37,7 @@ public class BasicTest {
         cap.setCapability(ChromeOptions.CAPABILITY, co);
         WebDriver webDriver = new ChromeDriver(cap);
         driver = new EventFiringWebDriverWrapper(webDriver);
+        driver.register(new ListenerThatHiglilightsElements("#FFFF00 ", 1, 50, TimeUnit.MILLISECONDS));
 //        driver = new EventFiringWebDriver(webDriver);
         driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
         driver.manage().window().maximize();

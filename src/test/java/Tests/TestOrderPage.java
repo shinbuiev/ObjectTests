@@ -43,6 +43,14 @@ public class TestOrderPage extends BasicTest {
     private ArrayList<ErrorMessage> errorMessageList = new ArrayList<ErrorMessage>();
 
 
+    @Test
+    public void test2(){
+         driver.get("https://www.crazydomains.com.au/web-hosting/order-economy-linux-hosting/");
+
+
+    }
+
+
     @DataProvider
     public Object[][] getExpectedProduct() {
         return new Object[][]{
@@ -155,7 +163,7 @@ public class TestOrderPage extends BasicTest {
         orderPage.clickOnPage();
         orderPage.inputDomainName(domainWithWrongTld);
         orderPage.clickOnPage();
-        orderPage.clickContinueOrderButton();
+//        orderPage.clickContinueOrderButton();
         checkErrorMessage();
 
         //incorrect domain own this domain
@@ -264,10 +272,10 @@ public class TestOrderPage extends BasicTest {
     }
 
 
-    @AfterTest
-    public void evnSgut() {
-        System.out.println(errorMessageList);
-        if (driver != null)
-            driver.quit();
-    }
+//    @AfterTest
+//    public void evnSgut() {
+//        System.out.println(errorMessageList);
+//        if (driver != null)
+//            driver.quit();
+//    }
 }

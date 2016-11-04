@@ -35,7 +35,7 @@ public class HostingPlanPage extends BasePage {
     private static final By PREMIUM_HOSTING_BUTTON_AT_THE_BOTTOM = By.xpath("//*[@id='moving_object_container']/div[2]/div/div/ul[2]/footer/div/span/a");
     private static final By UNLIMITED_HOSTING_BUTTON_AT_THE_BOTTOM = By.xpath("//*[@id='moving_object_container']/div[3]/div/div/ul[2]/footer/div/span/a");
 
-    protected EventFiringWebDriver driver;
+    protected EventFiringWebDriverWrapper driver;
 
     public HostingPlanPage(EventFiringWebDriverWrapper driver) {
         super(driver);

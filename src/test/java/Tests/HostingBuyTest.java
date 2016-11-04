@@ -136,6 +136,9 @@ public class HostingBuyTest extends BasicTest {
         hostingPlanPage = new HostingPlanPage(driver);
         orderPage = new HostingOrderPage(driver);
         hostingShoppingCartPage = new HostingShoppingCartPage(driver);
+//        hostingPlanPage = new HostingPlanPage(driver);
+//        orderPage = new HostingOrderPage(driver);
+//        hostingShoppingCartPage = new HostingShoppingCartPage(driver);
     }
 
     public void rememberProductBefore(BasePage page) {

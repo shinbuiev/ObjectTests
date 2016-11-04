@@ -8,6 +8,8 @@ import org.openqa.selenium.*;
 import org.openqa.selenium.support.CacheLookup;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.events.EventFiringWebDriver;
+import org.openqa.selenium.support.ui.ExpectedCondition;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 
 import java.util.ArrayList;
@@ -45,8 +47,13 @@ public class HostingOrderPage extends BasePage {
     @FindBy(xpath = "//div[@class='g-custom-radio']/label")
     private WebElement I_OWN_THIS_DOMAIN_NAME_RADIO_BUTTON;
 
+
+    //*[@class = 'linkTip tooltip_own_domain']
+
+
+//    @FindBy(xpath = "//*[@class='g-custom-radio _no-margin']/label")
     @CacheLookup
-    @FindBy(xpath = "//*[@class='g-custom-radio _no-margin']/label")
+    @FindBy(xpath = "//*[@class = 'linkTip tooltip_own_domain']")
     private WebElement REGISTER_A_NEW_DOMAIN_RADIO_BUTTON;
 
     @CacheLookup
@@ -212,7 +219,7 @@ public class HostingOrderPage extends BasePage {
     //for addons
     private ArrayList<Addon> addons = new ArrayList<Addon>();
 
-    protected EventFiringWebDriver driver;
+    protected EventFiringWebDriverWrapper driver;
     private WebHostingProduct actualProduct;
 
     public HostingOrderPage(EventFiringWebDriverWrapper driver) {
@@ -281,12 +288,21 @@ public class HostingOrderPage extends BasePage {
 
     public void clickRegisterNewDomain() {
 //        waitElementAndClick(REGISTER_A_NEW_DOMAIN_RADIO_BUTTON);
+//        driver.findElement(By.xpath(""));
+
+//*[@class = 'linkTip tooltip_own_domain']
+
+//        (//div[starts-with(@class, 'table-details row')]/div)[2]
         REGISTER_A_NEW_DOMAIN_RADIO_BUTTON.click();
     }
 
     public void clickIownThisDomain() {
 //        waitElementAndClick(I_OWN_THIS_DOMAIN_NAME_RADIO_BUTTON);
+//        I_OWN_THIS_DOMAIN_NAME_RADIO_BUTTON.click();
+
+//        ((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+I_OWN_THIS_DOMAIN_NAME_RADIO_BUTTON.getLocation().x+")");
         I_OWN_THIS_DOMAIN_NAME_RADIO_BUTTON.click();
+
     }
 
     // here can be validation!!!!

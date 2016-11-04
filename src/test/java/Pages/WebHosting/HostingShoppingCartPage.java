@@ -80,7 +80,7 @@ public class HostingShoppingCartPage extends BasePage {
 
 
     private WebHostingProduct actual;
-    protected EventFiringWebDriver driver;
+    protected EventFiringWebDriverWrapper driver;
 
     public HostingShoppingCartPage(EventFiringWebDriverWrapper driver) {
         super(driver);
