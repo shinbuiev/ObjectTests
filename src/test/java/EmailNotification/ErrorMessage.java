@@ -13,6 +13,9 @@ public class ErrorMessage {
     private ArrayList<File> files;
     private String fileName;
 
+
+    //Test commit
+
     public String getFileName() {
         return fileName;
     }
@@ -23,6 +26,7 @@ public class ErrorMessage {
 
     public ErrorMessage(String errorMessage, String fileFolder, ArrayList<File> fileNames){
         this.errorMessage = errorMessage;
+
         this.fileFolder = fileFolder;
 
         this.files = fileNames;
