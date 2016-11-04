@@ -24,6 +24,7 @@ public class ErrorMessage {
     public ErrorMessage(String errorMessage, String fileFolder, ArrayList<File> fileNames){
         this.errorMessage = errorMessage;
         this.fileFolder = fileFolder;
+
         this.files = fileNames;
     }
 
