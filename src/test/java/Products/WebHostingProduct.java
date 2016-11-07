@@ -49,7 +49,10 @@ public class WebHostingProduct extends Product {
 
     @Override
     public String toString() {
-        return super.toString() + " plan: " + getProductPlan() + " domain:" + getProductDomain() + " productAddons:" + getProductAddons();
+        if (!(getProductDomain().getDomainPrice() == null))
+            return super.toString() + " plan: " + getProductPlan() + " domain:" + getProductDomain() + " domain price: " + getProductDomain().getDomainPrice() + "\n" + " productAddons:" + getProductAddons();
+        else
+            return super.toString() + " plan: " + getProductPlan() + " domain:1111 " + getProductDomain() + " productAddons:" + getProductAddons();
     }
 
     //method check product from order page and shopping cart
@@ -87,12 +90,12 @@ public class WebHostingProduct extends Product {
         }
 
         // need add features/promo logic
-//        for (int i = 0; i < product.getProductAddons().size(); i++) {
-//            if (!product.getProductAddons().contains(this.getProductAddons().get(i))) {
+//        for (int i = 0; i < product.getSelectedProductAddons().size(); i++) {
+//            if (!product.getSelectedProductAddons().contains(this.getSelectedProductAddons().get(i))) {
 //                error = "Error8: For " + this.getProductName() +
 //                        " product, Wrong Addon Name: on Order Page was selected addon "
-//                        + this.getProductAddons().get(i).getAddonName() +
-//                        ", but in shopping Cart it's " + product.getProductAddons().get(i).getAddonName() + "\n";
+//                        + this.getSelectedProductAddons().get(i).getAddonName() +
+//                        ", but in shopping Cart it's " + product.getSelectedProductAddons().get(i).getAddonName() + "\n";
 //
 //                this.saveScreen("8", "WrongAddonNameOrderPage");
 //                product.saveScreen("8", "WrongAddonNameShoppingCart");

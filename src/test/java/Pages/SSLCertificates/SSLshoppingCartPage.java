@@ -1,6 +1,6 @@
 package Pages.SSLCertificates;
 
-import Interfaces.ExpectedProducts.EventFiringWebDriverWrapper;
+import Utils.EventFiringWebDriverWrapper;
 import Objects.*;
 import Pages.BasePage;
 import Products.SSLProduct;

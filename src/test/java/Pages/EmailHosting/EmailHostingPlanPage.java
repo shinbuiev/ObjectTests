@@ -1,19 +1,14 @@
 package Pages.EmailHosting;
 
-import Interfaces.ExpectedProducts.EventFiringWebDriverWrapper;
-import Objects.Plan;
+import Utils.EventFiringWebDriverWrapper;
 import Objects.Product;
 import Pages.BasePage;
 import Products.EmailHostingProduct;
-import Products.SSLProduct;
-import Products.WebHostingProduct;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.events.EventFiringWebDriver;
-
-import static Tests.BasicTest.driver;
 
 /**
  * Created by geser on 31.10.16.

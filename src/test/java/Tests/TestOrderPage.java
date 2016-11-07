@@ -7,10 +7,10 @@ import org.testng.Assert;
 
 import java.util.ArrayList;
 
+import org.testng.annotations.AfterTest;
 import org.testng.annotations.Test;
 import EmailNotification.ErrorMessage;
 import Pages.WebHosting.HostingPlanPage;
-import org.testng.annotations.AfterTest;
 import Pages.WebHosting.HostingOrderPage;
 import org.testng.annotations.DataProvider;
 import Pages.WebHosting.HostingShoppingCartPage;
@@ -22,16 +22,6 @@ import Interfaces.ExpectedProducts.BaseExpectedProduct;
  * Created by Sergiy.K on 02-Nov-16.
  */
 public class TestOrderPage extends BasicTest {
-
-
-    private String domain = "myfirstbuyincrazy.com.au";
-    private String secondDomain = "mysecondbuyincrazy.com.au";
-    private String incorrectDomain = "myfirstbuyincrazy";
-    private String domainWithWrongTld = "myfirstbuyincrazy.none";
-
-
-    private Price priceBefore;
-    private Price priceAfter;
     private Product productBefore;
     private Product productAfter;
 
@@ -41,14 +31,7 @@ public class TestOrderPage extends BasicTest {
     LinuxWebHosting linuxWebHosting = new LinuxWebHosting();
     WindowsWebHosting windowsWebHosting = new WindowsWebHosting();
     private ArrayList<ErrorMessage> errorMessageList = new ArrayList<ErrorMessage>();
-
-
-    @Test
-    public void test2(){
-         driver.get("https://www.crazydomains.com.au/web-hosting/order-economy-linux-hosting/");
-
-
-    }
+    private ConnectToValidation validation;
 
 
     @DataProvider
@@ -63,144 +46,52 @@ public class TestOrderPage extends BasicTest {
         };
     }
 
+//    @Test
+//    public void test2(){
+//        gotoPage("https://www.crazydomains.com.au/web-hosting/order-economy-linux-hosting/");
+//        orderPage.pageEnd();
+//        orderPage.clickRegisterNewDomain();
+//        orderPage.inputDomainName("sfsjfghsjgfsdjghfsj.com");
+//        orderPage.getR();
+//        System.out.println("domain Name" + orderPage.getDomainName());
+//    }
+
     @Test(dataProvider = "getExpectedProduct")
     public void test1(BaseExpectedProduct product, String url) {
         gotoPage(product.getProductMainPage());
+
         rememberProductBefore(hostingPlanPage);
-
         hostingPlanPage.selectPlan(url);
-
         rememberProductAfter(orderPage);
         comparePlanPageAndOrderPageProducts();
 
-        rememberTotalPriceBeforeSelect();
-        orderPage.setPlan("24 months");
-        rememberTotalPriceAfterSelect();
+        validation.emptyDomainFieldOwnDomainTest();
+        validation.emptyDomainFieldRegisterNewDomainTest();
+
+        validation.domainWithWrongTldOwnDomainNameTest();
+        validation.domainWithWrongTldRegisterNewDomainTest();
+
+        validation.incorrectDomainNameOwnDomainTest();
+        validation.incorrectDomainNameRegisterNewDomainTest();
+        checkValidationErrors();
+
+        orderPage.selectAllPlans(product.getProductPlans());// here select all plans one by one and compare total price
+        orderPage.selectAllAddons(product.getProductAddons());// here add all of existing addons and compare total price
         comparePrices();
 
-        rememberTotalPriceBeforeSelect();
-        orderPage.setPlan("12 months");
-        rememberTotalPriceAfterSelect();
-        comparePrices();
-
-        rememberTotalPriceBeforeSelect();
-        orderPage.setPlan("120 months");
-        rememberTotalPriceAfterSelect();
-        comparePrices();
-
-        rememberTotalPriceBeforeSelect();
-        orderPage.setPlan("36 months");
-        rememberTotalPriceAfterSelect();
-        comparePrices();
-
-        rememberTotalPriceBeforeSelect();
-        orderPage.setAddon("Premium Email Protection");
-        rememberTotalPriceAfterSelect();
-        comparePrices();
-
-        rememberTotalPriceBeforeSelect();
-        orderPage.setAddon("Traffic Booster");
-        rememberTotalPriceAfterSelect();
-        comparePrices();
-
-        rememberTotalPriceBeforeSelect();
-        orderPage.setAddon("Secure Web Hosting");
-        rememberTotalPriceAfterSelect();
-        comparePrices();
-
-        rememberTotalPriceBeforeSelect();
-        orderPage.setAddon("Web Analytics");
-        rememberTotalPriceAfterSelect();
-        comparePrices();
-
-        rememberTotalPriceBeforeSelect();
-        orderPage.setAddon("Premium Email Protection");
-        rememberTotalPriceAfterSelect();
-        comparePrices();
-
-        rememberTotalPriceBeforeSelect();
-        orderPage.setAddon("Mailing List Manager");
-        rememberTotalPriceAfterSelect();
-        comparePrices();
-
-
-        //CONNECT TO BLOCK VALIDATION   here need to change logic!!!!!
-        //empty field  own this domain
-        orderPage.pageEnd();
-        orderPage.clearDomainInputField();
-        orderPage.clickOnPage();
-        orderPage.clickIownThisDomain();
-        orderPage.clickContinueOrderButton();
-        checkErrorMessage();
-
-        //empty field  register domain
         orderPage.pageEnd();
         orderPage.clickRegisterNewDomain();
-        orderPage.inputDomainName("asasdasdadasds.com");
-        orderPage.clickOnPage();  //here need to add wait green light))!!!!!
         orderPage.clearDomainInputField();
         orderPage.clickOnPage();
-        orderPage.clickContinueOrderButton();
-        checkErrorMessage();
-
-        //domain with wrong tld own this domain
-        orderPage.pageEnd();
-        orderPage.clickIownThisDomain();
-        orderPage.inputDomainName("asasdasdadasds.com");
-        orderPage.clickOnPage();
-        orderPage.clearDomainInputField();
-        orderPage.clickOnPage();
-        orderPage.inputDomainName(domainWithWrongTld);
-        orderPage.clickOnPage();
-        checkStatusDomainAvailableTickStatus();
-
-        //domain with wrong tld register new domain
-        orderPage.pageEnd();
-        orderPage.clickRegisterNewDomain();
-        orderPage.inputDomainName("asasdasdadasds.com");
-        orderPage.clickOnPage();
-        orderPage.clearDomainInputField();
-        orderPage.clickOnPage();
-        orderPage.inputDomainName(domainWithWrongTld);
-        orderPage.clickOnPage();
-//        orderPage.clickContinueOrderButton();
-        checkErrorMessage();
-
-        //incorrect domain own this domain
-        orderPage.pageEnd();
-        orderPage.clickIownThisDomain();
-        orderPage.inputDomainName("asasdasdadasds.com");
-        orderPage.clickOnPage();
-        orderPage.clearDomainInputField();
-        orderPage.clickOnPage();
-        orderPage.inputDomainName(incorrectDomain);
-        orderPage.clickOnPage();
-        orderPage.clickContinueOrderButton();
-        checkErrorMessage();
-
-        //incorrect domain register new domain
-        orderPage.pageEnd();
-        orderPage.clickRegisterNewDomain();
-        orderPage.inputDomainName("asasdasdadasds.com");
-        orderPage.clickOnPage();
-        orderPage.clearDomainInputField();
-        orderPage.inputDomainName(incorrectDomain);
-        orderPage.clickContinueOrderButton();
-        checkErrorMessage();
-
-        orderPage.pageEnd();
-        orderPage.clearDomainInputField();
-        orderPage.clickOnPage();
-        orderPage.clickIownThisDomain();
-        orderPage.inputDomainName("DomainHosting.com");
+        orderPage.inputDomainName("DomainWebHostingForCrazyTests.com");
         orderPage.clickOnPage();
         rememberProductBefore(orderPage);
         orderPage.clickContinueOrderButton();
         hostingShoppingCartPage.clickCart();
 
         rememberProductAfter(hostingShoppingCartPage);
-//        compareProductsOrderPageAndShoppingCart();
-//        hostingShoppingCartPage.clearShoppingCart();
+        compareProductsOrderPageAndShoppingCart();
+        hostingShoppingCartPage.clearShoppingCart();
         isProductOk();
     }
 
@@ -218,15 +109,17 @@ public class TestOrderPage extends BasicTest {
         }
     }
 
-    public void checkStatusDomainAvailableTickStatus() {
-        Assert.assertTrue(orderPage.getDomainAvailableTickStatus());
+    public void comparePrices() {
+        if (orderPage.getPriceErrors().size() > 0) {
+            errorMessageList.add(new ErrorMessage("error with prices after action"));
+        }
+        else System.out.println("price is ok ");
     }
 
-    public void checkErrorMessage() {
-        if (!(orderPage.getValidationErrorMessage().equals("Domain name is invalid") ||
-                orderPage.getValidationErrorMessage().equals("Domain name is required") ||
-                orderPage.getValidationErrorMessage().equals("Requested domain name is invalid")))
-            errorMessageList.add(new ErrorMessage("!!!!!!!Validation Error Block ConnectTo on page: " + orderPage.getCurrentUrl() + "\n For domain name:"));
+    public void checkValidationErrors() {
+        if (validation.getErrorMessageList().size() > 0) {
+            errorMessageList.addAll(validation.getErrorMessageList());
+        }
     }
 
     public void gotoPage(java.lang.String url) {
@@ -236,6 +129,7 @@ public class TestOrderPage extends BasicTest {
         hostingPlanPage = new HostingPlanPage(driver);
         orderPage = new HostingOrderPage(driver);
         hostingShoppingCartPage = new HostingShoppingCartPage(driver);
+        validation = new ConnectToValidation(driver);
     }
 
     public void rememberProductBefore(BasePage page) {
@@ -248,20 +142,6 @@ public class TestOrderPage extends BasicTest {
         productAfter.takeScreenshot();
     }
 
-    public void rememberTotalPriceBeforeSelect() {
-        priceBefore = orderPage.getTotalPrice();
-    }
-
-    public void rememberTotalPriceAfterSelect() {
-        priceAfter = orderPage.getTotalPrice();
-    }
-
-    public void comparePrices() {
-        if (priceBefore.getPrice().equals(priceAfter.getPrice())) {
-            errorMessageList.add(new ErrorMessage("error with prices after action"));
-        }
-    }
-
     public void comparePlanPageAndOrderPageProducts() {
         productBefore.comparePlanPageOrderPageProductsAndGetErrors(productAfter);
         if (productBefore.getErrorMessages().size() > 0) {
@@ -271,11 +151,12 @@ public class TestOrderPage extends BasicTest {
         }
     }
 
-
-//    @AfterTest
-//    public void evnSgut() {
-//        System.out.println(errorMessageList);
-//        if (driver != null)
-//            driver.quit();
-//    }
+    @AfterTest
+    public void evnSgut() {
+        for (int i = 0; i < errorMessageList.size(); i++) {
+            System.out.println(errorMessageList.get(i));
+        }
+        if (driver != null)
+            driver.quit();
+    }
 }

@@ -1,15 +1,11 @@
 package Pages;
 
-import Interfaces.ExpectedProducts.EventFiringWebDriverWrapper;
+import Utils.EventFiringWebDriverWrapper;
 import Objects.Product;
 import org.openqa.selenium.Keys;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.events.EventFiringWebDriver;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 
 /**
  * Created by Sergiy.K on 21-Oct-16.

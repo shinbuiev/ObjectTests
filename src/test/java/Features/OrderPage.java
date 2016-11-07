@@ -1,12 +1,11 @@
 package Features;
 
-import Interfaces.ExpectedProducts.EventFiringWebDriverWrapper;
+import Utils.EventFiringWebDriverWrapper;
 import Objects.Product;
 import Pages.BasePage;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
-import org.openqa.selenium.support.events.EventFiringWebDriver;
 
 
 /**
@@ -193,17 +192,9 @@ public class OrderPage extends BasePage{
     }
 
     public void clickOnPage() {
-//        Utils.waitElement(CLICK);
         driver.findElement(CLICK).click();
     }
 
-//    public void waitDomainAvailableTickStatus() {
-//        Utils.waitElement(DOMAIN_AVAILABLE_TICK);
-//    }
-//
-//    public void waitPage() {
-//        Utils.waitElement(CLICK);
-//    }
 
     public boolean getDomainAvailableTickStatus() {
         return driver.findElement(DOMAIN_AVAILABLE_TICK).isEnabled();

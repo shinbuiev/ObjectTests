@@ -1,10 +1,9 @@
 package Pages.EmailHosting;
 
-import Interfaces.ExpectedProducts.EventFiringWebDriverWrapper;
+import Utils.EventFiringWebDriverWrapper;
 import Objects.*;
 import Pages.BasePage;
 import Products.EmailHostingProduct;
-import Products.WebHostingProduct;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
@@ -76,7 +75,7 @@ public class EmailHostingOrderPage  extends BasePage{
     private EmailHostingProduct actualProduct;
 //    private WebHostingProduct finalProduct;
 
-    public EmailHostingOrderPage(EventFiringWebDriverWrapper driver) {
+    public EmailHostingOrderPage(EventFiringWebDriverWrapper driver)    {
         super(driver);
     }
 

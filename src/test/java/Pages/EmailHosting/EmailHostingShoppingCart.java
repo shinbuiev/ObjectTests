@@ -1,10 +1,9 @@
 package Pages.EmailHosting;
 
-import Interfaces.ExpectedProducts.EventFiringWebDriverWrapper;
+import Utils.EventFiringWebDriverWrapper;
 import Objects.*;
 import Pages.BasePage;
 import Products.EmailHostingProduct;
-import Products.WebHostingProduct;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;

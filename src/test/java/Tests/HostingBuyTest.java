@@ -56,73 +56,7 @@ public class HostingBuyTest extends BasicTest {
         hostingPlanPage.selectPlan(plan);
         rememberProductAfter(orderPage);
         comparePlanPageAndOrderPageProducts();
-
-
-
-
-        //PLANS
         rememberTotalPriceBeforeSelect();
-
-//        orderPage.select24monthOptionTerm();
-//
-//        rememberTotalPriceAfterSelect();
-//        comparePrices();
-//
-//        rememberTotalPriceBeforeSelect();
-//        orderPage.select36monthOptionTerm();
-//        rememberTotalPriceAfterSelect();
-//        comparePrices();
-//
-//        rememberTotalPriceBeforeSelect();
-//        orderPage.select120monthOptionTerm();
-//        rememberTotalPriceAfterSelect();
-//        comparePrices();
-//
-//        rememberTotalPriceBeforeSelect();
-//        orderPage.select12monthOptionTerm();
-//        rememberTotalPriceAfterSelect();
-//        comparePrices();
-//
-//        //ADDONS
-//
-//        orderPage.pageDown();
-//        rememberTotalPriceBeforeSelect();
-//        orderPage.addTrafficBooster();
-//        rememberTotalPriceAfterSelect();
-//        comparePrices();
-//
-//        rememberTotalPriceBeforeSelect();
-//        orderPage.addWebAnalytics();
-//        rememberTotalPriceAfterSelect();
-//        comparePrices();
-//
-//        rememberTotalPriceBeforeSelect();
-//        orderPage.addPremiumEmailProtection();
-//        rememberTotalPriceAfterSelect();
-//        comparePrices();
-//
-//        rememberTotalPriceBeforeSelect();
-//        orderPage.addSecureWebHosting();
-//        rememberTotalPriceAfterSelect();
-//        comparePrices();
-//
-//        rememberTotalPriceBeforeSelect();
-//        orderPage.addMailingListManager();
-//        rememberTotalPriceAfterSelect();
-//        comparePrices();
-
-//        orderPage.pageEnd();
-//        orderPage.clearDomainInputField();
-//        orderPage.inputDomainName("DomainForTesting.com");
-//        rememberProductBefore(orderPage);
-//        orderPage.clickContinueOrderButton();
-//        hostingShoppingCartPage.clickCart();
-//        //here compare product from order page and shopping cart page, add screenshots and errors to errorMessageList if exist come differences
-//        rememberProductAfter(hostingShoppingCartPage);
-//        compareProductsOrderPageAndShoppingCart();
-//        hostingShoppingCartPage.clearShoppingCart();
-//        isProductOk();
-
     }
 
     public void isProductOk() {

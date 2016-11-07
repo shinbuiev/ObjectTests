@@ -1,13 +1,12 @@
 package Pages.WebHosting;
 
-import Interfaces.ExpectedProducts.EventFiringWebDriverWrapper;
+import Utils.EventFiringWebDriverWrapper;
 import Objects.*;
 import Pages.BasePage;
 import Products.WebHostingProduct;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.events.EventFiringWebDriver;
 
 import java.util.ArrayList;
 
@@ -101,8 +100,6 @@ public class HostingShoppingCartPage extends BasePage {
     }
 
 
-
-
     public int getProductCount() {
         return driver.findElements(PRODUCT_LIST).size();
     }
@@ -112,7 +109,9 @@ public class HostingShoppingCartPage extends BasePage {
     }
 
     public void clickCart() {
-        driver.findElement(cartClick).click();
+        if (!driver.getCurrentUrl().contains("shopping-cart")) {
+            driver.findElement(cartClick).click();
+        }
         actual = new WebHostingProduct(getProductName());
         actual.setProductDomain(new Domain(getProductDomain()));
         actual.setProductPrice(new Price(getPrice()));
@@ -139,15 +138,11 @@ public class HostingShoppingCartPage extends BasePage {
         return PRODUCTS_NAME_LIST.getText().split(" - ")[1];// last 7 symbols
     }
 
-    Product testShop;
     public WebHostingProduct getProduct() {
-        testShop = new WebHostingProduct(getProductName());
-
-
         return actual;
     }
 
-    public void clearShoppingCart(){
+    public void clearShoppingCart() {
 //        clearShoppingCartButton.clickOnPage();
 //        confirmClearCart.clickOnPage();
     }

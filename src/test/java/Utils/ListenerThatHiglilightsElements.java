@@ -1,4 +1,4 @@
-package Interfaces;
+package Utils;
 
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;

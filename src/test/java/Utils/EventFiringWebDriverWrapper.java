@@ -1,4 +1,4 @@
-package Interfaces.ExpectedProducts;
+package Utils;
 
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.events.EventFiringWebDriver;
@@ -34,15 +34,13 @@ public class EventFiringWebDriverWrapper extends EventFiringWebDriver {
 //        waitFullLoading();
         WebElement element;
         try {
-            System.out.println("first trying");
+//            System.out.println("first trying");
             element = findElementTest(by);
 //            element = super.findElement(by);
         } catch (NoSuchElementException e) {
-/// div class closeChat
 
-            //   //*[@id="lz_ec_image2"] click here than close
             System.out.println("No such element");
-//            System.out.println("ERROR" + e.getMessage());
+            System.out.println("ERROR" + e.getMessage());
 //            new WebDriverWait(driver, 4).until(ExpectedConditions.invisibilityOfElementLocated(by));
 //            element = super.findElement(by);
             element = findElementTest(by);

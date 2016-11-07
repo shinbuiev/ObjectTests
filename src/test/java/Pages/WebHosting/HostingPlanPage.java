@@ -1,14 +1,11 @@
 package Pages.WebHosting;
 
-import Interfaces.ExpectedProducts.EventFiringWebDriverWrapper;
-import Objects.Plan;
+import Utils.EventFiringWebDriverWrapper;
 import Pages.BasePage;
 import Products.WebHostingProduct;
 import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.events.EventFiringWebDriver;
 
 /**
  * Created by Sergiy.K on 21-Oct-16.

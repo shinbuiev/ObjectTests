@@ -1,13 +1,12 @@
 package Pages.SSLCertificates;
 
-import Interfaces.ExpectedProducts.EventFiringWebDriverWrapper;
+import Utils.EventFiringWebDriverWrapper;
 import Objects.Plan;
 import Pages.BasePage;
 import Products.SSLProduct;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.events.EventFiringWebDriver;
 
 /**
  * Created by geser on 27.10.16.

@@ -11,16 +11,17 @@ public class Domain {
 
     //  need to remake this class!!!
 
-    public Domain(String name){
+    public Domain(String name) {
         this.name = name;
+    }
+
+    public Domain(String name, Price domainPrice) {
+        this.name = name;
+        this.domainPrice = domainPrice;
     }
 
     public Price getDomainPrice() {
         return domainPrice;
-    }
-
-    public void setDomainPrice(Price domainPrice) {
-        this.domainPrice = domainPrice;
     }
 
     public String getDomainTld() {
