@@ -1,9 +1,5 @@
 package Objects;
 
-import Interfaces.ProductInterface;
-
-import java.util.ArrayList;
-
 /**
  * Created by Sergiy.K on 21-Oct-16.
  */
