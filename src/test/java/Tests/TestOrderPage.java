@@ -1,6 +1,5 @@
 package Tests;
 
-import Objects.Price;
 import Pages.BasePage;
 import Objects.Product;
 import org.testng.Assert;
@@ -14,9 +13,9 @@ import Pages.WebHosting.HostingPlanPage;
 import Pages.WebHosting.HostingOrderPage;
 import org.testng.annotations.DataProvider;
 import Pages.WebHosting.HostingShoppingCartPage;
-import Interfaces.ExpectedProducts.LinuxWebHosting;
-import Interfaces.ExpectedProducts.WindowsWebHosting;
-import Interfaces.ExpectedProducts.BaseExpectedProduct;
+import ExpectedProducts.LinuxWebHosting;
+import ExpectedProducts.WindowsWebHosting;
+import ExpectedProducts.BaseExpectedProduct;
 
 /**
  * Created by Sergiy.K on 02-Nov-16.
@@ -46,16 +45,6 @@ public class TestOrderPage extends BasicTest {
         };
     }
 
-//    @Test
-//    public void test2(){
-//        gotoPage("https://www.crazydomains.com.au/web-hosting/order-economy-linux-hosting/");
-//        orderPage.pageEnd();
-//        orderPage.clickRegisterNewDomain();
-//        orderPage.inputDomainName("sfsjfghsjgfsdjghfsj.com");
-//        orderPage.getR();
-//        System.out.println("domain Name" + orderPage.getDomainName());
-//    }
-
     @Test(dataProvider = "getExpectedProduct")
     public void test1(BaseExpectedProduct product, String url) {
         gotoPage(product.getProductMainPage());
@@ -75,8 +64,10 @@ public class TestOrderPage extends BasicTest {
         validation.incorrectDomainNameRegisterNewDomainTest();
         checkValidationErrors();
 
-        orderPage.selectAllPlans(product.getProductPlans());// here select all plans one by one and compare total price
-        orderPage.selectAllAddons(product.getProductAddons());// here add all of existing addons and compare total price
+        // here select all plans one by one and compare total price after each action, if price is still the same add message to errorMessage list
+        orderPage.selectAllPlans(product.getProductPlans());
+        // here add all of existing addons and compare total price after each action,  if price is still the same add message to errorMessage list
+        orderPage.selectAllAddons(product.getProductAddons());
         comparePrices();
 
         orderPage.pageEnd();

@@ -1,32 +1,19 @@
 package Tests;
 
-import EmailNotification.Email;
 import EmailNotification.ErrorMessage;
-import Interfaces.ExpectedProducts.BaseExpectedProduct;
-import Interfaces.ExpectedProducts.EmailHosting;
-import Interfaces.ExpectedProducts.LinuxWebHosting;
-import Interfaces.ExpectedProducts.WindowsWebHosting;
+import ExpectedProducts.BaseExpectedProduct;
+import ExpectedProducts.EmailHosting;
 import Objects.Product;
 import Pages.BasePage;
 import Pages.EmailHosting.EmailHostingOrderPage;
 import Pages.EmailHosting.EmailHostingPlanPage;
 import Pages.EmailHosting.EmailHostingShoppingCart;
-import Pages.WebHosting.HostingOrderPage;
-import Pages.WebHosting.HostingPlanPage;
-import Pages.WebHosting.HostingShoppingCartPage;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.chrome.ChromeOptions;
-import org.openqa.selenium.remote.DesiredCapabilities;
-import org.openqa.selenium.support.events.EventFiringWebDriver;
 import org.testng.Assert;
 import org.testng.annotations.AfterTest;
-import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 import java.util.ArrayList;
-import java.util.concurrent.TimeUnit;
 
 /**
  * Created by geser on 31.10.16.

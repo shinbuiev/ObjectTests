@@ -1,4 +1,4 @@
-package Interfaces.ExpectedProducts;
+package ExpectedProducts;
 
 import Objects.Addon;
 import Objects.Plan;

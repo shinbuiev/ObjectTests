@@ -1,8 +1,7 @@
 package Tests;
 
-import EmailNotification.Email;
 import EmailNotification.ErrorMessage;
-import Interfaces.ExpectedProducts.SSLCertificatesProducts;
+import ExpectedProducts.SSLCertificatesProducts;
 import Objects.Product;
 import Pages.BasePage;
 import Pages.SSLCertificates.SSLCertificatesPlanPage;

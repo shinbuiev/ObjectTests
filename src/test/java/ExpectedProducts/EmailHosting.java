@@ -1,11 +1,10 @@
-package Interfaces.ExpectedProducts;
+package ExpectedProducts;
 
 import Objects.Addon;
 import Objects.Plan;
 import Objects.Product;
 import Objects.Term;
 import Products.EmailHostingProduct;
-import Products.WebHostingProduct;
 
 import java.util.ArrayList;
 

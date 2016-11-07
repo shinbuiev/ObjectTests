@@ -87,7 +87,6 @@ public class HostingOrderPage extends BasePage {
     @FindBy(xpath = "//span[starts-with(@class,\"item-name\")]")
     private List<WebElement> planRadioButtonsNames;
 
-    private Plan productPlan;
     private Price priceBeforeAction;
     private ArrayList<ErrorMessage> priceErrors = new ArrayList<ErrorMessage>();
     private ArrayList<ErrorMessage> addonErrors = new ArrayList<ErrorMessage>();
@@ -150,9 +149,10 @@ public class HostingOrderPage extends BasePage {
     }
 
     public Plan getSelectedProductPlan() {// here need to change logic for plan, maybe don't need variable
+        Plan productPlan = new Plan(getPlanName());
         for (int i = 0; i < 4; i++) {
             if (planRadioButtonsStatus.get(i).isSelected())
-                productPlan = new Plan(planRadioButtonsNames.get(i).getText(), planRadioButtonsNames.get(i).getText());
+                productPlan.setTerm(new Term(planRadioButtonsNames.get(i).getText()));
         }
         return productPlan;
     }
@@ -160,7 +160,7 @@ public class HostingOrderPage extends BasePage {
     public ArrayList<Addon> getSelectedProductAddons() {
         for (int i = 0; i < addonCheckBoxStatusStatus.size(); i++) {
             if (addonCheckBoxStatusStatus.get(i).isSelected()) {
-                addons.add(new Addon(addonNames.get(i).getText()));
+                addons.add(new Addon(addonNames.get(i).getText(), getSelectedProductPlan().getTerm()));
             }
         }
         return addons;

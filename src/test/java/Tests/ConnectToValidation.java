@@ -1,15 +1,9 @@
 package Tests;
 
 import EmailNotification.ErrorMessage;
-import Features.OrderPage;
 import Pages.WebHosting.HostingOrderPage;
 import Utils.EventFiringWebDriverWrapper;
-import org.openqa.selenium.support.PageFactory;
-import org.testng.Assert;
-
 import java.util.ArrayList;
-
-import static Tests.BasicTest.driver;
 
 /**
  * Created by Sergiy.K on 07-Nov-16.
@@ -28,7 +22,6 @@ public class ConnectToValidation {
 
     public ConnectToValidation(EventFiringWebDriverWrapper driver) {
         this.driver = driver;
-//        PageFactory.initElements(driver, this);
         orderPage = new HostingOrderPage(driver);
     }
 

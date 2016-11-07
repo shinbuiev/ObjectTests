@@ -1,4 +1,4 @@
-package Interfaces.ExpectedProducts;
+package ExpectedProducts;
 
 import Objects.*;
 import Products.WebHostingProduct;

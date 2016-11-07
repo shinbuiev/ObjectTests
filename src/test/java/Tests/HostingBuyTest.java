@@ -1,9 +1,9 @@
 package Tests;
 
 import EmailNotification.ErrorMessage;
-import Interfaces.ExpectedProducts.BaseExpectedProduct;
-import Interfaces.ExpectedProducts.LinuxWebHosting;
-import Interfaces.ExpectedProducts.WindowsWebHosting;
+import ExpectedProducts.BaseExpectedProduct;
+import ExpectedProducts.LinuxWebHosting;
+import ExpectedProducts.WindowsWebHosting;
 import Objects.Price;
 import Objects.Product;
 import Pages.BasePage;
