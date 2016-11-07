@@ -1,6 +1,7 @@
 package Tests;
 
 import EmailNotification.ErrorMessage;
+import Pages.BaseOrderPage;
 import Pages.WebHosting.HostingOrderPage;
 import Utils.EventFiringWebDriverWrapper;
 import java.util.ArrayList;
@@ -18,11 +19,11 @@ public class ConnectToValidation {
     private String incorrectDomain = "myfirstbuyincrazy";
     private String domainWithWrongTld = "myfirstbuyincrazy.none";
     private EventFiringWebDriverWrapper driver;
-    private HostingOrderPage orderPage;
+    private BaseOrderPage orderPage;
 
     public ConnectToValidation(EventFiringWebDriverWrapper driver) {
         this.driver = driver;
-        orderPage = new HostingOrderPage(driver);
+        orderPage = new BaseOrderPage(driver);
     }
 
     public void emptyDomainFieldOwnDomainTest() {
