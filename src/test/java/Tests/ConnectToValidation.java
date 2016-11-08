@@ -2,7 +2,6 @@ package Tests;
 
 import EmailNotification.ErrorMessage;
 import Pages.BaseOrderPage;
-import Pages.WebHosting.HostingOrderPage;
 import Utils.EventFiringWebDriverWrapper;
 import java.util.ArrayList;
 
@@ -21,9 +20,12 @@ public class ConnectToValidation {
     private EventFiringWebDriverWrapper driver;
     private BaseOrderPage orderPage;
 
-    public ConnectToValidation(EventFiringWebDriverWrapper driver) {
-        this.driver = driver;
-        orderPage = new BaseOrderPage(driver);
+//    public ConnectToValidation(EventFiringWebDriverWrapper driver) {
+//        this.driver = driver;
+////        orderPage = new BaseOrderPage(driver);
+//    }
+    public ConnectToValidation(BaseOrderPage orderPage){
+        this.orderPage = orderPage;
     }
 
     public void emptyDomainFieldOwnDomainTest() {
@@ -31,7 +33,7 @@ public class ConnectToValidation {
         orderPage.clearDomainInputField();
         orderPage.clickOnPage();
         orderPage.clickContinueOrderButton();
-        checkErrorMessage("", orderPage.getConnectToSelectedRadioButton());
+        checkErrorMessage("", orderPage.getDomainOwner());
     }
 
     public void emptyDomainFieldRegisterNewDomainTest() {
@@ -42,10 +44,10 @@ public class ConnectToValidation {
         orderPage.clearDomainInputField();
         orderPage.clickOnPage();
         orderPage.clickContinueOrderButton();
-        checkErrorMessage("", orderPage.getConnectToSelectedRadioButton());
+        checkErrorMessage("", orderPage.getDomainOwner());
     }
 
-    public void domainWithWrongTldOwnDomainNameTest() {
+    public void domainWithWrongTldOwnDomainNameTest() {  //fail here
         orderPage.pageEnd();
         orderPage.clickIownThisDomain();
         orderPage.inputDomainName(domain);
@@ -58,10 +60,10 @@ public class ConnectToValidation {
         orderPage.pageEnd();
         orderPage.waitErrorMessage();
 
-        checkErrorMessage(domainWithWrongTld, orderPage.getConnectToSelectedRadioButton());
+        checkErrorMessage(domainWithWrongTld, orderPage.getDomainOwner());
     }
 
-    public void domainWithWrongTldRegisterNewDomainTest() {
+    public void domainWithWrongTldRegisterNewDomainTest() { //fail here
         orderPage.pageEnd();
         orderPage.clickRegisterNewDomain();
         orderPage.inputDomainName(domain);
@@ -73,7 +75,7 @@ public class ConnectToValidation {
 //        orderPage.clickContinueOrderButton();
 //        orderPage.pageEnd();
 
-        checkErrorMessage(domainWithWrongTld, orderPage.getConnectToSelectedRadioButton());
+        checkErrorMessage(domainWithWrongTld, orderPage.getDomainOwner());
     }
 
     public void incorrectDomainNameOwnDomainTest() {
@@ -86,7 +88,7 @@ public class ConnectToValidation {
         orderPage.inputDomainName(incorrectDomain);
         orderPage.clickOnPage();
         orderPage.clickContinueOrderButton();
-        checkErrorMessage(incorrectDomain, orderPage.getConnectToSelectedRadioButton());
+        checkErrorMessage(incorrectDomain, orderPage.getDomainOwner());
     }
 
     public void incorrectDomainNameRegisterNewDomainTest() {
@@ -97,7 +99,7 @@ public class ConnectToValidation {
         orderPage.clearDomainInputField();
         orderPage.inputDomainName(incorrectDomain);
         orderPage.clickContinueOrderButton();
-        checkErrorMessage(incorrectDomain, orderPage.getConnectToSelectedRadioButton());
+        checkErrorMessage(incorrectDomain, orderPage.getDomainOwner());
     }
 
     private void checkErrorMessage(String domainName, String owner) { //need to remake logic maybe transfer to order page

@@ -6,6 +6,8 @@ import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 /**
  * Created by Sergiy.K on 21-Oct-16.
@@ -30,15 +32,19 @@ public abstract class BasePage {
         CLICK.sendKeys(Keys.PAGE_DOWN);
     }
 
-//    public void waitElementAndClick(WebElement element)
-//    {
-//        new WebDriverWait(driver,4).until(ExpectedConditions.visibilityOf(element));
-//        element.click();
-//    }
+    public void waitElementAndClick(WebElement element)
+    {
+        new WebDriverWait(driver,4).until(ExpectedConditions.visibilityOf(element));
+        element.click();
+    }
 
-    public abstract Product getProduct();
+    public void waitForElement(WebElement element) {
+        new WebDriverWait(driver, 20).until(ExpectedConditions.visibilityOf(element));
+    }
 
     public String getCurrentUrl() {
         return driver.getCurrentUrl();
     }
+
+    public abstract Product getProduct();
 }

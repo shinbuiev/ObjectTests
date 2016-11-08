@@ -31,12 +31,9 @@ public class EventFiringWebDriverWrapper extends EventFiringWebDriver {
 
     @Override
     public WebElement findElement(By by) {
-//        waitFullLoading();
         WebElement element;
         try {
-//            System.out.println("first trying");
             element = findElementTest(by);
-//            element = super.findElement(by);
         } catch (NoSuchElementException e) {
 
             System.out.println("No such element");

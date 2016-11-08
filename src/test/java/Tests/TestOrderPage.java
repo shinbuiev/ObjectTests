@@ -1,7 +1,9 @@
 package Tests;
 
+import ExpectedProducts.BaseExpectedProduct;
 import Pages.BasePage;
 import Objects.Product;
+import Pages.WebHosting.Windows.WindowsHostingOrderPage;
 import org.testng.Assert;
 
 import java.util.ArrayList;
@@ -10,12 +12,10 @@ import org.testng.annotations.AfterTest;
 import org.testng.annotations.Test;
 import EmailNotification.ErrorMessage;
 import Pages.WebHosting.HostingPlanPage;
-import Pages.WebHosting.HostingOrderPage;
 import org.testng.annotations.DataProvider;
 import Pages.WebHosting.HostingShoppingCartPage;
 import ExpectedProducts.LinuxWebHosting;
 import ExpectedProducts.WindowsWebHosting;
-import ExpectedProducts.BaseExpectedProduct;
 
 /**
  * Created by Sergiy.K on 02-Nov-16.
@@ -24,7 +24,7 @@ public class TestOrderPage extends BasicTest {
     private Product productBefore;
     private Product productAfter;
 
-    private HostingOrderPage orderPage;
+    private WindowsHostingOrderPage orderPage;
     private HostingPlanPage hostingPlanPage;
     private HostingShoppingCartPage hostingShoppingCartPage;
     LinuxWebHosting linuxWebHosting = new LinuxWebHosting();
@@ -32,28 +32,28 @@ public class TestOrderPage extends BasicTest {
     private ArrayList<ErrorMessage> errorMessageList = new ArrayList<ErrorMessage>();
     private ConnectToValidation validation;
 
-
     @DataProvider
     public Object[][] getExpectedProduct() {
         return new Object[][]{
-//                {windowsWebHosting, windowsWebHosting.getProductPlans().get(0).getOrderPageUrl()},
-//                {windowsWebHosting, windowsWebHosting.getProductPlans().get(1).getOrderPageUrl()},
-//                {windowsWebHosting, windowsWebHosting.getProductPlans().get(2).getOrderPageUrl()},
+                {windowsWebHosting, windowsWebHosting.getProductPlans().get(0).getOrderPageUrl()},
+                {windowsWebHosting, windowsWebHosting.getProductPlans().get(1).getOrderPageUrl()},
+                {windowsWebHosting, windowsWebHosting.getProductPlans().get(2).getOrderPageUrl()},
                 {linuxWebHosting, linuxWebHosting.getProductPlans().get(0).getOrderPageUrl()},
-//                {linuxWebHosting, linuxWebHosting.getProductPlans().get(1).getOrderPageUrl()},
-//                {linuxWebHosting, linuxWebHosting.getProductPlans().get(2).getOrderPageUrl()},
+                {linuxWebHosting, linuxWebHosting.getProductPlans().get(1).getOrderPageUrl()},
+                {linuxWebHosting, linuxWebHosting.getProductPlans().get(2).getOrderPageUrl()},
         };
     }
 
-    @Test(dataProvider = "getExpectedProduct")
-    public void test1(BaseExpectedProduct product, String url) {
-        gotoPage(product.getProductMainPage());
 
+    @Test(dataProvider = "getExpectedProduct")
+    public void buyHostingTest(BaseExpectedProduct product, String plan) {
+        gotoPage(product.getProductMainPage());
         rememberProductBefore(hostingPlanPage);
-        hostingPlanPage.selectPlan(url);
+        hostingPlanPage.selectPlan(plan);
         rememberProductAfter(orderPage);
         comparePlanPageAndOrderPageProducts();
 
+        // here check validation on ConnectTo block
         validation.emptyDomainFieldOwnDomainTest();
         validation.emptyDomainFieldRegisterNewDomainTest();
 
@@ -63,12 +63,13 @@ public class TestOrderPage extends BasicTest {
         validation.incorrectDomainNameOwnDomainTest();
         validation.incorrectDomainNameRegisterNewDomainTest();
         checkValidationErrors();
+        //end check validation
 
         // here select all plans one by one and compare total price after each action, if price is still the same add message to errorMessage list
-        orderPage.selectAllPlans(product.getProductPlans());
+        orderPage.selectAllPlanOptions(windowsWebHosting.getProductTerms());
         // here add all of existing addons and compare total price after each action,  if price is still the same add message to errorMessage list
-        orderPage.selectAllAddons(product.getProductAddons());
-        comparePrices();
+        orderPage.selectAllAddons(windowsWebHosting.getProductAddons());
+        checkErrors();
 
         orderPage.pageEnd();
         orderPage.clickRegisterNewDomain();
@@ -76,41 +77,12 @@ public class TestOrderPage extends BasicTest {
         orderPage.clickOnPage();
         orderPage.inputDomainName("DomainWebHostingForCrazyTests.com");
         orderPage.clickOnPage();
-        rememberProductBefore(orderPage);
-        orderPage.clickContinueOrderButton();
-        hostingShoppingCartPage.clickCart();
 
-        rememberProductAfter(hostingShoppingCartPage);
-        compareProductsOrderPageAndShoppingCart();
-        hostingShoppingCartPage.clearShoppingCart();
-        isProductOk();
+        isAnyErrors();// if find some errors test is failed
     }
 
-
-    private void isProductOk() {
+    public void isAnyErrors() {
         Assert.assertTrue(errorMessageList.size() == 0, "\n" + errorMessageList);
-    }
-
-    public void compareProductsOrderPageAndShoppingCart() {
-        productBefore.getErrorShoppingCartPage(productAfter);
-        if (productBefore.getErrorMessages().size() > 0) {
-            errorMessageList.addAll(productBefore.getErrorMessages());
-            productBefore.saveScreen(productBefore.getClass().getName().replace(".", ""), "OrderPage1");
-            productAfter.saveScreen(productAfter.getClass().getName().replace(".", ""), "ShoppingCart1");
-        }
-    }
-
-    public void comparePrices() {
-        if (orderPage.getPriceErrors().size() > 0) {
-            errorMessageList.add(new ErrorMessage("error with prices after action"));
-        }
-        else System.out.println("price is ok ");
-    }
-
-    public void checkValidationErrors() {
-        if (validation.getErrorMessageList().size() > 0) {
-            errorMessageList.addAll(validation.getErrorMessageList());
-        }
     }
 
     public void gotoPage(java.lang.String url) {
@@ -118,10 +90,24 @@ public class TestOrderPage extends BasicTest {
             driver.get(url);
         }
         hostingPlanPage = new HostingPlanPage(driver);
-        orderPage = new HostingOrderPage(driver);
+        orderPage = new WindowsHostingOrderPage(driver);
+        validation = new ConnectToValidation(orderPage);
         hostingShoppingCartPage = new HostingShoppingCartPage(driver);
-        validation = new ConnectToValidation(driver);
+
     }
+
+    public void checkErrors() {
+        if (orderPage.getErrorMessages().size() > 0) {
+            errorMessageList.addAll(orderPage.getErrorMessages());
+        } else System.out.println(" Not found errors found on page ");
+    }
+
+    public void checkValidationErrors() {
+        if (validation.getErrorMessageList().size() > 0) {
+            errorMessageList.addAll(validation.getErrorMessageList());
+        } else System.out.println(" Validation errors not found ");
+    }
+
 
     public void rememberProductBefore(BasePage page) {
         productBefore = page.getProduct();
@@ -139,7 +125,7 @@ public class TestOrderPage extends BasicTest {
             errorMessageList.addAll(productBefore.getErrorMessages());
             productBefore.saveScreen(productBefore.getClass().getName().replace(".", ""), "PlanPage");
             productAfter.saveScreen(productAfter.getClass().getName().replace(".", ""), "OrderPage");
-        }
+        } else System.out.println("Compare Plan Page And Order Page Products is successful");
     }
 
     @AfterTest

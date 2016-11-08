@@ -2,13 +2,9 @@ package Pages;
 
 import EmailNotification.ErrorMessage;
 import Objects.*;
-import Products.WebHostingProduct;
 import Utils.EventFiringWebDriverWrapper;
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,20 +12,30 @@ import java.util.List;
 /**
  * Created by geser on 07.11.16.
  */
-public abstract class BaseOrderPage extends BasePage{
-    @FindBy(xpath = "//*[@class='bold item-name']")
-    private List<WebElement> NAME_ADDONS_LIST;
+public abstract class BaseOrderPage extends BasePage {
 
-    @FindBy(xpath = "//*[@class='table-details']/span[1]/span[1]")
-    private List<WebElement> NAME_PLANS_OPTIONS_LIST;
+    // BASE PRODUCT INFO
+    @FindBy(xpath = "//*[@class = 'main-title']")
+    private WebElement PRODUCT_NAME_TITLE_TEXT;
 
-    //connect to block
-    @FindBy(xpath = "//span[@id = 'domain_price']")
-    private WebElement DOMAIN_PRICE;
+    @FindBy(xpath = "//h3 [starts-with(@class,'plan-title-square')]")
+    private WebElement PLAN_NAME_TEXT;
 
-    @FindBy(xpath = "//*[@class='requiredField']")
-    private WebElement DOMAIN_NAME_VALIDATION_ERROR;
+    // PLAN OPTION BLOCK
+    @FindBy(xpath = "//span[starts-with(@class,\"item-name\")]/span")
+    private List<WebElement> PLAN_TERM_RADIO_BUTTONS;
 
+    @FindBy(xpath = "//div[starts-with(@class,\"g-custom-radio\")]/input")
+    private List<WebElement> PLAN_RADIO_BUTTON_STATUSES;
+
+    // ADDON BLOCK
+    @FindBy(xpath = "//div[starts-with(@class,\"g-custom-checkbox\")]/input")
+    private List<WebElement> ADDON_CHECKBOX_STATUSES;
+
+    @FindBy(xpath = "//span[@class = 'bold item-name']")
+    private List<WebElement> ADDON_NAMES_CHECKBOXES;
+
+    // CONNECT TO BLOCK
     @FindBy(xpath = "//*[@id='domain_name_own']")
     private WebElement I_OWN_THIS_DOMAIN_NAME_RADIO_BUTTON_STATUS;
 
@@ -42,96 +48,107 @@ public abstract class BaseOrderPage extends BasePage{
     @FindBy(xpath = "//*[@class = 'linkTip tooltip_register_domain']")
     private WebElement REGISTER_A_NEW_DOMAIN_RADIO_BUTTON;
 
+    @FindBy(xpath = "//*[@id='domain_price']")
+    private WebElement REGISTER_NEW_DOMAIN_PRICE;
+
     @FindBy(xpath = "//*[@id='search_domain_input']")
     private WebElement DOMAIN_SEARCH_FIELD;
+
+    @FindBy(xpath = "//span[@id = 'domain_price']")
+    private WebElement DOMAIN_PRICE;
+
+    @FindBy(xpath = "//*[@class='requiredField']")
+    private WebElement DOMAIN_NAME_VALIDATION_ERROR;
 
     @FindBy(xpath = "//div[@class=\"row col-xl-auto col-m-24\"]")
     private WebElement CLICK;
 
-    @FindBy(xpath = "//*[@id='domain_available']")
-    private WebElement IS_DOMAIN_AVAILABLE_IMAGE;
+    @FindBy(xpath = "//*[contains(text(),'Continue Order')]")
+    private WebElement CONTINUE_ORDER_BUTTON;
 
+    // NOT USEFUL FOR NOW
     @FindBy(xpath = "//*[@id='domain_available_tick']")
     private WebElement DOMAIN_AVAILABLE_TICK;
 
     @FindBy(xpath = "//*[@id='domain_available_cross']")
     private WebElement DOMAIN_NOT_AVAILABLE_TICK;
-
-    @FindBy(xpath = "//*[contains(text(),'Continue Order')]")
-    private WebElement CONTINUE_ORDER_BUTTON;
-
+    // TOTAL PRICE
     @FindBy(xpath = "//*[@id='total']")
     private WebElement TOTAL_PRICE;
 
-    @FindBy(xpath = "//*[@class = 'main-title']")
-    private WebElement PRODUCT_NAME_TITLE_TEXT;
-
-    @FindBy(xpath = "//*[@class='plan-title-square row _middle _center']")
-    private WebElement PLAN_NAME_TEXT;
-
-    @FindBy(xpath = "//*[@id='domain_price']")
-    private WebElement registerNewDomainPrice;
-
-    @FindBy(xpath = "//div[starts-with(@class,\"g-custom-radio\")]/input")
-    private List<WebElement> planRadioButtonsStatus;
-
-    @FindBy(xpath = "//div[starts-with(@class,\"g-custom-checkbox\")]/input")
-    private List<WebElement> addonCheckBoxStatusStatus;
-
-    @FindBy(xpath = "//span[@class = 'bold item-name']")
-    private List<WebElement> addonNames;
-
-    @FindBy(xpath = "//span[starts-with(@class,\"item-name\")]")
-    private List<WebElement> planRadioButtonsNames;
-
     private Price priceBeforeAction;
-    private ArrayList<ErrorMessage> priceErrors = new ArrayList<ErrorMessage>();
-    private ArrayList<ErrorMessage> addonErrors = new ArrayList<ErrorMessage>();
-    private ArrayList<ErrorMessage> planErrors = new ArrayList<ErrorMessage>();
-
-
-    //for addons
-    private ArrayList<Addon> addons = new ArrayList<Addon>();
-
+    private ArrayList<ErrorMessage> errorMessages = new ArrayList<ErrorMessage>(); // for errors on this page
     protected EventFiringWebDriverWrapper driver;
-    private WebHostingProduct actualProduct;
 
     public BaseOrderPage(EventFiringWebDriverWrapper driver) {
         super(driver);
         this.driver = driver;
     }
 
-    public void selectPlan(String planName) {
-        for (int i = 0; i < planRadioButtonsNames.size(); i++) {
-            if (planRadioButtonsNames.get(i).getText().equals(planName)) {
-                priceBeforeAction = getTotalPrice();
-                planRadioButtonsNames.get(i).click();
-                if (!priceBeforeAction.equals(getTotalPrice()))
-                    priceErrors.add(new ErrorMessage("Price not changed after select: " + planName));
-            } else
-                planErrors.add(new ErrorMessage("Can't find this plan: " + planName + " on this page " + driver.getCurrentUrl()));
-        }
+    public ArrayList<ErrorMessage> getErrorMessages() {
+        return errorMessages;
     }
 
-    public void selectAllPlans(ArrayList<Plan> plans) {
-        for (int i = 0; i < plans.size(); i++) {
-            selectPlan(plans.get(i).getPlanName());
-        }
+    public String getProductName() {
+        return PRODUCT_NAME_TITLE_TEXT.getText();
     }
 
-    public void selectAddon(String addonName) {
-        for (int i = 0; i < addonNames.size(); i++) {
-            if (addonNames.get(i).getText().equals(addonName)) {
-                addonNames.get(i).click();
-                if (!addonCheckBoxStatusStatus.get(i).isSelected()) {   //add addon work not correctly on site, if very quickly add addon
+    public String getPlanName() {
+        return PLAN_NAME_TEXT.getText();
+    }
+
+    // PLAN OPTION BLOCK
+    public void selectPlanOption(String planTerm) {
+        ArrayList<String> planTextList = new ArrayList<>();
+        for (int i = 0; i < PLAN_TERM_RADIO_BUTTONS.size(); i++) {
+            planTextList.add(PLAN_TERM_RADIO_BUTTONS.get(i).getText());
+        }
+
+        if (planTextList.contains(planTerm)) {
+            for (int i = 0; i < PLAN_TERM_RADIO_BUTTONS.size(); i++) {
+                if (PLAN_TERM_RADIO_BUTTONS.get(i).getText().equals(planTerm)) {
                     priceBeforeAction = getTotalPrice();
-                    addonNames.get(i).click();
-                    if (!priceBeforeAction.equals(getTotalPrice())) {
-                        priceErrors.add(new ErrorMessage("Price not changed after select: " + addonName));
+                    PLAN_TERM_RADIO_BUTTONS.get(i).click();
+                    if (priceBeforeAction.equals(getTotalPrice())) {
+                        errorMessages.add(new ErrorMessage("Price not changed after select term: " + planTerm));
                     }
                 }
-            } else
-                addonErrors.add(new ErrorMessage("Can't find this addon: " + addonName + " on this page " + driver.getCurrentUrl()));
+            }
+        } else
+            errorMessages.add(new ErrorMessage("Can't find this plan: " + planTerm + " on this page " + driver.getCurrentUrl()));
+    }
+
+    public void selectAllPlanOptions(ArrayList<Term> terms) {
+        for (int i = 0; i < terms.size(); i++) {
+            selectPlanOption(terms.get(i).getTerm());
+        }
+    }
+
+    // ADDONS BLOCK
+    public void selectAddon(String addonName) {
+        ArrayList<String> addonNameList = new ArrayList<>();
+        for (int i = 0; i < ADDON_NAMES_CHECKBOXES.size(); i++) {
+            addonNameList.add(ADDON_NAMES_CHECKBOXES.get(i).getText());
+        }
+
+        if (addonNameList.contains(addonName)) {
+            for (int i = 0; i < ADDON_NAMES_CHECKBOXES.size(); i++) {
+                if (ADDON_NAMES_CHECKBOXES.get(i).getText().equals(addonName)) {
+                    priceBeforeAction = getTotalPrice();
+                    ADDON_NAMES_CHECKBOXES.get(i).click();
+//                }
+                    if (!ADDON_CHECKBOX_STATUSES.get(i).isSelected()) {   //add addon work not correctly on site, if very quickly add addon
+
+                        ADDON_NAMES_CHECKBOXES.get(i).click();
+                    }
+
+                    if (priceBeforeAction.equals(getTotalPrice())) {
+                        errorMessages.add(new ErrorMessage("Price not changed after select addon: " + addonName));
+                    }
+                }
+            }
+        } else {
+            errorMessages.add(new ErrorMessage("Can't find this addon: " + addonName + " on this page " + driver.getCurrentUrl()));
         }
     }
 
@@ -141,37 +158,7 @@ public abstract class BaseOrderPage extends BasePage{
         }
     }
 
-    public ArrayList<ErrorMessage> getPriceErrors() {
-        return priceErrors;
-    }
-
-    public Plan getSelectedProductPlan() {// here need to change logic for plan, maybe don't need variable
-        Plan productPlan = new Plan(getPlanName());
-        for (int i = 0; i < 4; i++) {
-            if (planRadioButtonsStatus.get(i).isSelected())
-                productPlan.setTerm(new Term(planRadioButtonsNames.get(i).getText()));
-        }
-        return productPlan;
-    }
-
-    public ArrayList<Addon> getSelectedProductAddons() {
-        for (int i = 0; i < addonCheckBoxStatusStatus.size(); i++) {
-            if (addonCheckBoxStatusStatus.get(i).isSelected()) {
-                addons.add(new Addon(addonNames.get(i).getText(), getSelectedProductPlan().getTerm()));
-            }
-        }
-        return addons;
-    }
-
-    public void scrollDownPage() {
-        JavascriptExecutor jse = (JavascriptExecutor) driver;
-        jse.executeScript("scroll(0, 1800);");
-    }
-
-    public Price getTotalPrice() {
-        return new Price(TOTAL_PRICE.getText());
-    }
-
+    // CONNECT TO BLOCK
     public void clickRegisterNewDomain() {
         if (!REGISTER_A_NEW_DOMAIN_RADIO_BUTTON_STATUS.isSelected())
             REGISTER_A_NEW_DOMAIN_RADIO_BUTTON.click();
@@ -186,17 +173,13 @@ public abstract class BaseOrderPage extends BasePage{
         DOMAIN_SEARCH_FIELD.clear();
     }
 
-    public String getRegisterNewDomainPrice() {
+    public String getREGISTER_NEW_DOMAIN_PRICE() {
         waitForElement(DOMAIN_PRICE);
         return DOMAIN_PRICE.getText();
     }
 
-    public void waitErrorMessage(){
+    public void waitErrorMessage() {
         waitForElement(DOMAIN_NAME_VALIDATION_ERROR);
-    }
-
-    public void waitForElement(WebElement element) {
-        new WebDriverWait(driver, 20).until(ExpectedConditions.visibilityOf(element));
     }
 
     public String getValidationErrorMessage() {
@@ -215,17 +198,11 @@ public abstract class BaseOrderPage extends BasePage{
         return DOMAIN_SEARCH_FIELD.getAttribute("value");
     }
 
-    public String getConnectToSelectedRadioButton(){
+    // this method return selected radio button name
+    public String getDomainOwner() {
         if (I_OWN_THIS_DOMAIN_NAME_RADIO_BUTTON_STATUS.isSelected())
             return I_OWN_THIS_DOMAIN_NAME_RADIO_BUTTON.getText();
         else return REGISTER_A_NEW_DOMAIN_RADIO_BUTTON.getText();
-    }
-
-    public Domain getSelectedProductDomain() {
-        if (REGISTER_A_NEW_DOMAIN_RADIO_BUTTON_STATUS.isSelected()) {
-            return new Domain(getDomainName(), new Price(getRegisterNewDomainPrice()));
-        } else
-            return new Domain(getDomainName());
     }
 
     public void clickContinueOrderButton() {
@@ -236,13 +213,36 @@ public abstract class BaseOrderPage extends BasePage{
         CLICK.click();
     }
 
-    public String getProductName() {
-        return PRODUCT_NAME_TITLE_TEXT.getText();
+    public Price getTotalPrice() {
+        return new Price(TOTAL_PRICE.getText());
     }
 
-    public String getPlanName() {
-        return PLAN_NAME_TEXT.getText();
+    // PRODUCT INIT METHODS
+    public Domain getSelectedProductDomain() {
+        if (REGISTER_A_NEW_DOMAIN_RADIO_BUTTON_STATUS.isSelected()) {
+            return new Domain(getDomainName(), new Price(getREGISTER_NEW_DOMAIN_PRICE()));
+        } else
+            return new Domain(getDomainName());
     }
 
-//    public abstract Product getProduct();
+    public Plan getSelectedProductPlan() {// here need to change logic for plan, maybe don't need variable term
+        Plan productPlan = new Plan(getPlanName());
+        for (int i = 0; i < 4; i++) {
+            if (PLAN_RADIO_BUTTON_STATUSES.get(i).isSelected())
+                productPlan.setTerm(new Term(PLAN_TERM_RADIO_BUTTONS.get(i).getText()));
+        }
+        return productPlan;
+    }
+
+    public ArrayList<Addon> getSelectedProductAddons() {
+        ArrayList<Addon> addons = new ArrayList<>();
+        for (int i = 0; i < ADDON_CHECKBOX_STATUSES.size(); i++) {
+            if (ADDON_CHECKBOX_STATUSES.get(i).isSelected()) {
+                addons.add(new Addon(ADDON_NAMES_CHECKBOXES.get(i).getText(), getSelectedProductPlan().getTerm()));
+            }
+        }
+        return addons;
+    }
+
+    public abstract Product getProduct();
 }

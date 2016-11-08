@@ -39,7 +39,7 @@ public class HostingPlanPage extends BasePage {
         this.driver = driver;
     }
 
-    WebHostingProduct actual = new WebHostingProduct(getProductName()+ " wrong");
+    WebHostingProduct actual = new WebHostingProduct(getProductName());
     //to this page need to add methods for testing tool tips
 
     public WebHostingProduct getProduct() {
@@ -47,7 +47,7 @@ public class HostingPlanPage extends BasePage {
     }
 
     public void selectPlan(String url){
-        actual = new WebHostingProduct(getProductName()+ " wrong");
+        actual = new WebHostingProduct(getProductName());
         driver.findElement(By.xpath("//a[@href='" + url + "']")).click();
     }
 

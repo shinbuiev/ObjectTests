@@ -24,55 +24,105 @@ import java.util.ArrayList;
 public class HostingBuyTest extends BasicTest {
     private File screenFile;
 
-    private Price priceBefore;
-    private Price priceAfter;
     private Product productBefore;
     private Product productAfter;
-    private java.lang.String errors = "";
+
     private HostingOrderPage orderPage;
     private HostingPlanPage hostingPlanPage;
     private HostingShoppingCartPage hostingShoppingCartPage;
-    private LinuxWebHosting linuxWebHosting = new LinuxWebHosting();
-    private WindowsWebHosting windowsWebHosting = new WindowsWebHosting();
+    LinuxWebHosting linuxWebHosting = new LinuxWebHosting();
+    WindowsWebHosting windowsWebHosting = new WindowsWebHosting();
     private ArrayList<ErrorMessage> errorMessageList = new ArrayList<ErrorMessage>();
+    private ConnectToValidation validation;
 
-    //data provider for get expect product and try to buy product
+
     @DataProvider
     public Object[][] getExpectedProduct() {
         return new Object[][]{
-                {windowsWebHosting, windowsWebHosting.getProductPlans().get(0).getOrderPageUrl()},
+//                {windowsWebHosting, windowsWebHosting.getProductPlans().get(0).getOrderPageUrl()},
 //                {windowsWebHosting, windowsWebHosting.getProductPlans().get(1).getOrderPageUrl()},
 //                {windowsWebHosting, windowsWebHosting.getProductPlans().get(2).getOrderPageUrl()},
-//                {linuxWebHosting, linuxWebHosting.getProductPlans().get(0).getOrderPageUrl()},
+                {linuxWebHosting, linuxWebHosting.getProductPlans().get(0).getOrderPageUrl()},
 //                {linuxWebHosting, linuxWebHosting.getProductPlans().get(1).getOrderPageUrl()},
 //                {linuxWebHosting, linuxWebHosting.getProductPlans().get(2).getOrderPageUrl()},
         };
     }
 
     @Test(dataProvider = "getExpectedProduct")
-    public void buyHostingTest(BaseExpectedProduct product, String plan) {
+    public void test1(BaseExpectedProduct product, String url) {
         gotoPage(product.getProductMainPage());
+
         rememberProductBefore(hostingPlanPage);
-        hostingPlanPage.selectPlan(plan);
+        hostingPlanPage.selectPlan(url);
         rememberProductAfter(orderPage);
         comparePlanPageAndOrderPageProducts();
-        rememberTotalPriceBeforeSelect();
+
+        validation.emptyDomainFieldOwnDomainTest();
+        validation.emptyDomainFieldRegisterNewDomainTest();
+
+        validation.domainWithWrongTldOwnDomainNameTest();
+        validation.domainWithWrongTldRegisterNewDomainTest();
+
+        validation.incorrectDomainNameOwnDomainTest();
+        validation.incorrectDomainNameRegisterNewDomainTest();
+        checkValidationErrors();
+
+        // here select all plans one by one and compare total price after each action, if price is still the same add message to errorMessage list
+        orderPage.selectAllPlans(product.getProductPlans());
+        // here add all of existing addons and compare total price after each action,  if price is still the same add message to errorMessage list
+        orderPage.selectAllAddons(product.getProductAddons());
+        comparePrices();
+
+        orderPage.pageEnd();
+        orderPage.clickRegisterNewDomain();
+        orderPage.clearDomainInputField();
+        orderPage.clickOnPage();
+        orderPage.inputDomainName("DomainWebHostingForCrazyTests.com");
+        orderPage.clickOnPage();
+        rememberProductBefore(orderPage);
+        orderPage.clickContinueOrderButton();
+        hostingShoppingCartPage.clickCart();
+
+        rememberProductAfter(hostingShoppingCartPage);
+        compareProductsOrderPageAndShoppingCart();
+        hostingShoppingCartPage.clearShoppingCart();
+        isProductOk();
     }
 
-    public void isProductOk() {
-       Assert.assertTrue(errorMessageList.size() == 0, "\n" + errorMessageList);
+
+    private void isProductOk() {
+        Assert.assertTrue(errorMessageList.size() == 0, "\n" + errorMessageList);
+    }
+
+    public void compareProductsOrderPageAndShoppingCart() {
+        productBefore.getErrorShoppingCartPage(productAfter);
+        if (productBefore.getErrorMessages().size() > 0) {
+            errorMessageList.addAll(productBefore.getErrorMessages());
+            productBefore.saveScreen(productBefore.getClass().getName().replace(".", ""), "OrderPage1");
+            productAfter.saveScreen(productAfter.getClass().getName().replace(".", ""), "ShoppingCart1");
+        }
+    }
+
+    public void comparePrices() {
+        if (orderPage.getPriceErrors().size() > 0) {
+            errorMessageList.add(new ErrorMessage("error with prices after action"));
+        } else System.out.println("price is ok ");
+    }
+
+    public void checkValidationErrors() {
+        if (validation.getErrorMessageList().size() > 0) {
+            errorMessageList.addAll(validation.getErrorMessageList());
+        }
     }
 
     public void gotoPage(java.lang.String url) {
         if (!driver.getCurrentUrl().equals(url)) {
             driver.get(url);
         }
-        hostingPlanPage = new HostingPlanPage(driver);
-        orderPage = new HostingOrderPage(driver);
-        hostingShoppingCartPage = new HostingShoppingCartPage(driver);
 //        hostingPlanPage = new HostingPlanPage(driver);
 //        orderPage = new HostingOrderPage(driver);
 //        hostingShoppingCartPage = new HostingShoppingCartPage(driver);
+//        validation = new ConnectToValidation(orderPage);
     }
 
     public void rememberProductBefore(BasePage page) {
@@ -85,47 +135,18 @@ public class HostingBuyTest extends BasicTest {
         productAfter.takeScreenshot();
     }
 
-    public void rememberTotalPriceBeforeSelect(){
-        priceBefore = orderPage.getTotalPrice();
-    }
-
-    public void rememberTotalPriceAfterSelect(){
-        priceAfter = orderPage.getTotalPrice();
-    }
-
-    public void comparePrices(){
-        if (priceBefore.getPrice().equals(priceAfter.getPrice()))
-        {
-            errorMessageList.add(new ErrorMessage("error with prices after action"));
-        }
-        else
-        {
-            System.out.println(" colo price ");
-        }
-    }
-
     public void comparePlanPageAndOrderPageProducts() {
-
         productBefore.comparePlanPageOrderPageProductsAndGetErrors(productAfter);
         if (productBefore.getErrorMessages().size() > 0) {
             errorMessageList.addAll(productBefore.getErrorMessages());
-            productBefore.saveScreen(productBefore.getClass().getName().replace(".",""),"PlanPage");
-            productAfter.saveScreen(productAfter.getClass().getName().replace(".",""), "OrderPage");
+            productBefore.saveScreen(productBefore.getClass().getName().replace(".", ""), "PlanPage");
+            productAfter.saveScreen(productAfter.getClass().getName().replace(".", ""), "OrderPage");
         }
     }
 
-    public void compareProductsOrderPageAndShoppingCart() {
-        productBefore.getErrorShoppingCartPage(productAfter);
-        if (productBefore.getErrorMessages().size() > 0) {
-            errorMessageList.addAll(productBefore.getErrorMessages());
-            productBefore.saveScreen(productBefore.getClass().getName().replace(".",""), "OrderPage1");
-            productAfter.saveScreen(productAfter.getClass().getName().replace(".",""), "ShoppingCart1");
-        }
-    }
 
     @AfterTest
     public void sendEmailNotificationWithErrors() {
-
 //        if (errorMessageList.size() > 0) {
 //            Email email = new Email();
 //            try {
@@ -140,7 +161,11 @@ public class HostingBuyTest extends BasicTest {
 
     @AfterTest
     public void evnSgut() {
-        if (driver != null)
-            driver.quit();
+        for (int i = 0; i < errorMessageList.size(); i++) {
+//            System.out.println(errorMessageList.get(i));
+//        }
+            if (driver != null)
+                driver.quit();
+        }
     }
 }

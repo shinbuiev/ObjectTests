@@ -12,6 +12,8 @@ import java.util.ArrayList;
  * Created by geser on 30.10.16.
  */
 public class WindowsWebHosting extends BaseExpectedProduct{
+
+
     public String getProductName() {
         return "Windows Hosting";
     }
@@ -22,10 +24,11 @@ public class WindowsWebHosting extends BaseExpectedProduct{
 
     public ArrayList<Term> getProductTerms() {
         ArrayList<Term> terms = new ArrayList<Term>() {{
-            add(new Term("12"));
+            add(new Term("Test product Term"));  // it's only for test
             add(new Term("24"));
             add(new Term("36"));
             add(new Term("120"));
+            add(new Term("12"));
         }};
         return terms;
     }
@@ -41,6 +44,7 @@ public class WindowsWebHosting extends BaseExpectedProduct{
 
     public ArrayList<Addon> getProductAddons() {
         final ArrayList<Addon> addons = new ArrayList<Addon>() {{
+            add(new Addon("Test Addon Name"));// it's only for test
             add(new Addon("Traffic Booster"));
             add(new Addon("Web Analytics"));
             add(new Addon("Premium Email Protection"));

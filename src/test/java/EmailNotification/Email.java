@@ -24,7 +24,7 @@ public class Email {
         for (int i = 0; i < errors.size(); i++) {
             content = content + errors.get(i).getErrorMessage();
         }
-
+//        VADZ.A@dreamscapenetworks.com
         System.out.println("content = " + content);
         System.out.println("size of file list = " + fileList.size());
         String[] to = {"s.konoplyaniy@gmail.com", "s.konoplyaniy@gmail.com"};
