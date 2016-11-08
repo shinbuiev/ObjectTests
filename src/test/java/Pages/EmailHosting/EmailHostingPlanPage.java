@@ -82,7 +82,7 @@ public class EmailHostingPlanPage extends BasePage{
 
 
     public String getLastTableElementText() {
-        jse.executeScript("scroll(0, 1300);");
+        jse.executeScript("scrollTo(0, 1300);");
         return LAST_ELEMENT_OF_THE_TABLE.getText();
     }
 

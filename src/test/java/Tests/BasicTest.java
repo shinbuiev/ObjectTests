@@ -39,7 +39,7 @@ public class BasicTest {
         driver.register(new ListenerThatHiglilightsElements("#FFFF00 ", 1, 50, TimeUnit.MILLISECONDS));
 //        driver = new EventFiringWebDriver(webDriver);
         driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
-        driver.manage().window().maximize();
+//        driver.manage().window().maximize();
         driver.manage().deleteAllCookies();
     }
 }

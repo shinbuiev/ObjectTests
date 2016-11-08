@@ -168,7 +168,7 @@ public class HostingOrderPage extends BasePage {
 
     public void scrollDownPage() {
         JavascriptExecutor jse = (JavascriptExecutor) driver;
-        jse.executeScript("scroll(0, 1800);");
+        jse.executeScript("scrollTo(0, 1800);");
     }
 
     public Price getTotalPrice() {

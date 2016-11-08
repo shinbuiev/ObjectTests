@@ -3,7 +3,6 @@ package Utils;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.events.EventFiringWebDriver;
 import org.openqa.selenium.support.ui.ExpectedCondition;
-import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.util.List;
@@ -29,8 +28,14 @@ public class EventFiringWebDriverWrapper extends EventFiringWebDriver {
         return super.findElement(by);
     }
 
+    public void scrollTo(WebElement element) {
+        this.executeScript("scrollTo(0, " + this.manage().window().getSize().getHeight()/2 + ");");
+    }
+
     @Override
     public WebElement findElement(By by) {
+
+
         WebElement element;
         try {
             element = findElementTest(by);
@@ -48,7 +53,7 @@ public class EventFiringWebDriverWrapper extends EventFiringWebDriver {
             System.out.println("WebDriver Exception");
             element = findElement(by);
         }
-
+        scrollTo(element);
         return element;
     }
 
