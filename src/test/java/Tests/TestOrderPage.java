@@ -44,6 +44,56 @@ public class TestOrderPage extends BasicTest {
         };
     }
 
+    public void gotoOrderPage(){
+        if (!driver.getCurrentUrl().equals("https://www.crazydomains.com.au/" + windowsWebHosting.getProductPlans().get(0).getOrderPageUrl()))
+        driver.get("https://www.crazydomains.com.au/" + windowsWebHosting.getProductPlans().get(0).getOrderPageUrl());
+        hostingPlanPage = new HostingPlanPage(driver);
+        orderPage = new WindowsHostingOrderPage(driver);
+        validation = new ConnectToValidation(orderPage);
+        hostingShoppingCartPage = new HostingShoppingCartPage(driver);
+    }
+
+    @Test
+    public void checkValidation(){
+        gotoOrderPage();
+        validation.emptyDomainFieldOwnDomainTest();
+        validation.emptyDomainFieldRegisterNewDomainTest();
+
+        validation.domainWithWrongTldOwnDomainNameTest();
+        validation.domainWithWrongTldRegisterNewDomainTest();
+
+        validation.incorrectDomainNameOwnDomainTest();
+        validation.incorrectDomainNameRegisterNewDomainTest();
+        checkValidationErrorsAssert();// if find some errors test is failed
+    }
+
+    @Test
+    public void checkPlanOptions(){
+        orderPage.selectAllPlanOptions(windowsWebHosting.getProductTerms());
+        checkErrors();
+    }
+
+    @Test
+    public void checkAddons(){
+        gotoOrderPage();
+        orderPage.selectAllAddons(windowsWebHosting.getProductAddons());
+        checkErrors();// if find some errors test is failed
+    }
+
+    @Test
+    public void checkProduct(){
+        gotoOrderPage();
+        orderPage.pageEnd();
+        orderPage.clickRegisterNewDomain();
+        orderPage.clearDomainInputField();
+        orderPage.clickOnPage();
+        orderPage.inputDomainName("DomainWebHostingForCrazyTests.com");
+        orderPage.clickOnPage();
+        isAnyErrors();// if find some errors test is failed
+    }
+
+
+
 
     @Test(dataProvider = "getExpectedProduct")
     public void buyHostingTest(BaseExpectedProduct product, String plan) {
@@ -101,11 +151,18 @@ public class TestOrderPage extends BasicTest {
             errorMessageList.addAll(orderPage.getErrorMessages());
         } else System.out.println(" Not found errors found on page ");
     }
+    public void checkErrorsPlanOptions() {
+        Assert.assertTrue(orderPage.getErrorMessages().size() == 0, "\n" + orderPage.getErrorMessages());
+    }
 
     public void checkValidationErrors() {
         if (validation.getErrorMessageList().size() > 0) {
             errorMessageList.addAll(validation.getErrorMessageList());
         } else System.out.println(" Validation errors not found ");
+    }
+
+    public void checkValidationErrorsAssert() {
+        Assert.assertTrue(validation.getErrorMessageList().size() == 0, "\n" + validation.getErrorMessageList());
     }
 
 

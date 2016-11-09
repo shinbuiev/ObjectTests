@@ -30,6 +30,7 @@ public class ConnectToValidation {
 
     public void emptyDomainFieldOwnDomainTest() {
         orderPage.pageEnd();
+        orderPage.clickIownThisDomain();
         orderPage.clearDomainInputField();
         orderPage.clickOnPage();
         orderPage.clickContinueOrderButton();
