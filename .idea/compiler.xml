@@ -22,11 +22,11 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <processorPath useClasspath="true" />
-        <module name="CrazyTestsWithObjects" />
+        <module name="CrazyTest" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="CrazyTestsWithObjects" target="1.5" />
+      <module name="CrazyTest" target="1.5" />
     </bytecodeTargetLevel>
   </component>
 </project>

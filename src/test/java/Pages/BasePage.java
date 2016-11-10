@@ -1,101 +1,73 @@
 package Pages;
 
-import EmailNotification.Email;
-import EmailNotification.ErrorMessage;
-import Interfaces.ExpectedProducts.LinuxWebHosting;
-import Interfaces.ExpectedProducts.WindowsWebHosting;
-import Objects.Product;
-import org.openqa.selenium.Keys;
+import Tests.BaseTest;
+import org.apache.commons.io.FileUtils;
+import org.apache.log4j.Logger;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.events.EventFiringWebDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
-import java.util.ArrayList;
+import javax.imageio.ImageIO;
+import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 /**
- * Created by Sergiy.K on 21-Oct-16.
+ * Created by Dmitriy.F on 02.11.2016.
  */
 public abstract class BasePage {
-    private java.lang.String errors = "";
-    private LinuxWebHosting linuxWebHosting = new LinuxWebHosting();
-    private WindowsWebHosting windowsWebHosting = new WindowsWebHosting();
-    private static ArrayList<ErrorMessage> errorMessageList = new ArrayList<ErrorMessage>();
-    public Product productBefore;
-    public Product productAfter;
-    @FindBy(xpath = "/html/body")
-    private WebElement CLICK;
-
-    protected WebDriver driver;
-
-    public BasePage(WebDriver driver) {
-        PageFactory.initElements(driver,this);
-        this.driver = driver;
-        driver.manage().timeouts().pageLoadTimeout(10, TimeUnit.SECONDS);
-    }
-
-    public void rememberProductBefore(BasePage page) {
-        productBefore = page.getProduct();
-        System.out.println("Reember product before ");
-    }
-
-    public void pageEnd() {
-        CLICK.sendKeys(Keys.END);
-    }
-
-    public void pageDown() {
-        CLICK.sendKeys(Keys.PAGE_DOWN);
-    }
-
-    public abstract Product getProduct();
-
-    public String getCurrentUrl() {
-        return driver.getCurrentUrl();
+    private EventFiringWebDriver eventDriver;
 
 
-    }
 
-    public void rememberProductAfter(BasePage page) {
-        productAfter = page.getProduct();
-    }
-    public void checkProductSpecification(BasePage page) {
-        if (!errors.equals("")) {
-            errors = errors + "\n";
-        }
-        errors = errors + linuxWebHosting.isProduct(page.getProduct());
+    //----Top menu -------------------------------------
+
+
+
+    //--------------------------------------------------------------
+
+    public BasePage(EventFiringWebDriver eventDriver) {
+        PageFactory.initElements(eventDriver,this);
+        this.eventDriver = eventDriver;
+        eventDriver.manage().timeouts().pageLoadTimeout(60, TimeUnit.SECONDS);
     }
 
 
+    public void waitForElement(WebElement element) {
+        new WebDriverWait(eventDriver,4).until(ExpectedConditions.visibilityOf(element));
+    }
 
-    public void comparePlanPageAndOrderPageProducts(){
 
-        productBefore.comparePlanPageOrderPageProductsAndGetErrors(productAfter);
-        if (productBefore.getErrorMessages().size() > 0){
-            errorMessageList.addAll(productBefore.getErrorMessages());
+    public void randomClick(List<WebElement> list){
+        try {
+            list.get((int) (Math.random() * list.size())).click();
+        }catch (Exception e){
         }
     }
 
-    public void compareProductsOrderPageAndShoppingCart() {
-        productBefore.getErrorShoppingCartPage(productAfter);
-        if (productBefore.getErrorMessages().size() > 0){
-            errorMessageList.addAll(productBefore.getErrorMessages());
+
+    //---------Screenshot method----------------------------------------------------------------------------
+    public  static void takeScreen(EventFiringWebDriver recDriver,String eoorMess) {
+        try {
+            String date = new SimpleDateFormat("yyyy-MM-dd HH.mm.ss ").format(new Date());
+            File screenS = ((TakesScreenshot) (recDriver)).getScreenshotAs(OutputType.FILE);
+            FileUtils.copyFile(screenS, new File("C:\\Automation\\chromedriver\\Screen\\" + BaseTest.testName + "\\" + eoorMess +" "+ date + ".jpg"));
+        }catch (Exception e){
+            e.printStackTrace();
         }
     }
-
-    public static void errorSending(){
-        if (errorMessageList.size() > 0)
-        {
-            Email email = new Email();
-            try {
-                email.execute("Result for Web Hosting buy test ", errorMessageList);
-            } catch (Exception e) {
-                e.printStackTrace();
-                System.out.println("can't send email  \n" + e.getMessage());
-            }
-        }
-    }
-    }
+//---------Screenshot method-------------------------------------------------------------------------------
 
 
+
+}
