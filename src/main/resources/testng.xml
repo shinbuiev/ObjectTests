@@ -1,0 +1,39 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="FrontCrazyDomainsBuyTests">
+    <test name="EmailMarketingBuy">
+        <classes>
+            <class name="Tests.EmailMarketingTests"/>
+        </classes>
+    </test>
+    <test name="EShopBuy">
+        <classes>
+            <class name="Tests.EShopTests"/>
+        </classes>
+    </test>
+    <test name="HostingBuy">
+        <classes>
+            <class name="Tests.HostingTests"/>
+        </classes>
+    </test>
+    <test name="SiteProtectionBuy">
+        <classes>
+            <class name="Tests.SiteProtectionTests"/>
+        </classes>
+    </test>
+    <test name="WebSiteBuilderBuy">
+        <classes>
+            <class name="Tests.WebBuilderTests"/>
+        </classes>
+    </test>
+    <test name="WebDesignBuy">
+        <classes>
+            <class name="Tests.WebDesignTests"/>
+        </classes>
+    </test>
+</suite>
+
+
+
+
+
+
